@@ -48,7 +48,7 @@ Change a price or the opening hours once in `src/data/` and it updates everywher
 2. **Tag the GBP links** so Google traffic shows up separately in Analytics:
    - Website: `https://meatmootseattle.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp`
    - Menu: `https://meatmootseattle.com/menu?utm_source=google&utm_medium=organic&utm_campaign=gbp-menu`
-   - Reservations: `https://meatmootseattle.com/#reserve?utm_source=google&utm_medium=organic&utm_campaign=gbp-reserve`
+   - Reservations: `https://meatmootseattle.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp-reserve#reserve`
 3. **Primary category:** Halal restaurant (or Barbecue restaurant). **Secondary:** Barbecue restaurant, Steak house, Turkish restaurant, Middle Eastern restaurant, Caterer.
 4. **Review link.** Paste the GBP "Ask for reviews" link into `links.googleReview` in `src/data/site.ts`. The "Leave a review" buttons will then open the review form directly.
 5. **Search Console.** Verify the domain in Google Search Console and submit `https://meatmootseattle.com/sitemap-index.xml`.

@@ -9,6 +9,7 @@ interface Props {
 }
 const { items, title = 'Good to know', eyebrow = 'FAQ', headingLevel = 'h2' } = Astro.props;
 const Heading = headingLevel;
+const QuestionHeading = headingLevel === 'h1' ? 'h2' : 'h3';
 ---
 
 <section class="section faq" aria-labelledby="faq-title">
@@ -23,7 +24,7 @@ const Heading = headingLevel;
         items.map((f, i) => (
           <details data-reveal style={`--reveal-i:${Math.min(i, 4)}`}>
             <summary>
-              <h3>{f.q}</h3>
+              <QuestionHeading class="q">{f.q}</QuestionHeading>
               <span class="icon" aria-hidden="true" />
             </summary>
             <p>{f.a}</p>
@@ -69,13 +70,13 @@ const Heading = headingLevel;
     display: none;
   }
 
-  summary h3 {
+  .q {
     font-size: var(--step-2);
     line-height: 1.2;
     transition: color 0.3s;
   }
 
-  summary:hover h3 {
+  summary:hover .q {
     color: var(--gold);
   }
 

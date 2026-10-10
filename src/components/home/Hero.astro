@@ -23,7 +23,7 @@ import { site } from '@/data/site';
   <div class="content container">
     <p class="eyebrow eyebrow--rule">Upscale halal dining / Seattle</p>
     <h1 id="hero-title">
-      <span class="word">Meat</span>
+      <span class="word">Meat</span>{' '}
       <span class="word">Moot</span>
       <span class="sr-only"> — halal smokehouse in South Lake Union, Seattle</span>
     </h1>
@@ -54,6 +54,12 @@ import { site } from '@/data/site';
     isolation: isolate;
     overflow: hidden;
     background: #000;
+  }
+
+  @media (max-width: 760px) {
+    .hero {
+      min-height: calc(100svh - 56px - env(safe-area-inset-bottom));
+    }
   }
 
   .media {

@@ -23,18 +23,19 @@ export const GET: APIRoute = () => {
 - Part of the Meat Moot brand, founded in ${site.founded.city} in ${site.founded.year}
 
 ## Menu (priced per pound, all halal)
-${cuts.map((c) => `- ${c.name} — ${formatPrice(c.pricePerLb)}/lb: ${c.summary} (${site.url}/menu/${c.slug})`).join('\n')}
+${cuts.map((c) => `- [${c.name}](${site.url}/menu/${c.slug}): ${formatPrice(c.pricePerLb)}/lb. ${c.summary}`).join('\n')}
 
 Included with every cut: unlimited sauces (${included.sauces.join(', ')}); salads and sides (${included.sides.join(', ')}); unlimited ${included.beverages.join(' and ').toLowerCase()}.
 
 ${lunchSpecial.title}: ${lunchSpecial.days}, ${lunchSpecial.time} — ${lunchSpecial.portion} ${lunchSpecial.choices.join(' or ')} for ${formatPrice(lunchSpecial.price)}.
 
 ## Pages
-- Menu: ${site.url}/menu
-- Halal standards: ${site.url}/halal
-- Events, groups & catering: ${site.url}/events
-- Hours & directions: ${site.url}/visit
-- FAQ: ${site.url}/faq
+- [Menu](${site.url}/menu): every cut, price per pound, sides and the weekday lunch special
+- [Halal standards](${site.url}/halal): sourcing, certification and our alcohol-free policy
+- [Events, groups & catering](${site.url}/events): team dinners, celebrations and catering requests
+- [Hours & directions](${site.url}/visit): address, hours, parking and transit
+- [FAQ](${site.url}/faq): answers to common questions
+- [Journal](${site.url}/journal): guides to ordering, halal BBQ in Seattle and group lunches
 
 ## FAQ
 ${faqs.map((f) => `Q: ${f.q}\nA: ${f.a}`).join('\n\n')}

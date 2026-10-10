@@ -1,0 +1,37 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base title="Page not found | Meat Moot Seattle" description="This page doesn't exist. Head back to the menu or reserve a table at Meat Moot Seattle." noindex>
+  <section class="section">
+    <div class="container lost">
+      <p class="eyebrow eyebrow--gold">404</p>
+      <h1 class="display">This cut is <em>off the menu.</em></h1>
+      <p class="body-muted">The page you were looking for has moved or never existed. The brisket, however, is right where we left it.</p>
+      <div class="ctas">
+        <a class="btn" href="/menu">See the menu</a>
+        <a class="link-arrow" href="/">Back home</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lost {
+    display: grid;
+    gap: var(--space-m);
+    justify-items: start;
+    min-height: 60svh;
+    align-content: center;
+  }
+
+  em {
+    color: var(--gold);
+  }
+
+  .ctas {
+    display: flex;
+    gap: 1.75rem;
+    align-items: center;
+  }
+</style>

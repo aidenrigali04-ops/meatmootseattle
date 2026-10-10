@@ -1,0 +1,212 @@
+---
+import { site, formatTime } from '@/data/site';
+import { cuts } from '@/data/menu';
+
+const year = new Date().getFullYear();
+const daily = site.hours.every((h) => h.opens === site.hours[0].opens && h.closes === site.hours[0].closes);
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <a class="address-display" href={site.links.directions} target="_blank" rel="noopener" data-track="click_directions" data-placement="footer">
+      <span>{site.address.streetShort}</span>
+      <span>{site.address.city}, {site.address.region} {site.address.postalCode}</span>
+    </a>
+
+    <div class="grid">
+      <div class="col">
+        <h2 class="eyebrow">Visit</h2>
+        <address>
+          {site.name}<br />
+          {site.address.street}<br />
+          {site.address.city}, {site.address.region} {site.address.postalCode}<br />
+          <span class="muted">{site.address.neighborhood} · {site.address.crossStreets}</span>
+        </address>
+        <a class="link-arrow" href={site.links.directions} target="_blank" rel="noopener" data-track="click_directions" data-placement="footer">Get directions</a>
+      </div>
+
+      <div class="col">
+        <h2 class="eyebrow">Hours</h2>
+        {
+          daily ? (
+            <p>
+              Monday – Sunday
+              <br />
+              {formatTime(site.hours[0].opens)} – {formatTime(site.hours[0].closes)}
+            </p>
+          ) : (
+            <ul class="hours">
+              {site.hours.map((h) => (
+                <li>
+                  <span>{h.short}</span>
+                  <span>
+                    {formatTime(h.opens)} – {formatTime(h.closes)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        <p class="muted">Weekday lunch special 12 – 3pm</p>
+      </div>
+
+      <div class="col">
+        <h2 class="eyebrow">Contact</h2>
+        <p>
+          <a href={`tel:${site.phoneE164}`} data-track="click_call" data-placement="footer">{site.phone}</a><br />
+          <a href={`mailto:${site.email}`} data-track="click_email" data-placement="footer">{site.email}</a>
+        </p>
+        <ul class="social">
+          <li><a href={site.social.instagram} target="_blank" rel="noopener me">Instagram</a></li>
+          <li><a href={site.social.tiktok} target="_blank" rel="noopener me">TikTok</a></li>
+          <li><a href={site.social.facebook} target="_blank" rel="noopener me">Facebook</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h2 class="eyebrow">Our cuts</h2>
+        <ul class="links">
+          {cuts.map((c) => <li><a href={`/menu/${c.slug}`}>Smoked {c.name}</a></li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="base">
+      <p class="wordmark">Meat Moot Seattle</p>
+      <ul class="legal">
+        <li><a href="/menu">Menu</a></li>
+        <li><a href="/halal">Halal</a></li>
+        <li><a href="/events">Events &amp; Catering</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="/journal">Journal</a></li>
+      </ul>
+      <p class="muted small">© {year} {site.name}. 100% halal · alcohol-free. Part of the <a href={site.links.brand} target="_blank" rel="noopener">Meat Moot</a> family, est. {site.founded.city} {site.founded.year}.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding-block: var(--space-xl) var(--space-l);
+    background: radial-gradient(120% 80% at 0% 0%, rgb(var(--ember) / 0.06), transparent 60%), var(--ink);
+  }
+
+  .address-display {
+    display: grid;
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 1rem + 6.5vw, 6.5rem);
+    line-height: 1;
+    color: var(--gold);
+    text-decoration: none;
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--line);
+    transition: color 0.4s;
+  }
+
+  .address-display:hover {
+    color: var(--gold-bright);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-l);
+    padding-block: var(--space-xl);
+    font-size: 0.92rem;
+    color: var(--cream-soft);
+  }
+
+  .col {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  address {
+    font-style: normal;
+  }
+
+  .col a {
+    text-decoration: none;
+  }
+
+  .col a:hover {
+    color: var(--gold);
+  }
+
+  .col .link-arrow {
+    justify-self: start;
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+
+  .links,
+  .social,
+  .legal {
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .base {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-m);
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--line);
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .legal a {
+    text-decoration: none;
+    color: var(--cream-soft);
+  }
+
+  .legal a:hover {
+    color: var(--gold);
+  }
+
+  .small {
+    font-size: 0.78rem;
+    text-align: right;
+  }
+
+  @media (max-width: 960px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .base {
+      grid-template-columns: 1fr;
+    }
+
+    .small {
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

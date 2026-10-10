@@ -1,0 +1,91 @@
+---
+import { site } from '@/data/site';
+const reviewHref = site.links.googleReview || site.links.googleMaps;
+---
+
+<section class="section press" aria-labelledby="press-title">
+  <div class="container grid">
+    <figure class="quote" data-reveal>
+      <p class="eyebrow">As featured in Eater Seattle</p>
+      <blockquote cite={site.links.press.eater}>
+        <p id="press-title">“A swanky new spot specializing in smoked meat and fire.”</p>
+      </blockquote>
+      <figcaption>
+        <a href={site.links.press.eater} target="_blank" rel="noopener">Eater Seattle — “A Theatrical, High-End Halal Chain Is Coming to Seattle”</a>
+      </figcaption>
+    </figure>
+
+    <div class="reviews" data-reveal style="--reveal-i:1">
+      <h2 class="h3">What our guests say</h2>
+      <p class="body-muted">
+        Hundreds of Seattle diners have reviewed their first Meat Moot board on Google. Read what they ordered — and if you've been in, tell the next table what to try.
+      </p>
+      <div class="ctas">
+        <a class="btn" href={reviewHref} target="_blank" rel="noopener" data-track="click_review" data-placement="home">Leave a review</a>
+        <a class="link-arrow" href={site.links.googleMaps} target="_blank" rel="noopener" data-track="click_read_reviews">Read Google reviews</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .quote {
+    margin: 0;
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  blockquote {
+    margin: 0;
+  }
+
+  blockquote p {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: var(--step-4);
+    line-height: 1.05;
+  }
+
+  figcaption a {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  figcaption a:hover {
+    color: var(--gold);
+  }
+
+  .reviews {
+    display: grid;
+    gap: var(--space-m);
+    padding-left: var(--space-xl);
+    border-left: 1px solid var(--line);
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .reviews {
+      padding: var(--space-l) 0 0;
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

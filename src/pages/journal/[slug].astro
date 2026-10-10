@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Reserve from '@/components/Reserve.astro';
+import { articleSchema, breadcrumbSchema } from '@/lib/schema';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('journal', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: CollectionEntry<'journal'>;
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const path = `/journal/${post.id}`;
+const crumbs = [
+  { name: 'Journal', path: '/journal' },
+  { name: post.data.title, path },
+];
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+---
+
+<Base
+  title={`${post.data.title} | Meat Moot Seattle`}
+  description={post.data.description}
+  image={post.data.cover.src}
+  imageAlt={post.data.coverAlt}
+  type="article"
+  schema={[
+    articleSchema({
+      title: post.data.title,
+      description: post.data.description,
+      path,
+      published: post.data.published,
+      updated: post.data.updated,
+      image: post.data.cover.src,
+    }),
+    breadcrumbSchema(crumbs),
+  ]}
+>
+  <article>
+    <header class="container head">
+      <Breadcrumbs items={crumbs} />
+      <time datetime={post.data.published.toISOString()}>{fmt(post.data.published)}</time>
+      <h1 class="display">{post.data.title}</h1>
+      <p class="intro">{post.data.description}</p>
+    </header>
+    <div class="container cover">
+      <Image src={post.data.cover} alt={post.data.coverAlt} widths={[768, 1280, 1600]} sizes="(max-width: 1400px) 100vw, 1320px" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="container">
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+  <Reserve />
+</Base>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-m);
+    padding-top: var(--space-l);
+    padding-bottom: var(--space-l);
+    max-width: 62rem;
+    margin-inline: 0 auto;
+  }
+
+  @media (min-width: 1440px) {
+    .head {
+      margin-inline: auto;
+    }
+  }
+
+  h1 {
+    font-size: var(--step-4);
+  }
+
+  time {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .intro {
+    font-size: var(--step-1);
+    color: var(--cream-soft);
+    max-width: 56ch;
+  }
+
+  .cover :global(img) {
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  .prose {
+    max-width: 44rem;
+    margin: var(--space-xl) auto var(--space-2xl);
+    color: var(--cream-soft);
+    font-size: 1.075rem;
+    line-height: 1.8;
+  }
+
+  .prose :global(> * + *) {
+    margin-top: 1.25em;
+  }
+
+  .prose :global(h2) {
+    margin-top: 2.2em;
+    font-size: var(--step-3);
+    color: var(--cream);
+  }
+
+  .prose :global(strong) {
+    color: var(--cream);
+    font-weight: 500;
+  }
+
+  .prose :global(a) {
+    color: var(--gold);
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .prose :global(li::marker) {
+    color: var(--gold);
+  }
+
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .prose :global(th),
+  .prose :global(td) {
+    text-align: left;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .prose :global(th) {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+</style>

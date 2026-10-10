@@ -1,0 +1,23 @@
+{
+  "name": "meatmootseattle",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/dm-sans": "^5.2.5",
+    "@fontsource/cormorant": "^5.2.5",
+    "astro": "^7.3.8",
+    "sharp": "^0.34.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.8.3"
+  }
+}

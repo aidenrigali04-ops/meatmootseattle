@@ -1,0 +1,111 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import VisitBlock from '@/components/VisitBlock.astro';
+import FaqList from '@/components/FaqList.astro';
+import Reserve from '@/components/Reserve.astro';
+import { faqsByTag } from '@/data/faq';
+import { site } from '@/data/site';
+import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+
+const faqs = faqsByTag('visit');
+const crumbs = [{ name: 'Visit', path: '/visit' }];
+const nearby = ['South Lake Union', 'Eastlake', 'Capitol Hill', 'Downtown Seattle', 'Belltown', 'Queen Anne', 'Westlake', 'Denny Triangle'];
+---
+
+<Base
+  title={`Hours & Directions | Meat Moot Seattle, ${site.address.streetShort}`}
+  description={`Meat Moot Seattle is at ${site.address.streetShort}, Seattle, WA ${site.address.postalCode} in South Lake Union, on the corner of Fairview Ave N & Republican St. Open daily 11am–9pm. Call ${site.phone}.`}
+  schema={[breadcrumbSchema(crumbs), faqSchema(faqs)]}
+>
+  <PageHeader
+    eyebrow="Visit Meat Moot Seattle"
+    title="Hours &amp; <em>directions</em>"
+    intro={`Find us on the corner of Fairview Ave N and Republican St in South Lake Union — open every day from 11am to 9pm.`}
+    crumbs={crumbs}
+  />
+
+  <VisitBlock title="Our South Lake Union home" />
+
+  <section class="section">
+    <div class="container getting">
+      <div data-reveal>
+        <h2 class="h2">Getting here</h2>
+      </div>
+      <div class="cols">
+        <div data-reveal>
+          <h3 class="eyebrow eyebrow--gold">On foot</h3>
+          <p>A short walk from the Amazon campus, the Spheres area and Lake Union Park — an easy lunch or after-work stop for the South Lake Union offices.</p>
+        </div>
+        <div data-reveal style="--reveal-i:1">
+          <h3 class="eyebrow eyebrow--gold">By transit</h3>
+          <p>The South Lake Union Streetcar and several King County Metro routes stop within a few blocks. Plan your trip in Google Maps.</p>
+        </div>
+        <div data-reveal style="--reveal-i:2">
+          <h3 class="eyebrow eyebrow--gold">By car</h3>
+          <p>Paid street parking and public garages are available nearby. Rideshare drop-off works best on Fairview Ave N.</p>
+        </div>
+      </div>
+      <div class="nearby" data-reveal>
+        <h3 class="eyebrow">Minutes from</h3>
+        <ul>
+          {nearby.map((n) => <li>{n}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Reserve />
+  <FaqList items={faqs} title="Visiting questions" />
+</Base>
+
+<style>
+  .getting {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .cols > div {
+    display: grid;
+    gap: 0.8rem;
+    align-content: start;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--line);
+  }
+
+  .cols p {
+    color: var(--cream-soft);
+  }
+
+  .nearby {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .nearby ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .nearby li {
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--cream-soft);
+  }
+
+  @media (max-width: 860px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,222 @@
+---
+import { Image } from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import Reserve from '@/components/Reserve.astro';
+import FaqList from '@/components/FaqList.astro';
+import header from '@/assets/img/beef-ribs-spread.jpg';
+import brisket from '@/assets/img/brisket-spread.jpg';
+import ribs from '@/assets/img/lamb-ribs-spread.jpg';
+import { faqsByTag } from '@/data/faq';
+import { site } from '@/data/site';
+import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+
+const faqs = faqsByTag('events');
+const crumbs = [{ name: 'Events & Catering', path: '/events' }];
+
+const occasions = [
+  { title: 'Team lunches & dinners', body: 'Steps from the South Lake Union tech campuses. Shared boards keep the table talking and make ordering for a group effortless.' },
+  { title: 'Birthdays & celebrations', body: 'Theatrical table-side carving turns any milestone into a moment. Tell us the occasion and we will make it feel like one.' },
+  { title: 'Family gatherings', body: 'Generous, fully halal and alcohol-free — a table every generation can share, from Eid to graduations.' },
+  { title: 'Corporate & client events', body: 'Impress visiting teams and clients with a uniquely Seattle-meets-Istanbul dining experience.' },
+];
+---
+
+<Base
+  title="Group Dining, Private Events & Catering in South Lake Union | Meat Moot Seattle"
+  description="Host team dinners, birthdays and family celebrations at Meat Moot Seattle, or order halal smoked meat catering. Shared boards of brisket, ribs and lamb in South Lake Union."
+  schema={[breadcrumbSchema(crumbs), faqSchema(faqs)]}
+  overlayHeader
+>
+  <PageHeader
+    eyebrow="Events, groups & catering"
+    title="Bring everyone <em>to the table.</em>"
+    intro="Meat Moot was made for sharing. Bring your team, your family or your whole crew and we'll take care of the cuts, the quantities and the show."
+    image={header}
+    imageAlt="A shared spread of halal smoked beef ribs, salads and sauces for a group at Meat Moot"
+    crumbs={crumbs}
+  >
+    <div class="header-ctas">
+      <a class="btn" href="#enquire" data-track="click_events" data-placement="events_header">Start an enquiry</a>
+      <a class="link-arrow" href={`tel:${site.phoneE164}`} data-track="click_call" data-placement="events_header">Call {site.phone}</a>
+    </div>
+  </PageHeader>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="h2 sec-title" data-reveal>Occasions we love hosting</h2>
+      <ul class="occasions">
+        {
+          occasions.map((o, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <h3 class="h3">{o.title}</h3>
+              <p>{o.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="group-dining">
+    <div class="container split">
+      <figure data-reveal>
+        <Image src={brisket} alt="Smoked halal brisket carved for a group with sauces and salads" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
+      </figure>
+      <div class="copy" data-reveal style="--reveal-i:1">
+        <p class="eyebrow eyebrow--gold">Dine with us</p>
+        <h2 class="h2">Group dining</h2>
+        <p class="body-muted">
+          For parties of {site.reservations.largePartySize} or more we'll reserve your table, recommend how much of each cut to order (we usually plan about ½–¾ lb per guest), and have the carvers ready when you arrive.
+        </p>
+        <ul class="ticks">
+          <li>Shared boards with unlimited sauces, salads and drinks</li>
+          <li>Table-side carving and finishing</li>
+          <li>Weekday lunch pricing available 12–3pm</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="catering">
+    <div class="container split reverse">
+      <figure data-reveal>
+        <Image src={ribs} alt="A rack of halal smoked lamb ribs ready for catering" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
+      </figure>
+      <div class="copy" data-reveal style="--reveal-i:1">
+        <p class="eyebrow eyebrow--gold">We come to you</p>
+        <h2 class="h2">Halal catering</h2>
+        <p class="body-muted">
+          Office lunches, weddings, mosque and community events, backyard celebrations — we smoke to order and pack our brisket, ribs and lamb with house sauces and sides, ready to serve.
+        </p>
+        <p class="body-muted">Give us a few days' notice for large orders so we can smoke enough for everyone.</p>
+        <a class="btn" href="#enquire" data-track="click_catering">Request a catering quote</a>
+      </div>
+    </div>
+  </section>
+
+  <Reserve id="enquire" variant="event" />
+  <FaqList items={faqs} title="Planning questions" />
+</Base>
+
+<style>
+  .header-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+    align-items: center;
+    margin-top: var(--space-s);
+  }
+
+  .sec-title {
+    margin-bottom: var(--space-l);
+  }
+
+  .occasions {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+  }
+
+  .occasions li {
+    display: grid;
+    gap: 0.9rem;
+    align-content: start;
+    padding: var(--space-l) var(--space-m) 0 0;
+  }
+
+  .occasions li + li {
+    padding-left: var(--space-m);
+    border-left: 1px solid var(--line);
+  }
+
+  .occasions p {
+    color: var(--cream-soft);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .reverse figure {
+    order: 2;
+  }
+
+  figure {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+
+  figure :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .copy {
+    display: grid;
+    gap: var(--space-m);
+    justify-items: start;
+  }
+
+  .ticks {
+    list-style: none;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .ticks li {
+    padding-left: 1.6rem;
+    position: relative;
+    color: var(--cream-soft);
+  }
+
+  .ticks li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.8em;
+    width: 0.9rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  @media (max-width: 1000px) {
+    .occasions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .occasions li:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .split {
+      grid-template-columns: 1fr;
+    }
+
+    .reverse figure {
+      order: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .occasions {
+      grid-template-columns: 1fr;
+    }
+
+    .occasions li,
+    .occasions li + li {
+      padding: var(--space-m) 0;
+      border-left: 0;
+    }
+  }
+</style>

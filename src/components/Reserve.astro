@@ -1,0 +1,256 @@
+---
+import { site } from '@/data/site';
+
+interface Props {
+  id?: string;
+  variant?: 'reservation' | 'event';
+  title?: string;
+  intro?: string;
+}
+
+const {
+  id = 'reserve',
+  variant = 'reservation',
+  title = variant === 'event' ? 'Plan your event' : 'Secure your table',
+  intro = variant === 'event'
+    ? "Tell us about your group and we'll come back with cuts, quantities and timing within one business day."
+    : `Walk-ins are welcome when the room allows, but we recommend reserving your place in advance. Parties of ${site.reservations.largePartySize} or more, please call us directly.`,
+} = Astro.props;
+
+const times: string[] = [];
+for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
+  const h = Math.floor(m / 60);
+  const mm = m % 60;
+  const label = `${h % 12 === 0 ? 12 : h % 12}:${String(mm).padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
+  times.push(label);
+}
+const guestOptions = variant === 'event' ? ['8–12', '13–20', '21–40', '40+'] : ['1', '2', '3', '4', '5', '6+'];
+const subject = variant === 'event' ? 'Event / catering enquiry' : 'Table reservation request';
+---
+
+<section class="section reserve" id={id} aria-labelledby={`${id}-title`}>
+  <div class="container grid">
+    <div class="intro">
+      <p class="eyebrow eyebrow--gold" data-reveal>{variant === 'event' ? 'Enquiries' : 'Reservations'}</p>
+      <h2 id={`${id}-title`} class="h2" data-reveal style="--reveal-i:1">{title}</h2>
+      <p class="body-muted" data-reveal style="--reveal-i:2">{intro}</p>
+      <p class="call" data-reveal style="--reveal-i:3">
+        Prefer to talk? <a href={`tel:${site.phoneE164}`} data-track="click_call" data-placement={`${variant}_form`}>{site.phone}</a>
+      </p>
+    </div>
+
+    <form
+      class="form"
+      data-reserve
+      data-endpoint={site.reservations.formEndpoint}
+      data-email={site.email}
+      data-subject={subject}
+      data-variant={variant}
+      data-large={site.reservations.largePartySize}
+      method="post"
+      action={site.reservations.formEndpoint || `mailto:${site.email}`}
+      novalidate>
+      <input type="hidden" name="_subject" value={subject} />
+      <div class="row two">
+        <div class="field">
+          <label for={`${id}-name`}>Full name</label>
+          <input id={`${id}-name`} name="name" autocomplete="name" placeholder="Your full name" required />
+        </div>
+        <div class="field">
+          <label for={`${id}-email`}>Email address</label>
+          <input id={`${id}-email`} name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+        </div>
+      </div>
+      <div class="row three">
+        <div class="field">
+          <label for={`${id}-date`}>Date</label>
+          <input id={`${id}-date`} name="date" type="date" required data-min-today />
+        </div>
+        <div class="field">
+          <label for={`${id}-time`}>Time</label>
+          <select id={`${id}-time`} name="time" required>
+            {times.map((t) => <option selected={t === '6:30 PM'}>{t}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for={`${id}-guests`}>Guests</label>
+          <select id={`${id}-guests`} name="guests" required>
+            {guestOptions.map((g, i) => <option selected={variant === 'event' ? i === 0 : g === '2'}>{g}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for={`${id}-phone`}>Phone {variant === 'reservation' && <span class="opt">(optional)</span>}</label>
+        <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" placeholder="(206) 555-0100" required={variant === 'event'} />
+      </div>
+      <div class="field">
+        <label for={`${id}-notes`}>{variant === 'event' ? 'Tell us about the event' : 'Special requests'}</label>
+        <textarea
+          id={`${id}-notes`}
+          name="notes"
+          rows="3"
+          placeholder={variant === 'event' ? 'Occasion, dine-in or catering, budget, anything we should know…' : 'Occasion, seating preference, high chair…'}
+        ></textarea>
+      </div>
+
+      <p class="large-note" data-large-note hidden>
+        For parties of {site.reservations.largePartySize} or more, calling <a href={`tel:${site.phoneE164}`}>{site.phone}</a> is the fastest way to lock in a table.
+      </p>
+
+      <div class="submit">
+        <button class="btn" type="submit">{variant === 'event' ? 'Send enquiry' : 'Request reservation'}</button>
+        <p class="status" role="status" aria-live="polite" data-status></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: var(--space-xl);
+  }
+
+  .intro {
+    display: grid;
+    gap: var(--space-m);
+    align-content: start;
+  }
+
+  .call a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .form {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .row {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .two {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .three {
+    grid-template-columns: 1.2fr 1fr 0.8fr;
+  }
+
+  .opt {
+    letter-spacing: 0.08em;
+    text-transform: none;
+  }
+
+  .large-note {
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--gold);
+    background: var(--ink-raised);
+    font-size: 0.9rem;
+    color: var(--cream-soft);
+  }
+
+  .large-note a {
+    color: var(--gold);
+  }
+
+  .submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .status {
+    font-size: 0.9rem;
+    color: var(--cream-soft);
+  }
+
+  .status.is-error {
+    color: #e48a7a;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .two,
+    .three {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const today = new Date();
+  const iso = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  document.querySelectorAll<HTMLInputElement>('[data-min-today]').forEach((i) => (i.min = iso));
+
+  document.querySelectorAll<HTMLFormElement>('[data-reserve]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const note = form.querySelector<HTMLElement>('[data-large-note]');
+    const guests = form.querySelector<HTMLSelectElement>('select[name="guests"]');
+    const large = Number(form.dataset.large ?? 6);
+    const isEvent = form.dataset.variant === 'event';
+
+    guests?.addEventListener('change', () => {
+      if (note && !isEvent) note.hidden = parseInt(guests.value, 10) < large;
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.classList.remove('is-error');
+      if (!form.checkValidity()) {
+        const first = form.querySelector<HTMLElement>(':invalid');
+        first?.focus();
+        status.classList.add('is-error');
+        status.textContent = 'Please fill in your name, a valid email and a date.';
+        return;
+      }
+
+      const data = new FormData(form);
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+      w.gtag?.('event', isEvent ? 'submit_event_enquiry' : 'submit_reservation', { guests: data.get('guests') });
+
+      const endpoint = form.dataset.endpoint;
+      if (endpoint) {
+        status.textContent = 'Sending…';
+        try {
+          const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+          if (!res.ok) throw new Error(String(res.status));
+          form.reset();
+          status.textContent = isEvent
+            ? "Thank you — we'll be in touch within one business day."
+            : "Thank you — we'll confirm your table by email shortly.";
+        } catch {
+          status.classList.add('is-error');
+          status.textContent = 'Something went wrong. Please call us and we will book you in.';
+        }
+        return;
+      }
+
+      const lines = [
+        `Name: ${data.get('name')}`,
+        `Email: ${data.get('email')}`,
+        `Phone: ${data.get('phone') || '—'}`,
+        `Date: ${data.get('date')}`,
+        `Time: ${data.get('time')}`,
+        `Guests: ${data.get('guests')}`,
+        '',
+        `${data.get('notes') || ''}`,
+      ];
+      const href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(
+        `${form.dataset.subject} — ${data.get('date')} · ${data.get('guests')} guests`,
+      )}&body=${encodeURIComponent(lines.join('\n'))}`;
+      window.location.href = href;
+      status.textContent = 'Your email app should open with your request ready to send.';
+    });
+  });
+</script>

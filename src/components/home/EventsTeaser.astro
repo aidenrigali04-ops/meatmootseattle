@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets';
+import spread from '@/assets/img/beef-ribs-spread.jpg';
+import ribs from '@/assets/img/lamb-ribs-spread.jpg';
+---
+
+<section class="section events" id="events" aria-labelledby="events-title">
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow eyebrow--gold" data-reveal>Events, groups &amp; catering</p>
+      <h2 id="events-title" class="display" data-reveal style="--reveal-i:1">Made for the <span class="italic">whole table</span></h2>
+    </header>
+  </div>
+
+  <div class="banner" data-reveal>
+    <Image src={spread} alt="A shared table of smoked halal beef ribs, salads and house sauces ready for a group" widths={[768, 1280, 2048]} sizes="100vw" />
+  </div>
+
+  <div class="container body">
+    <div class="copy" data-reveal>
+      <p class="lead-copy">
+        Meat Moot was built around sharing. Boards of brisket, ribs and lamb land in the middle of the table, our carvers finish them in front of you, and everyone dives in.
+      </p>
+      <p class="body-muted">
+        From team lunches steps from the South Lake Union tech campuses to birthdays, Eid gatherings and family celebrations, we'll plan the cuts, the quantities and the timing with you. Need it at your place instead? We cater too.
+      </p>
+      <div class="ctas">
+        <a class="btn" href="/events" data-track="click_events" data-placement="home">Plan an event</a>
+        <a class="link-arrow" href="/events#catering">Catering</a>
+      </div>
+    </div>
+    <figure class="side" data-reveal style="--reveal-i:1">
+      <Image src={ribs} alt="Rack of smoked halal lamb ribs with sauces and salads" widths={[480, 800]} sizes="(max-width: 860px) 100vw, 40vw" />
+    </figure>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-m);
+    margin-bottom: var(--space-l);
+  }
+
+  .banner {
+    aspect-ratio: 21 / 8;
+    overflow: hidden;
+  }
+
+  .banner :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.82) saturate(1.05);
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+    margin-top: var(--space-xl);
+  }
+
+  .copy {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .lead-copy {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.3;
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+
+  .side {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+
+  .side :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 860px) {
+    .banner {
+      aspect-ratio: 4 / 3;
+    }
+
+    .body {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

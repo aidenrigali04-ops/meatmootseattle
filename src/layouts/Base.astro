@@ -1,0 +1,116 @@
+---
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import ActionBar from '@/components/ActionBar.astro';
+import Analytics from '@/components/Analytics.astro';
+import { site } from '@/data/site';
+import { restaurantSchema } from '@/lib/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  schema?: object[];
+  noindex?: boolean;
+  /** Pages whose first section is a full-bleed image get a transparent header. */
+  overlayHeader?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/og-default.jpg',
+  imageAlt = 'Slow-smoked halal brisket at Meat Moot Seattle',
+  type = 'website',
+  schema = [],
+  noindex = false,
+  overlayHeader = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1'), site.url).toString();
+const ogImage = new URL(image, site.url).toString();
+const jsonLd = [restaurantSchema(), ...schema];
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="geo.region" content="US-WA" />
+    <meta name="geo.placename" content="Seattle" />
+    <meta name="geo.position" content={`${site.geo.lat};${site.geo.lng}`} />
+    <meta name="ICBM" content={`${site.geo.lat}, ${site.geo.lng}`} />
+
+    <meta name="theme-color" content="#0b0b0c" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {jsonLd.map((data) => <script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />)}
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <Analytics />
+  </head>
+  <body class:list={[{ 'has-overlay-header': overlayHeader }]}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header overlay={overlayHeader} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <ActionBar />
+
+    <script>
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+
+      document.addEventListener('click', (ev) => {
+        const el = (ev.target as HTMLElement).closest<HTMLElement>('[data-track]');
+        if (!el) return;
+        const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+        w.gtag?.('event', el.dataset.track, {
+          link_url: (el as HTMLAnchorElement).href ?? undefined,
+          placement: el.dataset.placement ?? undefined,
+        });
+      });
+    </script>
+  </body>
+</html>

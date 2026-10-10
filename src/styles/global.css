@@ -1,0 +1,411 @@
+@import '@fontsource/cormorant/300.css';
+@import '@fontsource/cormorant/400.css';
+@import '@fontsource/cormorant/500.css';
+@import '@fontsource/cormorant/400-italic.css';
+@import '@fontsource-variable/dm-sans';
+
+:root {
+  /* Palette — lifted from the Framer build */
+  --ink: #0b0b0c;
+  --ink-warm: #120e0a;
+  --ink-raised: #151311;
+  --cream: #ece7df;
+  --cream-soft: #c9c3b8;
+  --muted: #8a857c;
+  --gold: #b08d57;
+  --gold-bright: #c9a46c;
+  --ember: 214 120 40;
+  --line: rgb(236 231 223 / 0.1);
+  --line-strong: rgb(236 231 223 / 0.18);
+  --halal-green: #2f9e5b;
+
+  --font-display: 'Cormorant', 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans Variable', 'DM Sans', ui-sans-serif, sans-serif;
+
+  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.05rem);
+  --step-1: clamp(1.15rem, 1.05rem + 0.45vw, 1.4rem);
+  --step-2: clamp(1.5rem, 1.25rem + 1.1vw, 2.2rem);
+  --step-3: clamp(2.1rem, 1.6rem + 2.2vw, 3.5rem);
+  --step-4: clamp(2.8rem, 1.9rem + 4vw, 5.25rem);
+  --step-hero: clamp(4.5rem, 2.5rem + 9vw, 11rem);
+
+  --space-xs: 0.5rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --space-xl: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  --space-2xl: clamp(5rem, 3.5rem + 6vw, 9rem);
+
+  --gutter: clamp(1.25rem, 0.5rem + 3.5vw, 3.5rem);
+  --max: 1320px;
+  --radius: 2px;
+  --header-h: 76px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Film grain keeps the large dark fields from looking flat on big screens */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img,
+picture,
+video,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 1px solid var(--gold-bright);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: 200;
+  padding: 0.75rem 1rem;
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ---------- Layout ---------- */
+
+.container {
+  width: 100%;
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.section + .section {
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- Type helpers ---------- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eyebrow--gold {
+  color: var(--gold);
+}
+
+.eyebrow--rule::before {
+  content: '';
+  width: 2.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.display {
+  font-size: var(--step-4);
+  font-weight: 300;
+}
+
+.h2 {
+  font-size: var(--step-3);
+}
+
+.h3 {
+  font-size: var(--step-2);
+}
+
+.lead {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.25;
+  color: var(--cream);
+}
+
+.body-muted {
+  color: var(--cream-soft);
+  max-width: 62ch;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.gold {
+  color: var(--gold);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  --btn-fg: var(--cream);
+  --btn-border: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3rem;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--btn-fg);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--gold);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--ink);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.btn--solid {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.btn--solid::before {
+  background: var(--cream);
+}
+
+.btn--ghost {
+  --btn-border: var(--line-strong);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+  padding-block: 0.4rem;
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color 0.3s, gap 0.3s var(--ease-out);
+}
+
+.link-arrow::after {
+  content: '→';
+  font-family: var(--font-body);
+}
+
+.link-arrow:hover {
+  border-color: var(--gold);
+  gap: 0.9rem;
+}
+
+/* ---------- Reveal on scroll ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+    transition-delay: calc(var(--reveal-i, 0) * 90ms);
+  }
+
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Forms ---------- */
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.field label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.6rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  color: var(--cream);
+  transition: border-color 0.3s;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+.field select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 10px) 55%, calc(100% - 5px) 55%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.field select option {
+  background: var(--ink-raised);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgb(138 133 124 / 0.7);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--gold);
+}
+
+.field input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+}

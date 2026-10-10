@@ -1,0 +1,236 @@
+---
+import { Image } from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import LunchSpecial from '@/components/LunchSpecial.astro';
+import FaqList from '@/components/FaqList.astro';
+import HalalBand from '@/components/HalalBand.astro';
+import header from '@/assets/img/lamb-shank-table.jpg';
+import { cuts, included, formatPrice } from '@/data/menu';
+import { faqsByTag } from '@/data/faq';
+import { site } from '@/data/site';
+import { menuSchema, breadcrumbSchema, faqSchema } from '@/lib/schema';
+
+const faqs = faqsByTag('menu');
+const crumbs = [{ name: 'Menu', path: '/menu' }];
+const groups = [
+  { title: 'Unlimited house sauces', items: included.sauces },
+  { title: 'Salads & sides', items: included.sides },
+  { title: 'Garnish', items: included.garnish },
+  { title: 'Unlimited beverages', items: included.beverages },
+];
+---
+
+<Base
+  title="Menu & Prices | Halal Smoked Brisket, Ribs & Lamb | Meat Moot Seattle"
+  description="The full Meat Moot Seattle menu: halal smoked brisket, lamb shank, lamb neck, lamb shoulder, lamb ribs, beef ribs and beef shank from $49.99/lb — with unlimited sauces, salads and drinks."
+  schema={[menuSchema(), breadcrumbSchema(crumbs), faqSchema(faqs)]}
+  overlayHeader
+>
+  <PageHeader
+    eyebrow="The menu"
+    title="Sold by the pound. <em>Carved to share.</em>"
+    intro="Seven halal cuts, smoked in-house over wood for up to 16 hours. Choose your cut at the counter, we weigh it in front of you, and every board comes with unlimited sauces, salads, sides and a drink."
+    image={header}
+    imageAlt="Smoked halal lamb with house sauces and salads on a Meat Moot table"
+    crumbs={crumbs}
+  >
+    <div class="header-ctas">
+      <a class="btn" href="/#reserve" data-track="click_reserve" data-placement="menu_header">Reserve a table</a>
+      <a class="link-arrow" href={site.links.orderDelivery} target="_blank" rel="noopener" data-track="click_order" data-placement="menu_header">Order pickup or delivery</a>
+    </div>
+  </PageHeader>
+
+  <section class="section" aria-labelledby="meats-title">
+    <div class="container">
+      <header class="sec-head">
+        <h2 id="meats-title" class="h2" data-reveal>Smoked meats</h2>
+        <p class="body-muted" data-reveal style="--reveal-i:1">Prices per pound. Most guests order about ½ lb each — our carvers will help you choose.</p>
+      </header>
+
+      <ul class="cuts">
+        {
+          cuts.map((c, i) => (
+            <li data-reveal style={`--reveal-i:${i % 3}`}>
+              <a href={`/menu/${c.slug}`} class="cut">
+                <div class="img">
+                  <Image src={c.image} alt={c.imageAlt} widths={[400, 640, 900]} sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw" />
+                </div>
+                <div class="row">
+                  <h3 class="h3">{c.name}</h3>
+                  <p class="price">
+                    {formatPrice(c.pricePerLb)}
+                    <span>/ lb</span>
+                  </p>
+                </div>
+                <p class="summary">{c.summary}</p>
+                <span class="more">
+                  {c.animal} · Halal <span aria-hidden="true">→</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <div id="lunch"><LunchSpecial /></div>
+
+  <section class="section" aria-labelledby="included-title">
+    <div class="container">
+      <header class="sec-head">
+        <h2 id="included-title" class="h2" data-reveal>Included with every cut</h2>
+        <p class="body-muted" data-reveal style="--reveal-i:1">No add-ons, no upsell. Every pound comes to the table with all of this — refilled as often as you like.</p>
+      </header>
+      <div class="included">
+        {
+          groups.map((g, i) => (
+            <div data-reveal style={`--reveal-i:${i}`}>
+              <h3 class="eyebrow eyebrow--gold">{g.title}</h3>
+              <ul>
+                {g.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <HalalBand />
+  <FaqList items={faqs} title="Ordering, explained" />
+</Base>
+
+<style>
+  .header-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+    align-items: center;
+    margin-top: var(--space-s);
+  }
+
+  .sec-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--space-m);
+    margin-bottom: var(--space-l);
+    padding-bottom: var(--space-m);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sec-head .body-muted {
+    max-width: 44ch;
+  }
+
+  .cuts {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-xl) var(--space-l);
+  }
+
+  .cut {
+    display: grid;
+    gap: 0.9rem;
+    text-decoration: none;
+  }
+
+  .img {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--ink-raised);
+  }
+
+  .img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s var(--ease-out), filter 0.6s;
+    filter: brightness(0.9);
+  }
+
+  .cut:hover .img :global(img) {
+    transform: scale(1.05);
+    filter: brightness(1);
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-top: 0.4rem;
+  }
+
+  .price {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .price span {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .summary {
+    color: var(--cream-soft);
+  }
+
+  .more {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  .cut:hover .more {
+    color: var(--gold);
+  }
+
+  .included {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .included > div {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .included ul {
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    color: var(--cream);
+  }
+
+  @media (max-width: 1000px) {
+    .cuts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .included {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cuts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

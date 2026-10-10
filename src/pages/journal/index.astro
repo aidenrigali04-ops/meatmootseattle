@@ -27,7 +27,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'nu
             <li data-reveal style={`--reveal-i:${i % 3}`}>
               <a href={`/journal/${p.id}`}>
                 <div class="img">
-                  <Image src={p.data.cover} alt={p.data.coverAlt} widths={[400, 640, 900]} sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw" />
+                  <Image src={p.data.cover} alt={p.data.coverAlt} widths={[400, 640, 900]} sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw" quality={70} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
                 </div>
                 <time datetime={p.data.published.toISOString()}>{fmt(p.data.published)}</time>
                 <h2 class="h3">{p.data.title}</h2>

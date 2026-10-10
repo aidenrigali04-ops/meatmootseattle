@@ -292,7 +292,21 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   const overlay = document.querySelector<HTMLElement>('[data-overlay]');
 
   if (header) {
-    const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 40);
+    let scrolled: boolean | null = null;
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const next = window.scrollY > 40;
+      if (next !== scrolled) {
+        scrolled = next;
+        header.classList.toggle('is-scrolled', next);
+      }
+    };
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   }

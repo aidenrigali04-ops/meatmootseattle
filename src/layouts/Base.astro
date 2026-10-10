@@ -6,6 +6,8 @@ import ActionBar from '@/components/ActionBar.astro';
 import Analytics from '@/components/Analytics.astro';
 import { site } from '@/data/site';
 import { restaurantSchema } from '@/lib/schema';
+import displayFont from '@fontsource/cormorant/files/cormorant-latin-300-normal.woff2?url';
+import bodyFont from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -30,7 +32,11 @@ const {
   overlayHeader = false,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/(.)\/$/, '$1'), site.url).toString();
+const canonicalPath = Astro.url.pathname
+  .replace(/\.html$/, '')
+  .replace(/(^|\/)index$/, '$1')
+  .replace(/(.)\/$/, '$1');
+const canonical = new URL(canonicalPath, site.url).toString();
 const ogImage = new URL(image, site.url).toString();
 const jsonLd = [restaurantSchema(), ...schema];
 ---
@@ -43,6 +49,8 @@ const jsonLd = [restaurantSchema(), ...schema];
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
     {noindex && <meta name="robots" content="noindex, follow" />}
 
     <meta property="og:type" content={type} />

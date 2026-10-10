@@ -6,7 +6,7 @@ import FaqList from '@/components/FaqList.astro';
 import Reserve from '@/components/Reserve.astro';
 import { faqsByTag } from '@/data/faq';
 import { site } from '@/data/site';
-import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { breadcrumbSchema } from '@/lib/schema';
 
 const faqs = faqsByTag('visit');
 const crumbs = [{ name: 'Visit', path: '/visit' }];
@@ -16,7 +16,7 @@ const nearby = ['South Lake Union', 'Eastlake', 'Capitol Hill', 'Downtown Seattl
 <Base
   title={`Hours & Directions | Meat Moot Seattle, ${site.address.streetShort}`}
   description={`Meat Moot Seattle is at ${site.address.streetShort}, Seattle, WA ${site.address.postalCode} in South Lake Union, on the corner of Fairview Ave N & Republican St. Open daily 11am–9pm. Call ${site.phone}.`}
-  schema={[breadcrumbSchema(crumbs), faqSchema(faqs)]}
+  schema={[breadcrumbSchema(crumbs)]}
 >
   <PageHeader
     eyebrow="Visit Meat Moot Seattle"

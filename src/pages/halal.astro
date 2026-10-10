@@ -9,7 +9,7 @@ import board from '@/assets/img/lamb-shank-board.jpg';
 import badge from '@/assets/img/halal-badge.png';
 import { faqsByTag } from '@/data/faq';
 import { site } from '@/data/site';
-import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { breadcrumbSchema } from '@/lib/schema';
 
 const faqs = faqsByTag('halal');
 const crumbs = [{ name: 'Halal', path: '/halal' }];
@@ -32,7 +32,7 @@ const pillars = [
 <Base
   title="Halal Restaurant in Seattle — 100% Halal & Alcohol-Free | Meat Moot"
   description="Meat Moot is a fully halal smokehouse in South Lake Union, Seattle. Every meat is halal, the kitchen is pork-free and we serve no alcohol. Smoked brisket, ribs and lamb, open daily."
-  schema={[breadcrumbSchema(crumbs), faqSchema(faqs)]}
+  schema={[breadcrumbSchema(crumbs)]}
   overlayHeader
 >
   <PageHeader

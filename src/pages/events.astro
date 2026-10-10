@@ -9,7 +9,7 @@ import brisket from '@/assets/img/brisket-spread.jpg';
 import ribs from '@/assets/img/lamb-ribs-spread.jpg';
 import { faqsByTag } from '@/data/faq';
 import { site } from '@/data/site';
-import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { breadcrumbSchema } from '@/lib/schema';
 
 const faqs = faqsByTag('events');
 const crumbs = [{ name: 'Events & Catering', path: '/events' }];
@@ -25,7 +25,7 @@ const occasions = [
 <Base
   title="Group Dining, Private Events & Catering in South Lake Union | Meat Moot Seattle"
   description="Host team dinners, birthdays and family celebrations at Meat Moot Seattle, or order halal smoked meat catering. Shared boards of brisket, ribs and lamb in South Lake Union."
-  schema={[breadcrumbSchema(crumbs), faqSchema(faqs)]}
+  schema={[breadcrumbSchema(crumbs)]}
   overlayHeader
 >
   <PageHeader

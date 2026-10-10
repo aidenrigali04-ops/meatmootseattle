@@ -9,7 +9,7 @@ import header from '@/assets/img/lamb-shank-table.jpg';
 import { cuts, included, formatPrice } from '@/data/menu';
 import { faqsByTag } from '@/data/faq';
 import { site } from '@/data/site';
-import { menuSchema, breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { menuSchema, breadcrumbSchema } from '@/lib/schema';
 
 const faqs = faqsByTag('menu');
 const crumbs = [{ name: 'Menu', path: '/menu' }];
@@ -24,7 +24,7 @@ const groups = [
 <Base
   title="Menu & Prices | Halal Smoked Brisket, Ribs & Lamb | Meat Moot Seattle"
   description="The full Meat Moot Seattle menu: halal smoked brisket, lamb shank, lamb neck, lamb shoulder, lamb ribs, beef ribs and beef shank from $49.99/lb — with unlimited sauces, salads and drinks."
-  schema={[menuSchema(), breadcrumbSchema(crumbs), faqSchema(faqs)]}
+  schema={[menuSchema(), breadcrumbSchema(crumbs)]}
   overlayHeader
 >
   <PageHeader
@@ -54,7 +54,7 @@ const groups = [
             <li data-reveal style={`--reveal-i:${i % 3}`}>
               <a href={`/menu/${c.slug}`} class="cut">
                 <div class="img">
-                  <Image src={c.image} alt={c.imageAlt} widths={[400, 640, 900]} sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw" />
+                  <Image src={c.image} alt={c.imageAlt} widths={[400, 640, 900]} sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw" quality={70} />
                 </div>
                 <div class="row">
                   <h3 class="h3">{c.name}</h3>

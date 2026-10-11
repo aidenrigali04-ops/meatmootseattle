@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://meatmootseattle.com',
   trailingSlash: 'never',
-  build: { format: 'file' },
+  build: { format: 'directory' },
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/404'),

@@ -59,6 +59,6 @@ Change a price or the opening hours once in `src/data/` and it updates everywher
 
 - `links.googleReview`: your GBP review link.
 - `halal.certifier`: the name of your halal certifying body (shown on `/halal` when set).
-- `reservations.widgetSnippet`: the OpenTable reservation widget code (OpenTable for Restaurants → Restaurant Profile → Reservation widget → Copy code). Until it's set, the booking panel shows a "Find a table" button that opens the OpenTable page in a new tab. Booking notification emails are configured in OpenTable, not on the website.
+- `reservations.widgetScript`: the `src` from the OpenTable reservation widget code (OpenTable for Restaurants → Restaurant Profile → Reservation widget → Copy code). It's set to restaurant ID 1461475. The widget script loads only when a booking panel scrolls near the screen, so it doesn't slow the rest of the page down. If it's emptied, the panel falls back to a "Find a table" button that opens the OpenTable page. Booking notification emails are configured in OpenTable, not on the website.
 - `reservations.formEndpoint`: optional Formspree, Basin or similar endpoint for the event enquiry form. Until it's set, the form opens a pre-filled email to `info@meatmootseattle.com`.
 - Photos of the Seattle dining room and team. Current imagery is food from the Framer build and the Meat Moot brand site.

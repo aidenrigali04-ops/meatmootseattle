@@ -20,8 +20,9 @@ const {
   headingLevel = 'h2',
 } = Astro.props;
 const Heading = headingLevel;
+const reveal = headingLevel === 'h1' ? {} : { 'data-reveal': true };
 
-const { widgetSnippet, bookingUrl, largePartySize, formEndpoint } = site.reservations;
+const { widgetScript, bookingUrl, largePartySize, formEndpoint, provider } = site.reservations;
 const h = site.hours[0];
 
 const times: string[] = [];
@@ -38,17 +39,17 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
 <section class="section reserve" id={id} aria-labelledby={`${id}-title`}>
   <div class="container grid">
     <div class="intro">
-      <p class="eyebrow eyebrow--gold" data-reveal>{variant === 'event' ? 'Enquiries' : 'Reservations'}</p>
-      <Heading id={`${id}-title`} class="h2" data-reveal style="--reveal-i:1">{title}</Heading>
-      <p class="body-muted" data-reveal style="--reveal-i:2">{intro}</p>
-      <p class="call" data-reveal style="--reveal-i:3">
+      <p class="eyebrow eyebrow--gold" {...reveal}>{variant === 'event' ? 'Enquiries' : 'Reservations'}</p>
+      <Heading id={`${id}-title`} class="h2" {...reveal} style="--reveal-i:1">{title}</Heading>
+      <p class="body-muted" {...reveal} style="--reveal-i:2">{intro}</p>
+      <p class="call" {...reveal} style="--reveal-i:3">
         Prefer to talk? <a href={`tel:${site.phoneE164}`} data-track="click_call" data-placement={`${variant}_section`}>{site.phone}</a>
       </p>
     </div>
 
     {
       variant === 'reservation' ? (
-        <div class="booking" data-reveal style="--reveal-i:2">
+        <div class="booking" {...reveal} style="--reveal-i:2">
           <ul class="facts">
             <li>
               <span>Hours</span>
@@ -64,15 +65,20 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
             </li>
           </ul>
 
-          <div class="widget">
-            {widgetSnippet ? (
-              <div class="booking-widget" set:html={widgetSnippet}></div>
-            ) : (
+          {widgetScript ? (
+            <div class="widget">
+              <div class="booking-widget" data-booking-widget={widgetScript}></div>
+              <a class="alt" href={bookingUrl} target="_blank" rel="noopener" data-track="click_reserve" data-placement={`${id}_booking_link`}>
+                Or book on {provider} ↗
+              </a>
+            </div>
+          ) : (
+            <div class="widget">
               <a class="btn" href={bookingUrl} target="_blank" rel="noopener" data-track="click_reserve" data-placement={`${id}_booking`}>
                 Find a table
               </a>
-            )}
-          </div>
+            </div>
+          )}
 
           <p class="large">
             <strong>Parties of {largePartySize} or more:</strong> email{' '}
@@ -153,7 +159,8 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
 
   .call a {
     color: var(--gold);
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   .booking {
@@ -187,7 +194,26 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
   }
 
   .widget {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
     min-height: 3.25rem;
+  }
+
+  .booking-widget {
+    width: 224px;
+    min-height: 301px;
+    /* Matching the widget's light scheme keeps the browser from painting an opaque backdrop behind the iframe. */
+    color-scheme: light;
+  }
+
+  .alt {
+    font-size: 0.85rem;
+    color: var(--cream-soft);
+  }
+
+  .alt:hover {
+    color: var(--gold);
   }
 
   .large {
@@ -263,6 +289,35 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
   document.querySelectorAll<HTMLInputElement>('[data-min-today]').forEach((i) => (i.min = iso));
 
   const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+
+  // The OpenTable loader inserts its widget right before its own <script> element, so the
+  // script is appended inside the placeholder after page load, once the panel is near the viewport.
+  const widgets = document.querySelectorAll<HTMLElement>('[data-booking-widget]');
+  if (widgets.length) {
+    const load = (el: HTMLElement) => {
+      if (el.dataset.loaded) return;
+      el.dataset.loaded = 'true';
+      const s = document.createElement('script');
+      s.src = el.dataset.bookingWidget!;
+      el.appendChild(s);
+    };
+    const start = () => {
+      if (!('IntersectionObserver' in window)) return widgets.forEach(load);
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            io.unobserve(e.target);
+            load(e.target as HTMLElement);
+          }
+        },
+        { rootMargin: '600px 0px' },
+      );
+      widgets.forEach((el) => io.observe(el));
+    };
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
+  }
 
   document.querySelectorAll<HTMLFormElement>('[data-enquiry]').forEach((form) => {
     const status = form.querySelector<HTMLElement>('[data-status]')!;

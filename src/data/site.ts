@@ -86,10 +86,11 @@ export const site = {
     /** Public OpenTable page; used as the fallback button until `widgetSnippet` is set. */
     bookingUrl: 'https://www.opentable.com/r/meat-moot-seattle',
     /**
-     * Paste the code from OpenTable for Restaurants → Restaurant Profile → Reservation widget →
-     * Copy code. It renders the OpenTable booking widget in place on this site.
+     * `src` of the OpenTable widget script (OpenTable for Restaurants → Restaurant Profile →
+     * Reservation widget → Copy code). Loaded only when the booking panel nears the viewport.
      */
-    widgetSnippet: ``,
+    widgetScript:
+      'https://www.opentable.com/widget/reservation/loader?rid=1461475&type=standard&theme=standard&color=3&dark=false&iframe=true&domain=com&lang=en-US&newtab=false&ot_source=Restaurant%20website&cfe=true',
     /**
      * Event-enquiry form endpoint (Formspree, Basin, etc.). Leave empty and the form opens a
      * pre-filled email to `site.email` instead, so it works with zero backend.

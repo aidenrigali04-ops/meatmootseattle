@@ -32,4 +32,4 @@ So you can order anything on the menu, sauces included, without asking what's in
 
 Halal barbecue is still serious barbecue. Our brisket smokes for up to 16 hours until the bark sets and the fat renders. The lamb shanks are lacquered and falling off the bone. Every board comes with eight house sauces and a spread of Turkish and Middle Eastern salads.
 
-Read more about [our halal standards](/halal), or [book a table](/#reserve) and taste the difference.
+Read more about [our halal standards](/halal), or [book a table](/reserve) and taste the difference.

@@ -46,7 +46,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Do I need a reservation?',
-    a: `Walk-ins are welcome when the room allows, but we recommend reserving, especially for dinner and weekends. For parties of ${site.reservations.largePartySize} or more, please call us at ${site.phone}.`,
+    a: `Walk-ins are welcome when the room allows, but we recommend reserving, especially for dinner and weekends. Book online at ${site.url}/reserve for parties of up to ${site.reservations.largePartySize - 1}. For ${site.reservations.largePartySize} or more, email ${site.email} or call ${site.phone}.`,
     tags: ['visit', 'events'],
   },
   {

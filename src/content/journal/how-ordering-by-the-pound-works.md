@@ -43,4 +43,4 @@ Every pound arrives with **unlimited house-made sauces** (chimichurri, honey mus
 
 Monday to Friday, 12–3pm, you can get a **½ lb lamb shank or beef brisket for $23.99**. It's the easiest way to try Meat Moot on a lunch break from the South Lake Union offices.
 
-Ready? [See the full menu](/menu) or [reserve a table](/#reserve).
+Ready? [See the full menu](/menu) or [reserve a table](/reserve).

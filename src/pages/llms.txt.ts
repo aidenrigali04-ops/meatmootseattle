@@ -18,7 +18,7 @@ export const GET: APIRoute = () => {
 - Phone: ${site.phone}
 - Email: ${site.email}
 - Price range: ${site.priceRange}
-- Reservations: ${site.url}/#reserve (parties of ${site.reservations.largePartySize}+ please call)
+- Reservations: ${site.url}/reserve (online via ${site.reservations.provider} for parties of up to ${site.reservations.largePartySize - 1}; ${site.reservations.largePartySize}+ email ${site.email} or call)
 - Order pickup/delivery: ${site.links.orderDelivery}
 - Part of the Meat Moot brand, founded in ${site.founded.city} in ${site.founded.year}
 

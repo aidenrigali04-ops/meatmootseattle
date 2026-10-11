@@ -40,7 +40,7 @@ Change a price or the opening hours once in `src/data/` and it updates everywher
 - `sitemap-index.xml`, `robots.txt`, and `llms.txt` (a plain-text brief for AI assistants such as ChatGPT, Perplexity and Gemini).
 - Pages built around real local searches: "halal restaurant Seattle", "smoked brisket Seattle", "lamb shank Seattle", "team lunch South Lake Union" and similar.
 - Fast loading: self-hosted fonts, WebP images at responsive sizes, almost no JavaScript, and a lazy-loaded map.
-- Conversion tracking (once GA4 is on): `click_call`, `click_directions`, `click_reserve`, `click_order`, `click_review`, `submit_reservation` and `submit_event_enquiry`, each tagged with where on the page it was clicked.
+- Conversion tracking (once GA4 is on): `click_call`, `click_directions`, `click_reserve`, `click_order`, `click_review`, `click_email` and `submit_event_enquiry`, each tagged with where on the page it was clicked.
 
 ## Google Business Profile checklist
 
@@ -48,7 +48,8 @@ Change a price or the opening hours once in `src/data/` and it updates everywher
 2. **Tag the GBP links** so Google traffic shows up separately in Analytics:
    - Website: `https://meatmootseattle.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp`
    - Menu: `https://meatmootseattle.com/menu?utm_source=google&utm_medium=organic&utm_campaign=gbp-menu`
-   - Reservations: `https://meatmootseattle.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp-reserve#reserve`
+   - Reservations: `https://meatmootseattle.com/reserve?utm_source=google&utm_medium=organic&utm_campaign=gbp-reserve`
+   - **Reserve with Google:** in Toast Web → Waitlist & Reservations → Settings → Reservations → Online access, turn on Reserve with Google. Toast says the "Reserve a table" button shows on the GBP listing within 24–48 hours.
 3. **Primary category:** Halal restaurant (or Barbecue restaurant). **Secondary:** Barbecue restaurant, Steak house, Turkish restaurant, Middle Eastern restaurant, Caterer.
 4. **Review link.** Paste the GBP "Ask for reviews" link into `links.googleReview` in `src/data/site.ts`. The "Leave a review" buttons will then open the review form directly.
 5. **Search Console.** Verify the domain in Google Search Console and submit `https://meatmootseattle.com/sitemap-index.xml`.
@@ -58,5 +59,6 @@ Change a price or the opening hours once in `src/data/` and it updates everywher
 
 - `links.googleReview`: your GBP review link.
 - `halal.certifier`: the name of your halal certifying body (shown on `/halal` when set).
-- `reservations.formEndpoint`: a Formspree, Basin or similar endpoint. Until it's set, the reservation form opens a pre-filled email to `info@meatmootseattle.com`.
+- `reservations.widgetSnippet`: the Toast Tables website widget code (Toast Web → Waitlist & Reservations → Settings → Reservations → Website widget → copy). Until it's set, the booking panel shows a "Find a table" button that opens the Toast booking page in a new tab. Booking notification emails are configured in Toast, not on the website.
+- `reservations.formEndpoint`: optional Formspree, Basin or similar endpoint for the event enquiry form. Until it's set, the form opens a pre-filled email to `info@meatmootseattle.com`.
 - Photos of the Seattle dining room and team. Current imagery is food from the Framer build and the Meat Moot brand site.

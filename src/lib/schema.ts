@@ -52,7 +52,7 @@ export function restaurantSchema() {
     potentialAction: [
       {
         '@type': 'ReserveAction',
-        target: { '@type': 'EntryPoint', urlTemplate: abs('/#reserve'), actionPlatform: ['https://schema.org/DesktopWebPlatform', 'https://schema.org/MobileWebPlatform'] },
+        target: { '@type': 'EntryPoint', urlTemplate: abs('/reserve'), actionPlatform: ['https://schema.org/DesktopWebPlatform', 'https://schema.org/MobileWebPlatform'] },
         result: { '@type': 'FoodEstablishmentReservation', name: 'Table reservation' },
       },
       {

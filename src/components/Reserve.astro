@@ -1,11 +1,13 @@
 ---
-import { site } from '@/data/site';
+import { site, formatTime } from '@/data/site';
+import { lunchSpecial } from '@/data/menu';
 
 interface Props {
   id?: string;
   variant?: 'reservation' | 'event';
   title?: string;
   intro?: string;
+  headingLevel?: 'h1' | 'h2';
 }
 
 const {
@@ -14,94 +16,125 @@ const {
   title = variant === 'event' ? 'Plan your event' : 'Secure your table',
   intro = variant === 'event'
     ? "Tell us about your group and we'll come back with cuts, quantities and timing within one business day."
-    : `Walk-ins are welcome when the room allows, but we recommend reserving your place in advance. Parties of ${site.reservations.largePartySize} or more, please call us directly.`,
+    : 'Choose a date, time and party size to book your table online. Walk-ins are welcome when the room allows.',
+  headingLevel = 'h2',
 } = Astro.props;
+const Heading = headingLevel;
+
+const { widgetSnippet, bookingUrl, largePartySize, formEndpoint } = site.reservations;
+const h = site.hours[0];
 
 const times: string[] = [];
 for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
-  const h = Math.floor(m / 60);
+  const hr = Math.floor(m / 60);
   const mm = m % 60;
-  const label = `${h % 12 === 0 ? 12 : h % 12}:${String(mm).padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
-  times.push(label);
+  times.push(`${hr % 12 === 0 ? 12 : hr % 12}:${String(mm).padStart(2, '0')} ${hr >= 12 ? 'PM' : 'AM'}`);
 }
-const guestOptions = variant === 'event' ? ['8–12', '13–20', '21–40', '40+'] : ['1', '2', '3', '4', '5', '6+'];
-const subject = variant === 'event' ? 'Event / catering enquiry' : 'Table reservation request';
+const guestOptions = ['6–7', '8–12', '13–20', '21–40', '40+'];
+const subject = 'Event / large party enquiry';
+const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large party request (${largePartySize}+ guests)`)}`;
 ---
 
 <section class="section reserve" id={id} aria-labelledby={`${id}-title`}>
   <div class="container grid">
     <div class="intro">
       <p class="eyebrow eyebrow--gold" data-reveal>{variant === 'event' ? 'Enquiries' : 'Reservations'}</p>
-      <h2 id={`${id}-title`} class="h2" data-reveal style="--reveal-i:1">{title}</h2>
+      <Heading id={`${id}-title`} class="h2" data-reveal style="--reveal-i:1">{title}</Heading>
       <p class="body-muted" data-reveal style="--reveal-i:2">{intro}</p>
       <p class="call" data-reveal style="--reveal-i:3">
-        Prefer to talk? <a href={`tel:${site.phoneE164}`} data-track="click_call" data-placement={`${variant}_form`}>{site.phone}</a>
+        Prefer to talk? <a href={`tel:${site.phoneE164}`} data-track="click_call" data-placement={`${variant}_section`}>{site.phone}</a>
       </p>
     </div>
 
-    <form
-      class="form"
-      data-reserve
-      data-endpoint={site.reservations.formEndpoint}
-      data-email={site.email}
-      data-subject={subject}
-      data-variant={variant}
-      data-large={site.reservations.largePartySize}
-      method="post"
-      action={site.reservations.formEndpoint || `mailto:${site.email}`}
-      novalidate>
-      <input type="hidden" name="_subject" value={subject} />
-      <div class="row two">
-        <div class="field">
-          <label for={`${id}-name`}>Full name</label>
-          <input id={`${id}-name`} name="name" autocomplete="name" placeholder="Your full name" required />
-        </div>
-        <div class="field">
-          <label for={`${id}-email`}>Email address</label>
-          <input id={`${id}-email`} name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
-        </div>
-      </div>
-      <div class="row three">
-        <div class="field">
-          <label for={`${id}-date`}>Date</label>
-          <input id={`${id}-date`} name="date" type="date" required data-min-today />
-        </div>
-        <div class="field">
-          <label for={`${id}-time`}>Time</label>
-          <select id={`${id}-time`} name="time" required>
-            {times.map((t) => <option selected={t === '6:30 PM'}>{t}</option>)}
-          </select>
-        </div>
-        <div class="field">
-          <label for={`${id}-guests`}>Guests</label>
-          <select id={`${id}-guests`} name="guests" required>
-            {guestOptions.map((g, i) => <option selected={variant === 'event' ? i === 0 : g === '2'}>{g}</option>)}
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label for={`${id}-phone`}>Phone {variant === 'reservation' && <span class="opt">(optional)</span>}</label>
-        <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" placeholder="(206) 555-0100" required={variant === 'event'} />
-      </div>
-      <div class="field">
-        <label for={`${id}-notes`}>{variant === 'event' ? 'Tell us about the event' : 'Special requests'}</label>
-        <textarea
-          id={`${id}-notes`}
-          name="notes"
-          rows="3"
-          placeholder={variant === 'event' ? 'Occasion, dine-in or catering, budget, anything we should know…' : 'Occasion, seating preference, high chair…'}
-        ></textarea>
-      </div>
+    {
+      variant === 'reservation' ? (
+        <div class="booking" data-reveal style="--reveal-i:2">
+          <ul class="facts">
+            <li>
+              <span>Hours</span>
+              {`Daily, ${formatTime(h.opens)}–${formatTime(h.closes)}`}
+            </li>
+            <li>
+              <span>Weekday lunch</span>
+              {`${lunchSpecial.time}`}
+            </li>
+            <li>
+              <span>Book online</span>
+              {`Parties of 1–${largePartySize - 1}`}
+            </li>
+          </ul>
 
-      <p class="large-note" data-large-note hidden>
-        For parties of {site.reservations.largePartySize} or more, calling <a href={`tel:${site.phoneE164}`}>{site.phone}</a> is the fastest way to lock in a table.
-      </p>
+          <div class="widget">
+            {widgetSnippet ? (
+              <div class="toast-widget" data-toast-widget set:html={widgetSnippet}></div>
+            ) : (
+              <a class="btn" href={bookingUrl} target="_blank" rel="noopener" data-track="click_reserve" data-placement={`${id}_booking`}>
+                Find a table
+              </a>
+            )}
+          </div>
 
-      <div class="submit">
-        <button class="btn" type="submit">{variant === 'event' ? 'Send enquiry' : 'Request reservation'}</button>
-        <p class="status" role="status" aria-live="polite" data-status></p>
-      </div>
-    </form>
+          <p class="large">
+            <strong>Parties of {largePartySize} or more:</strong> email{' '}
+            <a href={largeMail} data-track="click_email" data-placement={`${id}_large_party`}>{site.email}</a> or call{' '}
+            <a href={`tel:${site.phoneE164}`} data-track="click_call" data-placement={`${id}_large_party`}>{site.phone}</a> and we'll
+            plan the table, the cuts and the timing with you.
+          </p>
+        </div>
+      ) : (
+        <form
+          class="form"
+          data-enquiry
+          data-endpoint={formEndpoint}
+          data-email={site.email}
+          data-subject={subject}
+          method="post"
+          action={formEndpoint || `mailto:${site.email}`}
+          novalidate>
+          <input type="hidden" name="_subject" value={subject} />
+          <div class="row two">
+            <div class="field">
+              <label for={`${id}-name`}>Full name</label>
+              <input id={`${id}-name`} name="name" autocomplete="name" placeholder="Your full name" required />
+            </div>
+            <div class="field">
+              <label for={`${id}-email`}>Email address</label>
+              <input id={`${id}-email`} name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+            </div>
+          </div>
+          <div class="row three">
+            <div class="field">
+              <label for={`${id}-date`}>Date</label>
+              <input id={`${id}-date`} name="date" type="date" required data-min-today />
+            </div>
+            <div class="field">
+              <label for={`${id}-time`}>Time</label>
+              <select id={`${id}-time`} name="time" required>
+                {times.map((t) => <option selected={t === '6:30 PM'}>{t}</option>)}
+              </select>
+            </div>
+            <div class="field">
+              <label for={`${id}-guests`}>Guests</label>
+              <select id={`${id}-guests`} name="guests" required>
+                {guestOptions.map((g, i) => <option selected={i === 1}>{g}</option>)}
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for={`${id}-phone`}>Phone</label>
+            <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" placeholder="(206) 555-0100" required />
+          </div>
+          <div class="field">
+            <label for={`${id}-notes`}>Tell us about the event</label>
+            <textarea id={`${id}-notes`} name="notes" rows="3" placeholder="Occasion, dine-in or catering, budget, anything we should know…"></textarea>
+          </div>
+          <div class="submit">
+            <button class="btn" type="submit">Send enquiry</button>
+            <p class="status" role="status" aria-live="polite" data-status></p>
+          </div>
+        </form>
+      )
+    }
   </div>
 </section>
 
@@ -123,6 +156,58 @@ const subject = variant === 'event' ? 'Event / catering enquiry' : 'Table reserv
     text-decoration: none;
   }
 
+  .booking {
+    display: grid;
+    gap: var(--space-l);
+    align-content: start;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border: 1px solid var(--line);
+    background: var(--ink-raised);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding-bottom: var(--space-l);
+    border-bottom: 1px solid var(--line);
+    list-style: none;
+    font-size: 0.95rem;
+    color: var(--cream);
+  }
+
+  .facts span {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .widget {
+    min-height: 3.25rem;
+  }
+
+  .large {
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--gold);
+    background: var(--ink);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--cream-soft);
+  }
+
+  .large strong {
+    font-weight: 500;
+    color: var(--cream);
+  }
+
+  .large a {
+    color: var(--gold);
+  }
+
   .form {
     display: grid;
     gap: var(--space-l);
@@ -139,23 +224,6 @@ const subject = variant === 'event' ? 'Event / catering enquiry' : 'Table reserv
 
   .three {
     grid-template-columns: 1.2fr 1fr 0.8fr;
-  }
-
-  .opt {
-    letter-spacing: 0.08em;
-    text-transform: none;
-  }
-
-  .large-note {
-    padding: 1rem 1.25rem;
-    border-left: 2px solid var(--gold);
-    background: var(--ink-raised);
-    font-size: 0.9rem;
-    color: var(--cream-soft);
-  }
-
-  .large-note a {
-    color: var(--gold);
   }
 
   .submit {
@@ -182,7 +250,8 @@ const subject = variant === 'event' ? 'Event / catering enquiry' : 'Table reserv
 
   @media (max-width: 560px) {
     .two,
-    .three {
+    .three,
+    .facts {
       grid-template-columns: 1fr;
     }
   }
@@ -193,31 +262,27 @@ const subject = variant === 'event' ? 'Event / catering enquiry' : 'Table reserv
   const iso = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   document.querySelectorAll<HTMLInputElement>('[data-min-today]').forEach((i) => (i.min = iso));
 
-  document.querySelectorAll<HTMLFormElement>('[data-reserve]').forEach((form) => {
-    const status = form.querySelector<HTMLElement>('[data-status]')!;
-    const note = form.querySelector<HTMLElement>('[data-large-note]');
-    const guests = form.querySelector<HTMLSelectElement>('select[name="guests"]');
-    const large = Number(form.dataset.large ?? 6);
-    const isEvent = form.dataset.variant === 'event';
+  const w = window as unknown as { gtag?: (...a: unknown[]) => void };
 
-    guests?.addEventListener('change', () => {
-      if (note && !isEvent) note.hidden = parseInt(guests.value, 10) < large;
-    });
+  document.querySelectorAll<HTMLElement>('[data-toast-widget]').forEach((el) => {
+    el.addEventListener('click', () => w.gtag?.('event', 'click_reserve', { placement: 'toast_widget' }), { capture: true });
+  });
+
+  document.querySelectorAll<HTMLFormElement>('[data-enquiry]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       status.classList.remove('is-error');
       if (!form.checkValidity()) {
-        const first = form.querySelector<HTMLElement>(':invalid');
-        first?.focus();
+        form.querySelector<HTMLElement>(':invalid')?.focus();
         status.classList.add('is-error');
-        status.textContent = 'Please fill in your name, a valid email and a date.';
+        status.textContent = 'Please fill in your name, a valid email, phone and a date.';
         return;
       }
 
       const data = new FormData(form);
-      const w = window as unknown as { gtag?: (...a: unknown[]) => void };
-      w.gtag?.('event', isEvent ? 'submit_event_enquiry' : 'submit_reservation', { guests: data.get('guests') });
+      w.gtag?.('event', 'submit_event_enquiry', { guests: data.get('guests') });
 
       const endpoint = form.dataset.endpoint;
       if (endpoint) {
@@ -226,12 +291,10 @@ const subject = variant === 'event' ? 'Event / catering enquiry' : 'Table reserv
           const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
           if (!res.ok) throw new Error(String(res.status));
           form.reset();
-          status.textContent = isEvent
-            ? "Thank you — we'll be in touch within one business day."
-            : "Thank you — we'll confirm your table by email shortly.";
+          status.textContent = "Thank you — we'll be in touch within one business day.";
         } catch {
           status.classList.add('is-error');
-          status.textContent = 'Something went wrong. Please call us and we will book you in.';
+          status.textContent = 'Something went wrong. Please call us and we will take it from there.';
         }
         return;
       }
@@ -239,18 +302,17 @@ const subject = variant === 'event' ? 'Event / catering enquiry' : 'Table reserv
       const lines = [
         `Name: ${data.get('name')}`,
         `Email: ${data.get('email')}`,
-        `Phone: ${data.get('phone') || '—'}`,
+        `Phone: ${data.get('phone')}`,
         `Date: ${data.get('date')}`,
         `Time: ${data.get('time')}`,
         `Guests: ${data.get('guests')}`,
         '',
         `${data.get('notes') || ''}`,
       ];
-      const href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(
         `${form.dataset.subject} — ${data.get('date')} · ${data.get('guests')} guests`,
       )}&body=${encodeURIComponent(lines.join('\n'))}`;
-      window.location.href = href;
-      status.textContent = 'Your email app should open with your request ready to send.';
+      status.textContent = 'Your email app should open with your enquiry ready to send.';
     });
   });
 </script>

@@ -42,7 +42,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 
     <div class="actions">
       <a class="phone" href={`tel:${site.phoneE164}`} data-track="click_call" data-placement="header">{site.phone}</a>
-      <a class="btn" href="/#reserve" data-track="click_reserve" data-placement="header">Reserve</a>
+      <a class="btn" href="/reserve" data-track="click_reserve" data-placement="header">Reserve</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="menu-overlay" data-burger>
         <span class="sr-only">Open menu</span>
         <span aria-hidden="true"></span>
@@ -56,7 +56,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       <nav aria-label="Mobile">
         <ol>
           {
-            [{ label: 'Home', href: '/' }, ...nav, { label: 'Reserve', href: '/#reserve' }].map((item, i) => (
+            [{ label: 'Home', href: '/' }, ...nav, { label: 'Reserve', href: '/reserve' }].map((item, i) => (
               <li style={`--i:${i}`}>
                 <a href={item.href}>
                   <span class="num">{String(i + 1).padStart(2, '0')}</span>

@@ -82,9 +82,17 @@ export const site = {
   },
 
   reservations: {
+    provider: 'Toast Tables',
+    /** Hosted Toast Tables booking page; used as the fallback button until `widgetSnippet` is set. */
+    bookingUrl: 'https://tables.toasttab.com/restaurants/2b67f9cd-3843-4e00-bebe-979571d8bd55/findTime',
     /**
-     * Form endpoint (Formspree, Basin, Netlify Forms, etc.). Leave empty and the form
-     * opens a pre-filled email to `email` instead, so it works with zero backend.
+     * Paste the snippet from Toast Web → Waitlist & Reservations → Settings → Reservations →
+     * Website widget. It renders Toast's "Reserve now" button, which opens the booking modal on this site.
+     */
+    widgetSnippet: ``,
+    /**
+     * Event-enquiry form endpoint (Formspree, Basin, etc.). Leave empty and the form opens a
+     * pre-filled email to `site.email` instead, so it works with zero backend.
      */
     formEndpoint: '',
     largePartySize: 6,

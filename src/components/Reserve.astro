@@ -66,7 +66,7 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
 
           <div class="widget">
             {widgetSnippet ? (
-              <div class="toast-widget" data-toast-widget set:html={widgetSnippet}></div>
+              <div class="booking-widget" set:html={widgetSnippet}></div>
             ) : (
               <a class="btn" href={bookingUrl} target="_blank" rel="noopener" data-track="click_reserve" data-placement={`${id}_booking`}>
                 Find a table
@@ -263,10 +263,6 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
   document.querySelectorAll<HTMLInputElement>('[data-min-today]').forEach((i) => (i.min = iso));
 
   const w = window as unknown as { gtag?: (...a: unknown[]) => void };
-
-  document.querySelectorAll<HTMLElement>('[data-toast-widget]').forEach((el) => {
-    el.addEventListener('click', () => w.gtag?.('event', 'click_reserve', { placement: 'toast_widget' }), { capture: true });
-  });
 
   document.querySelectorAll<HTMLFormElement>('[data-enquiry]').forEach((form) => {
     const status = form.querySelector<HTMLElement>('[data-status]')!;

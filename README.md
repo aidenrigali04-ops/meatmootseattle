@@ -49,7 +49,7 @@ Change a price or the opening hours once in `src/data/` and it updates everywher
    - Website: `https://meatmootseattle.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp`
    - Menu: `https://meatmootseattle.com/menu?utm_source=google&utm_medium=organic&utm_campaign=gbp-menu`
    - Reservations: `https://meatmootseattle.com/reserve?utm_source=google&utm_medium=organic&utm_campaign=gbp-reserve`
-   - **Reserve with Google:** in Toast Web → Waitlist & Reservations → Settings → Reservations → Online access, turn on Reserve with Google. Toast says the "Reserve a table" button shows on the GBP listing within 24–48 hours.
+   - **Reserve with Google:** OpenTable is a Reserve with Google booking partner, so a "Reserve a table" button can appear on the GBP listing. It matches on name, address and phone, so keep the OpenTable profile's NAP identical to GBP.
 3. **Primary category:** Halal restaurant (or Barbecue restaurant). **Secondary:** Barbecue restaurant, Steak house, Turkish restaurant, Middle Eastern restaurant, Caterer.
 4. **Review link.** Paste the GBP "Ask for reviews" link into `links.googleReview` in `src/data/site.ts`. The "Leave a review" buttons will then open the review form directly.
 5. **Search Console.** Verify the domain in Google Search Console and submit `https://meatmootseattle.com/sitemap-index.xml`.
@@ -59,6 +59,6 @@ Change a price or the opening hours once in `src/data/` and it updates everywher
 
 - `links.googleReview`: your GBP review link.
 - `halal.certifier`: the name of your halal certifying body (shown on `/halal` when set).
-- `reservations.widgetSnippet`: the Toast Tables website widget code (Toast Web → Waitlist & Reservations → Settings → Reservations → Website widget → copy). Until it's set, the booking panel shows a "Find a table" button that opens the Toast booking page in a new tab. Booking notification emails are configured in Toast, not on the website.
+- `reservations.widgetSnippet`: the OpenTable reservation widget code (OpenTable for Restaurants → Restaurant Profile → Reservation widget → Copy code). Until it's set, the booking panel shows a "Find a table" button that opens the OpenTable page in a new tab. Booking notification emails are configured in OpenTable, not on the website.
 - `reservations.formEndpoint`: optional Formspree, Basin or similar endpoint for the event enquiry form. Until it's set, the form opens a pre-filled email to `info@meatmootseattle.com`.
 - Photos of the Seattle dining room and team. Current imagery is food from the Framer build and the Meat Moot brand site.

@@ -82,12 +82,12 @@ export const site = {
   },
 
   reservations: {
-    provider: 'Toast Tables',
-    /** Hosted Toast Tables booking page; used as the fallback button until `widgetSnippet` is set. */
-    bookingUrl: 'https://tables.toasttab.com/restaurants/2b67f9cd-3843-4e00-bebe-979571d8bd55/findTime',
+    provider: 'OpenTable',
+    /** Public OpenTable page; used as the fallback button until `widgetSnippet` is set. */
+    bookingUrl: 'https://www.opentable.com/r/meat-moot-seattle',
     /**
-     * Paste the snippet from Toast Web → Waitlist & Reservations → Settings → Reservations →
-     * Website widget. It renders Toast's "Reserve now" button, which opens the booking modal on this site.
+     * Paste the code from OpenTable for Restaurants → Restaurant Profile → Reservation widget →
+     * Copy code. It renders the OpenTable booking widget in place on this site.
      */
     widgetSnippet: ``,
     /**

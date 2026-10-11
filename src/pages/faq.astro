@@ -1,0 +1,33 @@
+---
+import Base from '@/layouts/Base.astro';
+import FaqList from '@/components/FaqList.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { faqs } from '@/data/faq';
+import { site } from '@/data/site';
+import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+
+const crumbs = [{ name: 'FAQ', path: '/faq' }];
+---
+
+<Base
+  title="FAQ | Halal, Menu, Reservations & Hours | Meat Moot Seattle"
+  description="Answers to common questions about Meat Moot Seattle: halal and alcohol-free dining, ordering by the pound, the weekday lunch special, reservations, groups, catering and hours."
+  schema={[breadcrumbSchema(crumbs), faqSchema(faqs)]}
+>
+  <div class="container crumbs-wrap"><Breadcrumbs items={crumbs} /></div>
+  <FaqList items={faqs} title="Frequently asked questions" eyebrow="FAQ" headingLevel="h1">
+    <p class="body-muted">
+      Can't find what you need? Call <a href={`tel:${site.phoneE164}`}>{site.phone}</a> or email <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+  </FaqList>
+</Base>
+
+<style>
+  .crumbs-wrap {
+    padding-top: var(--space-l);
+  }
+
+  :global(.faq) {
+    padding-top: var(--space-l);
+  }
+</style>

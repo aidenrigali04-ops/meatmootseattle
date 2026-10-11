@@ -1,0 +1,35 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/home/Hero.astro';
+import HowItWorks from '@/components/home/HowItWorks.astro';
+import SignatureCuts from '@/components/home/SignatureCuts.astro';
+import LunchSpecial from '@/components/LunchSpecial.astro';
+import EventsTeaser from '@/components/home/EventsTeaser.astro';
+import Press from '@/components/home/Press.astro';
+import HalalBand from '@/components/HalalBand.astro';
+import VisitBlock from '@/components/VisitBlock.astro';
+import Reserve from '@/components/Reserve.astro';
+import FaqList from '@/components/FaqList.astro';
+import { faqsByTag } from '@/data/faq';
+
+const faqs = faqsByTag('general');
+---
+
+<Base
+  title="Meat Moot Seattle | Halal Smokehouse & BBQ in South Lake Union"
+  description="Seattle's halal smokehouse. Slow-smoked brisket, beef ribs and lamb sold by the pound, carved at the table in South Lake Union. 100% halal, alcohol-free. Open daily 11am–9pm."
+  overlayHeader
+>
+  <Hero />
+  <HowItWorks />
+  <SignatureCuts />
+  <LunchSpecial />
+  <EventsTeaser />
+  <Press />
+  <HalalBand />
+  <Reserve />
+  <VisitBlock />
+  <FaqList items={faqs} title="Before you visit">
+    <p class="body-muted">More questions? See the <a href="/faq">full FAQ</a> or call us.</p>
+  </FaqList>
+</Base>

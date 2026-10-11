@@ -1,0 +1,155 @@
+---
+import { site } from '@/data/site';
+
+const steps = [
+  {
+    title: 'Choose your cut',
+    body: "Pick from brisket, beef ribs, lamb shank, lamb neck or lamb shoulder at the carving counter, and tell us how much you'd like.",
+  },
+  {
+    title: 'We weigh and carve it',
+    body: "Your meat is weighed in front of you and carved to order, so you see exactly what you're getting.",
+  },
+  {
+    title: 'Sit down and dig in',
+    body: 'We bring it to your table with unlimited house sauces, fresh salads, sides and a drink.',
+  },
+];
+
+const stats = [
+  { value: site.stats.smokeHours, label: 'Hours on the smoke' },
+  { value: site.stats.yearsOpen, label: 'Years open' },
+  { value: site.stats.locations, label: 'Locations worldwide' },
+];
+---
+
+<section class="section how" id="how-it-works" aria-labelledby="how-title">
+  <div class="container">
+    <div class="intro">
+      <p class="eyebrow eyebrow--gold" data-reveal>How it works</p>
+      <h2 id="how-title" class="lead" data-reveal style="--reveal-i:1">
+        Every meat is halal, slow-smoked in-house and sold by the pound. Here's how a meal at Meat Moot works.
+      </h2>
+    </div>
+
+    <ol class="steps">
+      {
+        steps.map((s, i) => (
+          <li data-reveal style={`--reveal-i:${i}`}>
+            <span class="n" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="h3">
+              <span class="sr-only">Step {i + 1}: </span>
+              {s.title}
+            </h3>
+            <p>{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <dl class="stats">
+      {
+        stats.map((s, i) => (
+          <div data-reveal style={`--reveal-i:${i}`}>
+            <dt>{s.label}</dt>
+            <dd>{s.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .intro {
+    display: grid;
+    gap: var(--space-m);
+    max-width: 50rem;
+  }
+
+  .lead {
+    font-size: var(--step-3);
+    font-weight: 300;
+    line-height: 1.12;
+  }
+
+  .steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: var(--space-xl);
+    border-top: 1px solid var(--line);
+  }
+
+  .steps li {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    padding: var(--space-l) var(--space-l) var(--space-l) 0;
+  }
+
+  .steps li + li {
+    padding-left: var(--space-l);
+    border-left: 1px solid var(--line);
+  }
+
+  .n {
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .steps p {
+    color: var(--cream-soft);
+    max-width: 36ch;
+  }
+
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-l) var(--space-xl);
+    margin: var(--space-l) 0 0;
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--line);
+  }
+
+  .stats div {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .stats dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .stats dt {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @media (max-width: 860px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+
+    .steps li,
+    .steps li + li {
+      padding: var(--space-l) 0;
+      border-left: 0;
+    }
+
+    .steps li + li {
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

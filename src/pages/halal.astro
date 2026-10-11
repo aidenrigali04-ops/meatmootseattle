@@ -1,0 +1,180 @@
+---
+import { Image } from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import FaqList from '@/components/FaqList.astro';
+import VisitBlock from '@/components/VisitBlock.astro';
+import header from '@/assets/img/lamb-shank-honey.jpg';
+import board from '@/assets/img/lamb-shank-board.jpg';
+import badge from '@/assets/img/halal-badge.png';
+import { faqsByTag } from '@/data/faq';
+import { site } from '@/data/site';
+import { breadcrumbSchema } from '@/lib/schema';
+
+const faqs = faqsByTag('halal');
+const crumbs = [{ name: 'Halal', path: '/halal' }];
+const pillars = [
+  {
+    title: '100% halal meat',
+    body: 'Every cut on our menu — brisket, ribs, shank, neck and shoulder — is halal, and prepared according to halal standards from delivery to the carving board.',
+  },
+  {
+    title: 'Pork-free kitchen',
+    body: 'There is no pork in our kitchen, our smokers or on our menu — not in the sauces, not in the sides.',
+  },
+  {
+    title: 'Alcohol-free, always',
+    body: 'We do not serve alcohol. Our drinks are non-alcoholic, and mineral water and soft drinks are included with every meat order.',
+  },
+];
+---
+
+<Base
+  title="Halal Restaurant in Seattle — 100% Halal & Alcohol-Free | Meat Moot"
+  description="Meat Moot is a fully halal smokehouse in South Lake Union, Seattle. Every meat is halal, the kitchen is pork-free and we serve no alcohol. Smoked brisket, ribs and lamb, open daily."
+  schema={[breadcrumbSchema(crumbs)]}
+  overlayHeader
+>
+  <PageHeader
+    eyebrow="Halal certified · alcohol-free"
+    title="Fully halal. <em>Fully smoked.</em>"
+    intro="Meat Moot was born in Istanbul to bring a centuries-old smoked-meat tradition to the table — and halal is at the heart of it. In Seattle, that means every meat, every sauce and every drink is something the whole family can enjoy."
+    image={header}
+    imageAlt="Smoked halal lamb being finished with honey at Meat Moot"
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container">
+      <ul class="pillars">
+        {
+          pillars.map((p, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <span class="n">{String(i + 1).padStart(2, '0')}</span>
+              <h2 class="h3">{p.title}</h2>
+              <p>{p.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <figure data-reveal>
+        <Image src={board} alt="Halal smoked lamb shanks on a board with sauces and salads at Meat Moot Seattle" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
+      </figure>
+      <div class="copy" data-reveal style="--reveal-i:1">
+        <Image src={badge} alt="Halal" width={72} height={72} class="badge" />
+        <h2 class="h2">A halal smokehouse for all of Seattle</h2>
+        <p class="body-muted">
+          Finding high-end halal dining in Seattle used to mean compromise. Meat Moot set out to change that with a menu of premium smoked lamb and beef, theatrical table-side carving and a room built for celebrations — without pork or alcohol.
+        </p>
+        <p class="body-muted">
+          Whether you keep halal, are hosting family who do, or simply love serious barbecue, you can order anything on the menu with confidence.
+        </p>
+        {
+          site.halal.certifier && (
+            <p class="cert">
+              Certified by <strong>{site.halal.certifier}</strong>
+            </p>
+          )
+        }
+        <div class="ctas">
+          <a class="btn" href="/reserve" data-track="click_reserve" data-placement="halal">Reserve a table</a>
+          <a class="link-arrow" href="/menu">See the menu</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FaqList items={faqs} title="Halal questions, answered" />
+  <VisitBlock />
+</Base>
+
+<style>
+  .pillars {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+  }
+
+  .pillars li {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    padding: var(--space-l) var(--space-l) 0 0;
+  }
+
+  .pillars li + li {
+    padding-left: var(--space-l);
+    border-left: 1px solid var(--line);
+  }
+
+  .n {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .pillars p {
+    color: var(--cream-soft);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  figure {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+
+  figure :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .copy {
+    display: grid;
+    gap: var(--space-m);
+    justify-items: start;
+  }
+
+  .cert {
+    color: var(--cream-soft);
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+    align-items: center;
+  }
+
+  @media (max-width: 860px) {
+    .pillars,
+    .split {
+      grid-template-columns: 1fr;
+    }
+
+    .pillars li,
+    .pillars li + li {
+      padding: var(--space-l) 0;
+      border-left: 0;
+    }
+
+    .pillars li + li {
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

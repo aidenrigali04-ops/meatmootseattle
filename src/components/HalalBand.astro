@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import badge from '@/assets/img/halal-badge.png';
+
+interface Props {
+  link?: boolean;
+}
+const { link = true } = Astro.props;
+---
+
+<section class="halal" aria-labelledby="halal-band-title">
+  <div class="container">
+    <div class="inner" data-reveal>
+      <h2 id="halal-band-title">Halal certified <span class="amp">&amp;</span> alcohol-free</h2>
+      <Image src={badge} alt="Halal certified" width={96} height={96} />
+    </div>
+    <p class="sub" data-reveal style="--reveal-i:1">
+      Every cut is halal. No pork, no alcohol — just wood smoke, spice and time.
+      {link && <a href="/halal">Our halal standards</a>}
+    </p>
+  </div>
+</section>
+
+<style>
+  .halal {
+    padding-block: var(--space-xl);
+    background: var(--ink-warm);
+    border-block: 1px solid var(--line);
+  }
+
+  .inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-l);
+    padding-block: var(--space-l);
+    border-block: 1px solid var(--line);
+  }
+
+  h2 {
+    font-size: var(--step-3);
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .amp {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .inner :global(img) {
+    width: clamp(64px, 7vw, 96px);
+    height: auto;
+  }
+
+  .sub {
+    margin-top: var(--space-m);
+    text-align: center;
+    color: var(--cream-soft);
+  }
+
+  .sub a {
+    margin-left: 0.5rem;
+    color: var(--gold);
+  }
+</style>

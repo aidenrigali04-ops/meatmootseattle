@@ -1,0 +1,30 @@
+---
+import Base from '@/layouts/Base.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Reserve from '@/components/Reserve.astro';
+import VisitBlock from '@/components/VisitBlock.astro';
+import { site } from '@/data/site';
+import { breadcrumbSchema } from '@/lib/schema';
+
+const crumbs = [{ name: 'Reserve', path: '/reserve' }];
+---
+
+<Base
+  title="Reservations | Book a Table at Meat Moot Seattle, South Lake Union"
+  description={`Book a table at Meat Moot Seattle, the halal smokehouse in South Lake Union. Reserve online for parties of 1–${site.reservations.largePartySize - 1}; larger groups email or call ${site.phone}.`}
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <div class="container crumbs-wrap"><Breadcrumbs items={crumbs} /></div>
+  <Reserve title="Book a table" headingLevel="h1" />
+  <VisitBlock title="Find us in South Lake Union" />
+</Base>
+
+<style>
+  .crumbs-wrap {
+    padding-top: var(--space-l);
+  }
+
+  :global(.reserve) {
+    padding-top: var(--space-l);
+  }
+</style>

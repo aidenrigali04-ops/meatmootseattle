@@ -1,0 +1,183 @@
+---
+import { site, formatTime } from '@/data/site';
+import OpenStatus from './OpenStatus.astro';
+
+interface Props {
+  headingLevel?: 'h1' | 'h2';
+  title?: string;
+}
+const { headingLevel = 'h2', title = 'Find us in South Lake Union' } = Astro.props;
+const Heading = headingLevel;
+---
+
+<section class="section visit" id="visit" aria-labelledby="visit-title">
+  <div class="container grid">
+    <div class="info">
+      <p class="eyebrow eyebrow--gold" data-reveal>Visit</p>
+      <Heading id="visit-title" class="h2" data-reveal style="--reveal-i:1">{title}</Heading>
+      <OpenStatus />
+
+      <dl class="details">
+        <div data-reveal>
+          <dt>Address</dt>
+          <dd>
+            <address>
+              {site.address.street}<br />
+              {site.address.city}, {site.address.region} {site.address.postalCode}
+            </address>
+            <span class="muted">{site.address.crossStreets}</span>
+          </dd>
+        </div>
+        <div data-reveal style="--reveal-i:1">
+          <dt>Hours</dt>
+          <dd>
+            <ul class="hours">
+              {
+                site.hours.map((h) => (
+                  <li data-day={h.day}>
+                    <span>{h.day}</span>
+                    <span>
+                      {formatTime(h.opens)} – {formatTime(h.closes)}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+          </dd>
+        </div>
+        <div data-reveal style="--reveal-i:2">
+          <dt>Contact</dt>
+          <dd>
+            <a href={`tel:${site.phoneE164}`} data-track="click_call" data-placement="visit">{site.phone}</a><br />
+            <a href={`mailto:${site.email}`} data-track="click_email" data-placement="visit">{site.email}</a>
+          </dd>
+        </div>
+      </dl>
+
+      <div class="ctas">
+        <a class="btn" href={site.links.directions} target="_blank" rel="noopener" data-track="click_directions" data-placement="visit">Get directions</a>
+        <a class="link-arrow" href={site.links.orderDelivery} target="_blank" rel="noopener" data-track="click_order" data-placement="visit">Order pickup or delivery</a>
+      </div>
+    </div>
+
+    <div class="map" data-reveal style="--reveal-i:1">
+      <iframe
+        title={`Map showing ${site.name} at ${site.address.streetShort}, Seattle`}
+        src={site.links.mapEmbed}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-xl);
+    align-items: stretch;
+  }
+
+  .info {
+    display: grid;
+    gap: var(--space-m);
+    align-content: start;
+  }
+
+  .details {
+    display: grid;
+    gap: var(--space-m);
+    margin: var(--space-s) 0 0;
+  }
+
+  .details > div {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1rem;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--line);
+  }
+
+  dt {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.25rem;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--cream-soft);
+  }
+
+  address {
+    font-style: normal;
+    color: var(--cream);
+  }
+
+  .muted {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  dd a {
+    text-decoration: none;
+  }
+
+  dd a:hover {
+    color: var(--gold);
+  }
+
+  .hours {
+    list-style: none;
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .hours li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .hours li.is-today {
+    color: var(--gold);
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+    align-items: center;
+    margin-top: var(--space-s);
+  }
+
+  .map {
+    min-height: 420px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--ink-raised);
+  }
+
+  .map iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    border: 0;
+    filter: grayscale(1) invert(0.92) contrast(0.9) brightness(0.9) sepia(0.15);
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const day = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', weekday: 'long' }).format(new Date());
+  document.querySelectorAll(`.hours li[data-day="${day}"]`).forEach((li) => li.classList.add('is-today'));
+</script>

@@ -1,0 +1,333 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/img/logo.png';
+import { site } from '@/data/site';
+import OpenStatus from './OpenStatus.astro';
+
+interface Props {
+  overlay?: boolean;
+}
+const { overlay = false } = Astro.props;
+
+const nav = [
+  { label: 'Menu', href: '/menu' },
+  { label: 'Halal', href: '/halal' },
+  { label: 'Events & Catering', href: '/events' },
+  { label: 'Visit', href: '/visit' },
+  { label: 'Journal', href: '/journal' },
+];
+const path = Astro.url.pathname.replace(/\.html$/, '');
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header class:list={['site-header', { 'is-overlay': overlay }]} data-header>
+  <div class="bar container">
+    <a href="/" class="brand" aria-label={`${site.name} — home`}>
+      <Image src={logo} alt="" width={132} height={48} loading="eager" />
+    </a>
+
+    <nav class="primary" aria-label="Primary">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <a class="phone" href={`tel:${site.phoneE164}`} data-track="click_call" data-placement="header">{site.phone}</a>
+      <a class="btn" href="/reserve" data-track="click_reserve" data-placement="header">Reserve</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu-overlay" data-burger>
+        <span class="sr-only">Open menu</span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="overlay" id="menu-overlay" data-overlay hidden>
+    <div class="container overlay-inner">
+      <nav aria-label="Mobile">
+        <ol>
+          {
+            [{ label: 'Home', href: '/' }, ...nav, { label: 'Reserve', href: '/reserve' }].map((item, i) => (
+              <li style={`--i:${i}`}>
+                <a href={item.href}>
+                  <span class="num">{String(i + 1).padStart(2, '0')}</span>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+      <div class="overlay-meta">
+        <OpenStatus />
+        <p>{site.address.streetShort}, {site.address.city}</p>
+        <a href={`tel:${site.phoneE164}`} data-track="click_call" data-placement="menu">{site.phone}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-h);
+    transition: background-color 0.5s var(--ease-out), border-color 0.5s;
+    border-bottom: 1px solid var(--line);
+    background: rgb(11 11 12 / 0.82);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  }
+
+  .site-header.is-overlay {
+    position: fixed;
+    inset: 0 0 auto;
+    background: linear-gradient(to bottom, rgb(0 0 0 / 0.55), transparent);
+    border-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .site-header.is-overlay.is-scrolled,
+  .site-header.is-open {
+    background: rgb(11 11 12 / 0.88);
+    border-color: var(--line);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  }
+
+  .bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .brand img {
+    width: clamp(104px, 9vw, 132px);
+    height: auto;
+  }
+
+  .primary ul {
+    display: flex;
+    gap: clamp(1.25rem, 2.2vw, 2.25rem);
+    list-style: none;
+  }
+
+  .primary a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cream-soft);
+    padding-block: 0.5rem;
+    background: linear-gradient(var(--gold), var(--gold)) no-repeat left bottom / 0 1px;
+    transition: color 0.3s, background-size 0.4s var(--ease-out);
+  }
+
+  .primary a:hover,
+  .primary a[aria-current='page'] {
+    color: var(--cream);
+    background-size: 100% 1px;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .phone {
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--cream-soft);
+    white-space: nowrap;
+  }
+
+  .phone:hover {
+    color: var(--gold);
+  }
+
+  .actions .btn {
+    min-height: 2.6rem;
+    padding: 0.6rem 1.25rem;
+  }
+
+  .burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .burger span[aria-hidden] {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    height: 1px;
+    background: var(--gold);
+    transition: transform 0.45s var(--ease-out);
+  }
+
+  .burger span[aria-hidden]:nth-of-type(2) {
+    top: 18px;
+  }
+
+  .burger span[aria-hidden]:nth-of-type(3) {
+    top: 26px;
+  }
+
+  .is-open .burger span[aria-hidden]:nth-of-type(2) {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  .is-open .burger span[aria-hidden]:nth-of-type(3) {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  .overlay {
+    position: fixed;
+    inset: var(--header-h) 0 0;
+    background: var(--ink);
+    overflow-y: auto;
+  }
+
+  .overlay-inner {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-block: var(--space-l);
+    gap: var(--space-l);
+  }
+
+  .overlay ol {
+    list-style: none;
+  }
+
+  .overlay li {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .overlay li a {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding-block: 0.9rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.1;
+    text-decoration: none;
+  }
+
+  .num {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+
+  .overlay-meta {
+    display: grid;
+    gap: 0.4rem;
+    color: var(--cream-soft);
+    font-size: 0.9rem;
+  }
+
+  .overlay-meta a {
+    text-decoration: none;
+    color: var(--gold);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .is-open .overlay li {
+      animation: slide-in 0.6s var(--ease-out) both;
+      animation-delay: calc(var(--i) * 45ms);
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+
+  @media (max-width: 1080px) {
+    .primary,
+    .phone {
+      display: none;
+    }
+
+    .burger {
+      display: block;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .actions .btn {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const overlay = document.querySelector<HTMLElement>('[data-overlay]');
+
+  if (header) {
+    let scrolled: boolean | null = null;
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const next = window.scrollY > 40;
+      if (next !== scrolled) {
+        scrolled = next;
+        header.classList.toggle('is-scrolled', next);
+      }
+    };
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  if (header && burger && overlay) {
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.querySelector('.sr-only')!.textContent = open ? 'Close menu' : 'Open menu';
+      overlay.hidden = !open;
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+    burger.addEventListener('click', () => setOpen(overlay.hidden));
+    overlay.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !overlay.hidden) {
+        setOpen(false);
+        burger.focus();
+      }
+    });
+  }
+</script>

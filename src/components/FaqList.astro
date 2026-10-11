@@ -1,0 +1,121 @@
+---
+import type { FaqItem } from '@/data/faq';
+
+interface Props {
+  items: FaqItem[];
+  title?: string;
+  eyebrow?: string;
+  headingLevel?: 'h1' | 'h2';
+}
+const { items, title = 'Good to know', eyebrow = 'FAQ', headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+const QuestionHeading = headingLevel === 'h1' ? 'h2' : 'h3';
+---
+
+<section class="section faq" aria-labelledby="faq-title">
+  <div class="container grid">
+    <div class="head">
+      <p class="eyebrow eyebrow--gold" data-reveal>{eyebrow}</p>
+      <Heading id="faq-title" class="h2" data-reveal style="--reveal-i:1">{title}</Heading>
+      <slot />
+    </div>
+    <div class="items">
+      {
+        items.map((f, i) => (
+          <details data-reveal style={`--reveal-i:${Math.min(i, 4)}`}>
+            <summary>
+              <QuestionHeading class="q">{f.q}</QuestionHeading>
+              <span class="icon" aria-hidden="true" />
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-xl);
+  }
+
+  .head {
+    display: grid;
+    gap: var(--space-m);
+    align-content: start;
+  }
+
+  .items {
+    border-top: 1px solid var(--line);
+  }
+
+  details {
+    border-bottom: 1px solid var(--line);
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 1.4rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .q {
+    font-size: var(--step-2);
+    line-height: 1.2;
+    transition: color 0.3s;
+  }
+
+  summary:hover .q {
+    color: var(--gold);
+  }
+
+  .icon {
+    flex: none;
+    position: relative;
+    width: 14px;
+    height: 14px;
+  }
+
+  .icon::before,
+  .icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gold);
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  .icon::after {
+    transform: rotate(90deg);
+  }
+
+  details[open] .icon::after {
+    transform: rotate(0deg);
+  }
+
+  details p {
+    padding-bottom: 1.5rem;
+    max-width: 62ch;
+    color: var(--cream-soft);
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

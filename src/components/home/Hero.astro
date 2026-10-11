@@ -1,0 +1,203 @@
+---
+import { Image } from 'astro:assets';
+import hero from '@/assets/img/hero-brisket-flame.jpg';
+import OpenStatus from '@/components/OpenStatus.astro';
+import { site } from '@/data/site';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="media" aria-hidden="true">
+    <Image
+      src={hero}
+      alt=""
+      widths={[640, 960, 1336]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      layout="none"
+      quality={82}
+    />
+    <div class="glow"></div>
+  </div>
+
+  <div class="content container">
+    <p class="eyebrow eyebrow--rule">Upscale halal dining / Seattle</p>
+    <h1 id="hero-title">
+      <span class="word">Meat</span>{' '}
+      <span class="word">Moot</span>
+      <span class="sr-only"> — halal smokehouse in South Lake Union, Seattle</span>
+    </h1>
+    <p class="intro">
+      Seattle's halal smokehouse serving slow-smoked brisket, ribs and lamb, carved to share in South Lake Union.
+    </p>
+    <div class="ctas">
+      <a class="btn" href="/reserve" data-track="click_reserve" data-placement="hero">Reserve a table</a>
+      <a class="link-arrow" href="/menu">View the menu</a>
+    </div>
+  </div>
+
+  <div class="strip container">
+    <OpenStatus />
+    <a href={site.links.directions} target="_blank" rel="noopener" data-track="click_directions" data-placement="hero">
+      {site.address.streetShort} · {site.address.neighborhood}
+    </a>
+    <span>100% Halal · Alcohol-free</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    isolation: isolate;
+    overflow: hidden;
+    background: #000;
+  }
+
+  @media (max-width: 760px) {
+    .hero {
+      min-height: calc(100svh - 56px - env(safe-area-inset-bottom));
+    }
+  }
+
+  .media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 50%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .media :global(img) {
+      animation: drift 22s var(--ease-out) both;
+    }
+  }
+
+  @keyframes drift {
+    from {
+      transform: scale(1.12);
+    }
+    to {
+      transform: scale(1.02);
+    }
+  }
+
+  .media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgb(0 0 0 / 0.85) 0%, rgb(0 0 0 / 0.45) 38%, transparent 70%),
+      linear-gradient(0deg, var(--ink) 0%, transparent 32%);
+  }
+
+  .glow {
+    position: absolute;
+    inset: auto 10% 8% 30%;
+    height: 40%;
+    background: radial-gradient(closest-side, rgb(var(--ember) / 0.22), transparent);
+    filter: blur(30px);
+    mix-blend-mode: screen;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .glow {
+      animation: flicker 5s ease-in-out infinite alternate;
+    }
+  }
+
+  @keyframes flicker {
+    50% {
+      opacity: 0.65;
+    }
+  }
+
+  .content {
+    align-self: end;
+    padding-top: calc(var(--header-h) + var(--space-xl));
+    padding-bottom: var(--space-xl);
+    display: grid;
+    gap: var(--space-m);
+    justify-items: start;
+  }
+
+  h1 {
+    font-size: var(--step-hero);
+    font-weight: 300;
+    line-height: 0.88;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    display: grid;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .word,
+    .eyebrow,
+    .intro,
+    .ctas {
+      animation: rise 1.3s var(--ease-out) both;
+    }
+
+    .word:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    .intro {
+      animation-delay: 0.3s;
+    }
+
+    .ctas {
+      animation-delay: 0.42s;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.4em);
+    }
+  }
+
+  .intro {
+    max-width: 34ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--cream-soft);
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 2.5rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--cream-soft);
+  }
+
+  .strip a {
+    text-decoration: none;
+  }
+
+  .strip a:hover {
+    color: var(--gold);
+  }
+</style>

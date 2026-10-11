@@ -1,0 +1,79 @@
+---
+import { site } from '@/data/site';
+---
+
+<p class="open-status" data-open-status data-hours={JSON.stringify(site.hours)} data-tz={site.timeZone}>
+  <span class="dot" aria-hidden="true"></span>
+  <span data-open-text>{site.hoursSummary}</span>
+</p>
+
+<style>
+  .open-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--cream-soft);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+
+  .open-status.is-open .dot {
+    background: #5fbf7f;
+    box-shadow: 0 0 0 0 rgb(95 191 127 / 0.6);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .open-status.is-open .dot {
+      animation: pulse 2.4s infinite;
+    }
+  }
+
+  @keyframes pulse {
+    70% {
+      box-shadow: 0 0 0 8px rgb(95 191 127 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgb(95 191 127 / 0);
+    }
+  }
+</style>
+
+<script>
+  type Hours = { day: string; opens: string; closes: string }[];
+  const fmt = (hhmm: string) => {
+    const [h, m] = hhmm.split(':').map(Number);
+    const hr = h % 12 === 0 ? 12 : h % 12;
+    return `${hr}${m ? `:${String(m).padStart(2, '0')}` : ''}${h >= 12 ? 'pm' : 'am'}`;
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-open-status]').forEach((el) => {
+    const hours: Hours = JSON.parse(el.dataset.hours ?? '[]');
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: el.dataset.tz,
+      weekday: 'long',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    }).formatToParts(new Date());
+    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+    const today = hours.find((h) => h.day === get('weekday'));
+    const text = el.querySelector('[data-open-text]');
+    if (!today || !text) return;
+    const now = `${get('hour')}:${get('minute')}`;
+    if (now >= today.opens && now < today.closes) {
+      el.classList.add('is-open');
+      text.textContent = `Open now · until ${fmt(today.closes)}`;
+    } else if (now < today.opens) {
+      text.textContent = `Opens today at ${fmt(today.opens)}`;
+    } else {
+      text.textContent = `Closed now · opens ${fmt(today.opens)} tomorrow`;
+    }
+  });
+</script>

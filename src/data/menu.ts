@@ -3,7 +3,7 @@ import lambShankPlated from '@/assets/img/lamb-shank-plated.jpg';
 import lambShankHoney from '@/assets/img/lamb-shank-honey.jpg';
 import lambShankTable from '@/assets/img/lamb-shank-table.jpg';
 import lambRibsSpread from '@/assets/img/lamb-ribs-spread.jpg';
-import beefRibsSpread from '@/assets/img/beef-ribs-spread.jpg';
+import beefRibsPlated from '@/assets/img/beef-ribs-plated.jpg';
 import brisketSpread from '@/assets/img/brisket-spread.jpg';
 import beefBrisketTable from '@/assets/img/beef-brisket-table.jpg';
 
@@ -108,8 +108,8 @@ export const cuts: Cut[] = [
       'Thick halal beef ribs take their time in the smoker until the meat is tender enough to cut with a spoon. They land on the board as a showpiece and disappear just as fast.',
     texture: 'Thick, juicy and beefy, with a dark, peppery bark.',
     pairsWith: ['BBQ sauce', 'Meat Moot salad', 'Meat Moot Special Rice', 'Roasted garlic'],
-    image: beefRibsSpread,
-    imageAlt: 'Smoked halal beef ribs sliced on a board with house sauces and fresh salads',
+    image: beefRibsPlated,
+    imageAlt: 'A rack of smoked halal beef ribs on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces',
     keyword: 'halal beef ribs Seattle',
   },
   {

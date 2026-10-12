@@ -92,12 +92,14 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
           class="form"
           data-enquiry
           data-endpoint={formEndpoint}
-          data-email={site.email}
           data-subject={subject}
           method="post"
-          action={formEndpoint || `mailto:${site.email}`}
+          action={formEndpoint}
           novalidate>
           <input type="hidden" name="_subject" value={subject} />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="text" name="_honey" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <div class="row two">
             <div class="field">
               <label for={`${id}-name`}>Full name</label>
@@ -336,34 +338,33 @@ const largeMail = `mailto:${site.email}?subject=${encodeURIComponent(`Large part
       w.gtag?.('event', 'submit_event_enquiry', { guests: data.get('guests') });
 
       const endpoint = form.dataset.endpoint;
-      if (endpoint) {
-        status.textContent = 'Sending…';
-        try {
-          const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
-          if (!res.ok) throw new Error(String(res.status));
-          form.reset();
-          status.textContent = "Thank you — we'll be in touch within one business day.";
-        } catch {
-          status.classList.add('is-error');
-          status.textContent = 'Something went wrong. Please call us and we will take it from there.';
-        }
+      if (!endpoint) {
+        status.classList.add('is-error');
+        status.textContent = 'Something went wrong. Please call us and we will take it from there.';
         return;
       }
 
-      const lines = [
-        `Name: ${data.get('name')}`,
-        `Email: ${data.get('email')}`,
-        `Phone: ${data.get('phone')}`,
-        `Date: ${data.get('date')}`,
-        `Time: ${data.get('time')}`,
-        `Guests: ${data.get('guests')}`,
-        '',
-        `${data.get('notes') || ''}`,
-      ];
-      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(
-        `${form.dataset.subject} — ${data.get('date')} · ${data.get('guests')} guests`,
-      )}&body=${encodeURIComponent(lines.join('\n'))}`;
-      status.textContent = 'Your email app should open with your enquiry ready to send.';
+      status.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        const payload = (await res.json().catch(() => ({}))) as { success?: boolean | string; message?: string };
+        // FormSubmit returns success:"false" on the first submit while it emails an
+        // activation link. The enquiry is queued; treat that as sent so guests never
+        // see a failure (or the inbox address).
+        const activating = typeof payload.message === 'string' && /activat/i.test(payload.message);
+        const ok =
+          res.ok &&
+          (activating ||
+            payload.success === true ||
+            payload.success === 'true' ||
+            payload.success === undefined);
+        if (!ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = "Thank you — we'll be in touch within one business day.";
+      } catch {
+        status.classList.add('is-error');
+        status.textContent = 'Something went wrong. Please call us and we will take it from there.';
+      }
     });
   });
 </script>

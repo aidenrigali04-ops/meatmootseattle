@@ -29,7 +29,7 @@ const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'MenuItem',
   name: `Smoked ${cut.name}`,
-  description: `${cut.summary} ${cut.story}`,
+  description: `${cut.summary} ${cut.serving} ${cut.story}`,
   url: new URL(path, site.url).toString(),
   suitableForDiet: 'https://schema.org/HalalDiet',
   offers: {
@@ -43,7 +43,9 @@ const productSchema = {
 };
 
 const ledger = [
-  `1 lb halal ${cut.animal.toLowerCase()} ${cut.name.replace(/^(Lamb|Beef) /, '').toLowerCase()}`,
+  cut.soldBy === 'piece'
+    ? `1 piece of halal ${cut.animal.toLowerCase()} ${cut.name.replace(/^(Lamb|Beef) /, '').toLowerCase()}`
+    : `Halal ${cut.animal.toLowerCase()} ${cut.name.replace(/^(Lamb|Beef) /, '').toLowerCase()}, sold by the pound`,
   'Unlimited house-made sauces',
   'Fresh salads & sides, with refills',
   'Garnish: roasted garlic, jalapeños, cherry tomato, rosemary',
@@ -53,7 +55,7 @@ const ledger = [
 
 <Base
   title={`Smoked ${cut.name} in Seattle — ${formatPrice(cut.pricePerLb)}/lb | Meat Moot`}
-  description={`${cut.summary} 100% halal ${cut.name.toLowerCase()} served by the pound with unlimited sauces, salads and drinks at Meat Moot Seattle, South Lake Union.`}
+  description={`${cut.summary} ${cut.serving} ${formatPrice(cut.pricePerLb)}/lb at Meat Moot Seattle, South Lake Union. 100% halal, with unlimited sauces, salads and drinks.`}
   schema={[productSchema, breadcrumbSchema(crumbs)]}
   overlayHeader
 >
@@ -66,6 +68,7 @@ const ledger = [
     crumbs={crumbs}
   >
     <p class="price-tag">{formatPrice(cut.pricePerLb)} <span>per lb</span></p>
+    <p class="serving-note">{cut.serving}</p>
   </PageHeader>
 
   <section class="section">
@@ -131,6 +134,14 @@ const ledger = [
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--muted);
+  }
+
+  .serving-note {
+    margin-top: 0.5rem;
+    max-width: 36ch;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--cream-soft);
   }
 
   .story {

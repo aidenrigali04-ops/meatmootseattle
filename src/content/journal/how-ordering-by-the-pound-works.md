@@ -21,7 +21,7 @@ Every meat on the menu is **halal** and smoked in-house over wood. You can pick 
 
 ## 2. Tell us how much you'd like
 
-Prices are per pound, and you can order in any amount. As a rule of thumb:
+Prices are per pound. Lamb shank and beef shank are sold by the piece; other cuts have a minimum (½ lb of brisket, 1 lb of ribs, 3 lb of lamb shoulder). As a rule of thumb:
 
 | Appetite | Per person |
 | --- | --- |
@@ -41,6 +41,6 @@ Every pound arrives with **unlimited house-made sauces** (chimichurri, honey mus
 
 ## Tip: come for weekday lunch
 
-Monday to Friday, 12–3pm, you can get a **½ lb lamb shank or beef brisket for $23.99**. It's the easiest way to try Meat Moot on a lunch break from the South Lake Union offices.
+Monday to Friday, 12–3pm, the weekday lunch is **$19.99**: a chicken quarter, ½ lb of smoked brisket, or one lamb shank, with sauces, salads and a drink. It's the easiest way to try Meat Moot on a lunch break from the South Lake Union offices.
 
 Ready? [See the full menu](/menu) or [reserve a table](/reserve).

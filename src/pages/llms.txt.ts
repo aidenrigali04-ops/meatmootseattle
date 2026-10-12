@@ -23,11 +23,11 @@ export const GET: APIRoute = () => {
 - Part of the Meat Moot brand, founded in ${site.founded.city} in ${site.founded.year}
 
 ## Menu (priced per pound, all halal)
-${cuts.map((c) => `- [${c.name}](${site.url}/menu/${c.slug}): ${formatPrice(c.pricePerLb)}/lb. ${c.summary}`).join('\n')}
+${cuts.map((c) => `- [${c.name}](${site.url}/menu/${c.slug}): ${formatPrice(c.pricePerLb)}/lb. ${c.serving} ${c.summary}`).join('\n')}
 
 Included with every cut: unlimited sauces (${included.sauces.join(', ')}); salads and sides (${included.sides.join(', ')}); unlimited ${included.beverages.join(' and ').toLowerCase()}.
 
-${lunchSpecial.title}: ${lunchSpecial.days}, ${lunchSpecial.time} — ${lunchSpecial.portion} ${lunchSpecial.choices.join(' or ')} for ${formatPrice(lunchSpecial.price)}.
+${lunchSpecial.title}: ${lunchSpecial.days}, ${lunchSpecial.time} — ${formatPrice(lunchSpecial.price)} for ${lunchSpecial.options.map((o) => `${o.portion} ${o.name}`).join(', ')}. ${lunchSpecial.served}
 
 ## Pages
 - [Menu](${site.url}/menu): every cut, price per pound, sides and the weekday lunch special

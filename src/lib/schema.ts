@@ -82,7 +82,7 @@ export function menuSchema() {
         hasMenuItem: cuts.map((c) => ({
           '@type': 'MenuItem',
           name: c.name,
-          description: c.summary,
+          description: `${c.summary} ${c.serving}`,
           url: abs(`/menu/${c.slug}`),
           suitableForDiet: 'https://schema.org/HalalDiet',
           offers: {
@@ -103,9 +103,9 @@ export function menuSchema() {
         '@type': 'MenuSection',
         name: lunchSpecial.title,
         description: `${lunchSpecial.days}, ${lunchSpecial.time}`,
-        hasMenuItem: lunchSpecial.choices.map((name) => ({
+        hasMenuItem: lunchSpecial.options.map((o) => ({
           '@type': 'MenuItem',
-          name: `${lunchSpecial.portion} ${name}`,
+          name: `${o.portion} ${o.name}`,
           description: lunchSpecial.note,
           suitableForDiet: 'https://schema.org/HalalDiet',
           offers: { '@type': 'Offer', price: lunchSpecial.price.toFixed(2), priceCurrency: 'USD' },

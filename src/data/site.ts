@@ -92,10 +92,15 @@ export const site = {
     widgetScript:
       'https://www.opentable.com/widget/reservation/loader?rid=1461475&type=standard&theme=standard&color=3&dark=false&iframe=true&domain=com&lang=en-US&newtab=false&ot_source=Restaurant%20website&cfe=true',
     /**
-     * Event-enquiry form endpoint (Formspree, Basin, etc.). Leave empty and the form opens a
-     * pre-filled email to `site.email` instead, so it works with zero backend.
+     * Inbox for events and catering form submissions. Never rendered as visible text —
+     * guests only see the enquiry form, not this address.
      */
-    formEndpoint: '',
+    enquiryEmail: 'aiden@meatmootseattle.com',
+    /**
+     * Formsubmit.co AJAX endpoint for the event/catering form. Posts to `enquiryEmail`
+     * without showing the address on the page.
+     */
+    formEndpoint: 'https://formsubmit.co/ajax/aiden@meatmootseattle.com',
     largePartySize: 6,
   },
 

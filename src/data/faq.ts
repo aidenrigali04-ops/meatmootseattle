@@ -56,7 +56,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Do you offer catering, takeout or delivery?',
-    a: 'Yes. We cater events, and you can order pickup or delivery through our online ordering partners. For larger catering orders, contact us directly so we can smoke enough for your group.',
+    a: 'Yes. We cater events, and you can order pickup or delivery through our online ordering partners. For larger catering orders, send an enquiry through our Events page so we can smoke enough for your group.',
     tags: ['events', 'menu'],
   },
   {

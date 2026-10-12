@@ -17,7 +17,7 @@ export const pageMeta = {
   },
   menu: {
     title: `Halal BBQ Menu & Prices | ${brand}`,
-    description: `Seven halal cuts smoked in-house and sold by the pound from $49.99. Unlimited sauces, salads and drinks. Weekday lunch ${formatPrice(lunchSpecial.price)}, Monday–Friday 12–3pm.`,
+    description: `Seven halal cuts smoked in-house, priced from $49.99/lb. Unlimited sauces, salads and drinks. Weekday lunch ${formatPrice(lunchSpecial.price)}, Monday–Friday 12–3pm.`,
   },
   halal: {
     title: `Halal Restaurant in Seattle | ${brand}`,
@@ -64,11 +64,11 @@ const cutDescriptions: Record<string, string> = {
   'lamb-neck':
     'Halal lamb neck, smoked until succulent around the bone. $PRICE/lb, 1 lb minimum, at Meat Moot Seattle in South Lake Union. Sauces, salads and drinks included.',
   'lamb-ribs':
-    'Halal lamb ribs smoked until the fat caps crisp, served by the rack. $PRICE/lb, 1 lb minimum, at Meat Moot Seattle in South Lake Union. Sauces, salads and drinks included.',
+    'Halal lamb ribs smoked until the fat caps crisp, served by the rack. $PRICE/lb, 1 lb minimum, in South Lake Union. Sauces, salads and drinks included.',
   'beef-ribs':
     'Slow-smoked halal beef ribs with a dark, peppery bark. $PRICE/lb, 1 lb minimum, at Meat Moot Seattle in South Lake Union. Sauces, salads and drinks included.',
   'beef-shank':
-    'Halal beef shank with a marrow-rich centre, carved at the counter. Sold by the piece (about 0.8–1 lb) at $PRICE/lb in South Lake Union. Sauces, salads and drinks included.',
+    'Halal beef shank with a marrow-rich centre, sold by the piece (about 0.8–1 lb) at $PRICE/lb in South Lake Union. Sauces, salads and drinks included.',
 };
 
 export function cutMeta(cut: Cut): { title: string; description: string } {

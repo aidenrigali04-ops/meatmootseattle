@@ -2,7 +2,7 @@ import type { ImageMetadata } from 'astro';
 import lambShankPlated from '@/assets/img/lamb-shank-plated.jpg';
 import lambShankHoney from '@/assets/img/lamb-shank-honey.jpg';
 import lambShankTable from '@/assets/img/lamb-shank-table.jpg';
-import lambRibsSpread from '@/assets/img/lamb-ribs-spread.jpg';
+import lambRibsPlated from '@/assets/img/lamb-ribs-plated.jpg';
 import beefRibsPlated from '@/assets/img/beef-ribs-plated.jpg';
 import brisketSpread from '@/assets/img/brisket-spread.jpg';
 import beefBrisketTable from '@/assets/img/beef-brisket-table.jpg';
@@ -94,8 +94,8 @@ export const cuts: Cut[] = [
       'Smaller and richer than beef, our halal lamb ribs are smoked until the fat caps crisp and the meat comes clean off the bone. Order a rack for the table and pass them around.',
     texture: 'Crisp edges, rich meat and a clean pull from the bone.',
     pairsWith: ['Honey mustard', 'Haydaria salad', 'Cherry tomatoes', 'Rosemary'],
-    image: lambRibsSpread,
-    imageAlt: 'A rack of smoked halal lamb ribs with bowls of salads and dipping sauces',
+    image: lambRibsPlated,
+    imageAlt: 'A full rack of smoked halal lamb ribs on a black platter with rosemary, cherry tomatoes, rice, salads and house sauces',
     keyword: 'lamb ribs Seattle',
   },
   {

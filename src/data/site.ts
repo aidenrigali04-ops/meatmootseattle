@@ -10,7 +10,7 @@ export const site = {
   url: 'https://meatmootseattle.com',
   tagline: "Seattle's halal smokehouse",
   description:
-    "Seattle's halal smokehouse serving slow-smoked brisket, ribs and lamb, sold by the pound and carved to share in South Lake Union. 100% halal, alcohol-free. Open daily 11am–9pm.",
+    'Halal smoked brisket, ribs and lamb, sold by the pound in South Lake Union. 100% halal and alcohol-free. Open daily 11am–9pm. Weekday lunch $19.99.',
 
   phone: '(206) 261-0661',
   phoneE164: '+12062610661',

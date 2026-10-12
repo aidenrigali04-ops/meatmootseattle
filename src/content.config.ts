@@ -7,6 +7,8 @@ const journal = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string().max(70),
+      /** Optional shorter `<title>` for search results. On-page H1 stays `title`. */
+      metaTitle: z.string().max(60).optional(),
       description: z.string().max(170),
       published: z.coerce.date(),
       updated: z.coerce.date().optional(),

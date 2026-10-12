@@ -11,13 +11,14 @@ import VisitBlock from '@/components/VisitBlock.astro';
 import Reserve from '@/components/Reserve.astro';
 import FaqList from '@/components/FaqList.astro';
 import { faqsByTag } from '@/data/faq';
+import { pageMeta } from '@/data/seo';
 
 const faqs = faqsByTag('general');
 ---
 
 <Base
-  title="Meat Moot Seattle | Halal Smokehouse & BBQ in South Lake Union"
-  description="Seattle's halal smokehouse. Slow-smoked brisket, beef ribs and lamb sold by the pound, carved at the table in South Lake Union. 100% halal, alcohol-free. Open daily 11am–9pm."
+  title={pageMeta.home.title}
+  description={pageMeta.home.description}
   overlayHeader
 >
   <Hero />

@@ -10,6 +10,7 @@ import { cuts, included, formatPrice } from '@/data/menu';
 import { faqsByTag } from '@/data/faq';
 import { site } from '@/data/site';
 import { menuSchema, breadcrumbSchema } from '@/lib/schema';
+import { pageMeta } from '@/data/seo';
 
 const faqs = faqsByTag('menu');
 const crumbs = [{ name: 'Menu', path: '/menu' }];
@@ -22,8 +23,8 @@ const groups = [
 ---
 
 <Base
-  title="Menu & Prices | Halal Smoked Brisket, Ribs & Lamb | Meat Moot Seattle"
-  description="The full Meat Moot Seattle menu: halal smoked brisket, lamb shank, lamb neck, lamb shoulder, lamb ribs, beef ribs and beef shank from $49.99/lb — with unlimited sauces, salads and drinks."
+  title={pageMeta.menu.title}
+  description={pageMeta.menu.description}
   schema={[menuSchema(), breadcrumbSchema(crumbs)]}
   overlayHeader
 >

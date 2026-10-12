@@ -6,6 +6,7 @@ import Reserve from '@/components/Reserve.astro';
 import { cuts, included, formatPrice, type Cut } from '@/data/menu';
 import { site } from '@/data/site';
 import { breadcrumbSchema } from '@/lib/schema';
+import { cutMeta } from '@/data/seo';
 
 export function getStaticPaths() {
   return cuts.map((cut, i) => ({
@@ -19,6 +20,7 @@ interface Props {
   next: Cut;
 }
 const { cut, next } = Astro.props;
+const meta = cutMeta(cut);
 const path = `/menu/${cut.slug}`;
 const crumbs = [
   { name: 'Menu', path: '/menu' },
@@ -54,8 +56,8 @@ const ledger = [
 ---
 
 <Base
-  title={`Smoked ${cut.name} in Seattle — ${formatPrice(cut.pricePerLb)}/lb | Meat Moot`}
-  description={`${cut.summary} ${cut.serving} ${formatPrice(cut.pricePerLb)}/lb at Meat Moot Seattle, South Lake Union. 100% halal, with unlimited sauces, salads and drinks.`}
+  title={meta.title}
+  description={meta.description}
   schema={[productSchema, breadcrumbSchema(crumbs)]}
   overlayHeader
 >

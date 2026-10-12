@@ -1,8 +1,9 @@
 ---
 import Base from '@/layouts/Base.astro';
+import { pageMeta } from '@/data/seo';
 ---
 
-<Base title="Page not found | Meat Moot Seattle" description="This page doesn't exist. Head back to the menu or reserve a table at Meat Moot Seattle." noindex>
+<Base title={pageMeta.notFound.title} description={pageMeta.notFound.description} noindex>
   <section class="section">
     <div class="container lost">
       <p class="eyebrow eyebrow--gold">404</p>

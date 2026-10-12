@@ -1,6 +1,7 @@
 ---
 title: 'Halal BBQ in Seattle: What Makes Smoked Meat Halal?'
-description: 'What makes barbecue halal? A plain-English guide to halal BBQ, and how Meat Moot Seattle serves 100% halal, alcohol-free smoked brisket, ribs and lamb.'
+metaTitle: 'Halal BBQ in Seattle | Meat Moot Seattle'
+description: 'What makes barbecue halal: no pork, no alcohol in sauces, no cross-contact. How Meat Moot Seattle smokes brisket, ribs and lamb that way.'
 published: 2026-10-10
 cover: '../../assets/img/lamb-shank-plated.jpg'
 coverAlt: 'Smoked halal lamb shanks on a black platter with rosemary, roasted potatoes, cherry tomatoes and a ring of house sauces'

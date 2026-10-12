@@ -2,8 +2,8 @@
 title: 'Planning a Team Lunch in South Lake Union? Order Like a Pro'
 description: 'How to plan a team lunch or dinner in South Lake Union at Meat Moot Seattle: how much smoked meat to order per person, booking for groups and weekday lunch pricing.'
 published: 2026-10-10
-cover: '../../assets/img/beef-ribs-spread.jpg'
-coverAlt: 'A shared spread of smoked halal beef ribs, salads and sauces for a group lunch'
+cover: '../../assets/img/beef-ribs-plated.jpg'
+coverAlt: 'A rack of smoked halal beef ribs on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces'
 keyword: 'team lunch south lake union'
 ---
 

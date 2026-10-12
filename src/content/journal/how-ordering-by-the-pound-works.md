@@ -2,8 +2,8 @@
 title: 'First Time at Meat Moot Seattle? How Ordering by the Pound Works'
 description: 'Never ordered smoked meat by the pound? Here is exactly how a meal at Meat Moot Seattle works, how much to order per person and what comes with every cut.'
 published: 2026-10-10
-cover: '../../assets/img/brisket-spread.jpg'
-coverAlt: 'Smoked halal brisket on a carving board with sauces and salads at Meat Moot Seattle'
+cover: '../../assets/img/beef-brisket-plated.jpg'
+coverAlt: 'Smoked halal beef brisket on a black platter with rosemary, yellow rice, salads and house sauces'
 keyword: 'meat moot seattle'
 ---
 

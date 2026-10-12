@@ -25,7 +25,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'nu
 ---
 
 <Base
-  title={`${post.data.title} | Meat Moot Seattle`}
+  title={post.data.metaTitle ?? `${post.data.title} | Meat Moot Seattle`}
   description={post.data.description}
   image={post.data.cover.src}
   imageAlt={post.data.coverAlt}

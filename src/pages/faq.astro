@@ -5,13 +5,14 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import { faqs } from '@/data/faq';
 import { site } from '@/data/site';
 import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { pageMeta } from '@/data/seo';
 
 const crumbs = [{ name: 'FAQ', path: '/faq' }];
 ---
 
 <Base
-  title="FAQ | Halal, Menu, Reservations & Hours | Meat Moot Seattle"
-  description="Answers to common questions about Meat Moot Seattle: halal and alcohol-free dining, ordering by the pound, the weekday lunch special, reservations, groups, catering and hours."
+  title={pageMeta.faq.title}
+  description={pageMeta.faq.description}
   schema={[breadcrumbSchema(crumbs), faqSchema(faqs)]}
 >
   <div class="container crumbs-wrap"><Breadcrumbs items={crumbs} /></div>

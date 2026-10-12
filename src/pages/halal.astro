@@ -10,6 +10,7 @@ import badge from '@/assets/img/halal-badge.png';
 import { faqsByTag } from '@/data/faq';
 import { site } from '@/data/site';
 import { breadcrumbSchema } from '@/lib/schema';
+import { pageMeta } from '@/data/seo';
 
 const faqs = faqsByTag('halal');
 const crumbs = [{ name: 'Halal', path: '/halal' }];
@@ -30,8 +31,8 @@ const pillars = [
 ---
 
 <Base
-  title="Halal Restaurant in Seattle — 100% Halal & Alcohol-Free | Meat Moot"
-  description="Meat Moot is a fully halal smokehouse in South Lake Union, Seattle. Every meat is halal, the kitchen is pork-free and we serve no alcohol. Smoked brisket, ribs and lamb, open daily."
+  title={pageMeta.halal.title}
+  description={pageMeta.halal.description}
   schema={[breadcrumbSchema(crumbs)]}
   overlayHeader
 >

@@ -45,7 +45,7 @@ const groups = [
     <div class="container">
       <header class="sec-head">
         <h2 id="meats-title" class="h2" data-reveal>Smoked meats</h2>
-        <p class="body-muted" data-reveal style="--reveal-i:1">Prices per pound. Most guests order about ½ lb each — our carvers will help you choose.</p>
+        <p class="body-muted" data-reveal style="--reveal-i:1">Priced per pound. Some cuts are sold by the piece; others have a minimum weight. Most guests plan on about ½ lb each — our carvers will help you choose.</p>
       </header>
 
       <ul class="cuts">
@@ -64,6 +64,7 @@ const groups = [
                   </p>
                 </div>
                 <p class="summary">{c.summary}</p>
+                <p class="serving">{c.serving}</p>
                 <span class="more">
                   {c.animal} · Halal <span aria-hidden="true">→</span>
                 </span>
@@ -183,6 +184,12 @@ const groups = [
 
   .summary {
     color: var(--cream-soft);
+  }
+
+  .serving {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--muted);
   }
 
   .more {

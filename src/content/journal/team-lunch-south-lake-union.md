@@ -25,7 +25,7 @@ Everything comes with unlimited house sauces, salads, sides and soft drinks, so 
 
 ## Use the weekday lunch special
 
-Monday to Friday, 12–3pm, a **½ lb lamb shank or beef brisket is $23.99**. It's a predictable per-head cost for team lunches and expense reports.
+Monday to Friday, 12–3pm, weekday lunch is **$19.99** for a chicken quarter, ½ lb of smoked brisket, or one lamb shank. It's a predictable per-head cost for team lunches and expense reports.
 
 ## Everyone can eat
 

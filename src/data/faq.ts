@@ -16,7 +16,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'How does ordering by the pound work?',
-    a: 'Choose your cut at the carving counter and tell us how much you would like. We weigh it in front of you, carve it to order and bring it to your table with unlimited house sauces, fresh salads, sides and a drink.',
+    a: 'Prices are per pound. Choose your cut at the carving counter and tell us how much you would like — each cut has a minimum (for example ½ lb of brisket, 1 lb of ribs, 3 lb of lamb shoulder). Lamb shank and beef shank are sold by the piece. We weigh it in front of you, carve it to order and bring it to your table with unlimited house sauces, salads, sides and a drink.',
     tags: ['menu', 'general'],
   },
   {
@@ -31,7 +31,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Do you have a lunch special?',
-    a: `Yes. ${lunchSpecial.days}, ${lunchSpecial.time}, get a ${lunchSpecial.portion} portion of lamb shank or beef brisket for $${lunchSpecial.price}.`,
+    a: `Yes. ${lunchSpecial.days}, ${lunchSpecial.time}, choose a chicken quarter, ½ lb of smoked brisket, or one lamb shank for $${lunchSpecial.price}. Sauces, salads and a drink are included.`,
     tags: ['menu', 'general'],
   },
   {

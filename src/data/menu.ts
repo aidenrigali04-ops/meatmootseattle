@@ -5,7 +5,7 @@ import lambNeckPlated from '@/assets/img/lamb-neck-plated.jpg';
 import lambRibsPlated from '@/assets/img/lamb-ribs-plated.jpg';
 import beefRibsPlated from '@/assets/img/beef-ribs-plated.jpg';
 import beefShankPlated from '@/assets/img/beef-shank-plated.jpg';
-import brisketSpread from '@/assets/img/brisket-spread.jpg';
+import brisketPlated from '@/assets/img/beef-brisket-plated.jpg';
 
 export type Cut = {
   slug: string;
@@ -18,6 +18,10 @@ export type Cut = {
   pairsWith: string[];
   image: ImageMetadata;
   imageAlt: string;
+  /** How the cut is sold at the carving counter. */
+  soldBy: 'pound' | 'piece';
+  /** One-line order note: minimum weight or typical piece size. */
+  serving: string;
   /** Primary search phrase this cut's page targets. */
   keyword: string;
   signature?: boolean;
@@ -34,8 +38,10 @@ export const cuts: Cut[] = [
       'The cut that built our name. A whole halal brisket goes onto the wood smoke for 16 hours until the bark sets dark and the fat renders through, then it is weighed and sliced at the carving counter in front of you.',
     texture: 'Peppery bark, a soft smoke ring and slices that pull apart under a fork.',
     pairsWith: ['Chimichurri', 'BBQ sauce', 'Meat Moot Special Rice', 'Mixed pickles'],
-    image: brisketSpread,
-    imageAlt: 'Smoked halal beef brisket on a carving board surrounded by sauces, salads and bread at Meat Moot Seattle',
+    image: brisketPlated,
+    imageAlt: 'Smoked halal beef brisket on a black platter with rosemary, yellow rice, salads and house sauces',
+    soldBy: 'pound',
+    serving: 'Sold by the pound. Minimum order ½ lb.',
     keyword: 'smoked brisket Seattle',
     signature: true,
   },
@@ -51,6 +57,8 @@ export const cuts: Cut[] = [
     pairsWith: ['Honey', 'Smoky green garlic', 'Bulgur salad', 'Roasted garlic'],
     image: lambShankPlated,
     imageAlt: 'Smoked halal lamb shanks on a black platter with rosemary, roasted potatoes, cherry tomatoes and a ring of house sauces',
+    soldBy: 'piece',
+    serving: 'Sold by the piece. Each shank is about 0.4–0.7 lb.',
     keyword: 'lamb shank Seattle',
     signature: true,
   },
@@ -66,6 +74,8 @@ export const cuts: Cut[] = [
     pairsWith: ['Dynamite sauce', 'Turkish salad', 'Spicy potato', 'Mushroom sauce'],
     image: lambShoulderPlated,
     imageAlt: 'Whole smoked halal lamb shoulder on a black platter, surrounded by house sauces, salads, garlic and roasted potatoes',
+    soldBy: 'pound',
+    serving: 'Sold by the pound. Minimum 3 lb; each shoulder is usually 3–4.5 lb.',
     keyword: 'smoked lamb shoulder Seattle',
     signature: true,
   },
@@ -81,6 +91,8 @@ export const cuts: Cut[] = [
     pairsWith: ['Hot sauce', 'Arabic salad', 'Jalapeño peppers', 'Mashed potato'],
     image: lambNeckPlated,
     imageAlt: 'Smoked halal lamb neck on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces',
+    soldBy: 'pound',
+    serving: 'Sold by the pound. Minimum 1 lb; each piece is usually 1–1.7 lb.',
     keyword: 'halal lamb Seattle',
     signature: true,
   },
@@ -96,6 +108,8 @@ export const cuts: Cut[] = [
     pairsWith: ['Honey mustard', 'Haydaria salad', 'Cherry tomatoes', 'Rosemary'],
     image: lambRibsPlated,
     imageAlt: 'A full rack of smoked halal lamb ribs on a black platter with rosemary, cherry tomatoes, rice, salads and house sauces',
+    soldBy: 'pound',
+    serving: 'Sold by the pound. Minimum order 1 lb.',
     keyword: 'lamb ribs Seattle',
   },
   {
@@ -110,6 +124,8 @@ export const cuts: Cut[] = [
     pairsWith: ['BBQ sauce', 'Meat Moot salad', 'Meat Moot Special Rice', 'Roasted garlic'],
     image: beefRibsPlated,
     imageAlt: 'A rack of smoked halal beef ribs on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces',
+    soldBy: 'pound',
+    serving: 'Sold by the pound. Minimum order 1 lb.',
     keyword: 'halal beef ribs Seattle',
   },
   {
@@ -124,18 +140,23 @@ export const cuts: Cut[] = [
     pairsWith: ['Smoky green garlic', 'Bulgur salad', 'Mixed pickles', 'Spicy potato'],
     image: beefShankPlated,
     imageAlt: 'Upright smoked halal beef shank with a marrow bone, yellow rice, salads and house sauces',
+    soldBy: 'piece',
+    serving: 'Sold by the piece. Each shank is about 0.8–1 lb.',
     keyword: 'smoked beef shank Seattle',
   },
 ];
 
 export const lunchSpecial = {
   title: 'Weekday Lunch',
-  price: 23.99,
-  portion: '½ lb',
+  price: 19.99,
   days: 'Monday – Friday',
   time: '12pm – 3pm',
-  choices: ['Lamb Shank', 'Beef Brisket'],
-  note: 'A generous half-pound of lamb shank or beef brisket with house sauces, salads and a drink.',
+  options: [
+    { name: 'Chicken Quarter', portion: '1 quarter' },
+    { name: 'Beef Brisket', portion: '½ lb', href: '/menu/beef-brisket' },
+    { name: 'Lamb Shank', portion: '1 piece', href: '/menu/lamb-shank' },
+  ],
+  note: 'Choose a chicken quarter, ½ lb of smoked brisket, or one lamb shank. Served with house sauces, salads and a drink.',
   served: 'Served with house sauces, salads and a drink.',
 };
 

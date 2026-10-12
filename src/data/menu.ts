@@ -1,5 +1,5 @@
 import type { ImageMetadata } from 'astro';
-import lambShankBoard from '@/assets/img/lamb-shank-board.jpg';
+import lambShankPlated from '@/assets/img/lamb-shank-plated.jpg';
 import lambShankHoney from '@/assets/img/lamb-shank-honey.jpg';
 import lambShankTable from '@/assets/img/lamb-shank-table.jpg';
 import lambRibsSpread from '@/assets/img/lamb-ribs-spread.jpg';
@@ -49,8 +49,8 @@ export const cuts: Cut[] = [
       'Each halal lamb shank is seasoned with our house spice blend and smoked until the meat slips off the bone. It arrives whole on the board so you can carve and share it the way it is done in Istanbul.',
     texture: 'Deep, gelatinous and juicy, with a lacquered, smoky crust.',
     pairsWith: ['Honey', 'Smoky green garlic', 'Bulgur salad', 'Roasted garlic'],
-    image: lambShankBoard,
-    imageAlt: 'Whole smoked halal lamb shanks on a slate board with sauces and salads',
+    image: lambShankPlated,
+    imageAlt: 'Smoked halal lamb shanks on a black platter with rosemary, roasted potatoes, cherry tomatoes and a ring of house sauces',
     keyword: 'lamb shank Seattle',
     signature: true,
   },

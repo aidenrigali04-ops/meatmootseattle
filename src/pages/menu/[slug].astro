@@ -50,7 +50,7 @@ const ledger = [
     : `Halal ${cut.animal.toLowerCase()} ${cut.name.replace(/^(Lamb|Beef) /, '').toLowerCase()}, sold by the pound`,
   'Unlimited house-made sauces',
   'Fresh salads & sides, with refills',
-  'Garnish: roasted garlic, jalapeños, cherry tomato, rosemary',
+  `Garnish: ${included.garnish.slice(0, -1).join(', ').toLowerCase()} and ${included.garnish.at(-1)!.toLowerCase()}`,
   'Unlimited mineral water & soft drinks',
 ];
 ---

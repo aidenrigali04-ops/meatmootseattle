@@ -19,13 +19,14 @@ export const GET: APIRoute = () => {
 - Email: ${site.email}
 - Price range: ${site.priceRange}
 - Reservations: ${site.url}/reserve (online via ${site.reservations.provider} for parties of up to ${site.reservations.largePartySize - 1}; ${site.reservations.largePartySize}+ email ${site.email} or call)
-- Order pickup/delivery: ${site.links.orderDelivery}
+- Order online (Toast): ${site.links.orderOnline}
+- Delivery: Toast Delivery (${site.links.orderDelivery}); also ${site.links.deliveryPartners.map((p) => `${p.name} (${p.href})`).join('; ')}
 - Part of the Meat Moot brand, founded in ${site.founded.city} in ${site.founded.year}
 
 ## Menu (priced per pound, all halal)
 ${cuts.map((c) => `- [${c.name}](${site.url}/menu/${c.slug}): ${formatPrice(c.pricePerLb)}/lb. ${c.serving} ${c.summary}`).join('\n')}
 
-Included with every cut: unlimited sauces (${included.sauces.join(', ')}); salads and sides (${included.sides.join(', ')}); unlimited ${included.beverages.join(' and ').toLowerCase()}.
+Included with every cut: unlimited sauces (${included.sauces.join(', ')}); salads and sides (${included.sides.join(', ')}); garnish (${included.garnish.join(', ')}); unlimited ${included.beverages.join(' and ').toLowerCase()}.
 
 ${lunchSpecial.title}: ${lunchSpecial.days}, ${lunchSpecial.time} — ${formatPrice(lunchSpecial.price)} for ${lunchSpecial.options.map((o) => `${o.portion} ${o.name}`).join(', ')}. ${lunchSpecial.served}
 

@@ -65,8 +65,23 @@ export const site = {
       'https://www.google.com/maps/dir/?api=1&destination=Meat+Moot+Seattle%2C+400+Fairview+Ave+N%2C+Seattle%2C+WA+98109',
     mapEmbed:
       'https://www.google.com/maps?q=Meat+Moot+Seattle,+400+Fairview+Ave+N,+Seattle,+WA+98109&z=16&output=embed',
+    /** Toast online ordering for pickup (and in-house Toast checkout). */
+    orderOnline:
+      'https://www.toasttab.com/local/order/mm-seattle-smb-pos-new-business-em-400-fairview-avenue-north',
+    /** Toast Delivery — same Toast menu; guests choose delivery at checkout. */
     orderDelivery:
-      'https://www.seamless.com/menu/meat-moot-seattle-400-fairview-avenue-north-seattle/12651360',
+      'https://www.toasttab.com/local/order/mm-seattle-smb-pos-new-business-em-400-fairview-avenue-north',
+    /** Secondary delivery apps. Toast remains the primary delivery path. */
+    deliveryPartners: [
+      {
+        name: 'DoorDash',
+        href: 'https://www.doordash.com/store/meat-moot-seattle-38006001/',
+      },
+      {
+        name: 'Uber Eats',
+        href: 'https://www.ubereats.com/feed?diningMode=DELIVERY&q=Meat%20Moot&pl=JTdCJTIyYWRkcmVzcyUyMiUzQSUyMjQwMCUyMEZhaXJ2aWV3JTIwQXZlJTIwTiUyQyUyMFNlYXR0bGUlMkMlMjBXQSUyMDk4MTA5JTIyJTJDJTIycmVmZXJlbmNlJTIyJTNBJTIyJTIyJTJDJTIycmVmZXJlbmNlVHlwZSUyMiUzQSUyMmdvb2dsZV9wbGFjZXMlMjIlMkMlMjJsYXRpdHVkZSUyMiUzQTQ3LjYyMjg5OSUyQyUyMmxvbmdpdHVkZSUyMiUzQS0xMjIuMzM0MDAzJTdE',
+      },
+    ],
     appAndroid: 'https://play.google.com/store/apps/details?id=com.meatmoot.io',
     brand: 'https://meatmoot.com.tr/',
     press: {

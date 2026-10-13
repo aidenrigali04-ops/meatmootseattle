@@ -1,6 +1,7 @@
 ---
 import { site, formatTime } from '@/data/site';
 import OpenStatus from './OpenStatus.astro';
+import OrderActions from './OrderActions.astro';
 
 interface Props {
   headingLevel?: 'h1' | 'h2';
@@ -56,7 +57,7 @@ const Heading = headingLevel;
 
       <div class="ctas">
         <a class="btn" href={site.links.directions} target="_blank" rel="noopener" data-track="click_directions" data-placement="visit">Get directions</a>
-        <a class="link-arrow" href={site.links.orderDelivery} target="_blank" rel="noopener" data-track="click_order" data-placement="visit">Order pickup or delivery</a>
+        <OrderActions placement="visit" />
       </div>
     </div>
 
@@ -150,7 +151,7 @@ const Heading = headingLevel;
     display: flex;
     flex-wrap: wrap;
     gap: 1.75rem;
-    align-items: center;
+    align-items: flex-start;
     margin-top: var(--space-s);
   }
 

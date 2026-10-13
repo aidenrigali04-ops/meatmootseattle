@@ -38,7 +38,7 @@ Your meat is weighed in front of you and carved to order, so you see exactly wha
 
 ## 4. Sit down — everything else is included
 
-Every pound arrives with **unlimited house-made sauces** (chimichurri, honey mustard, dynamite, BBQ, hot sauce, honey, mushroom and smoky green garlic), fresh salads and sides like Meat Moot Special Rice, mashed potato and mixed pickles, plus **unlimited mineral water and soft drinks**. No add-ons, no upsell.
+Every pound arrives with **unlimited house-made sauces** (chimichurri, honey mustard, dynamite, BBQ, hot sauce, honey, mushroom and smoky green garlic), salads and sides — rice, taboullah, tatziki and green salad — garnishes of tomatoes, rosemary, garlic and potatoes, plus **unlimited mineral water and soft drinks**. No add-ons, no upsell.
 
 ## Tip: come for weekday lunch
 

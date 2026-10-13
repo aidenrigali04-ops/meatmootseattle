@@ -8,9 +8,9 @@ import HalalBand from '@/components/HalalBand.astro';
 import header from '@/assets/img/lamb-shank-table.jpg';
 import { cuts, included, formatPrice } from '@/data/menu';
 import { faqsByTag } from '@/data/faq';
-import { site } from '@/data/site';
 import { menuSchema, breadcrumbSchema } from '@/lib/schema';
 import { pageMeta } from '@/data/seo';
+import OrderActions from '@/components/OrderActions.astro';
 
 const faqs = faqsByTag('menu');
 const crumbs = [{ name: 'Menu', path: '/menu' }];
@@ -38,7 +38,7 @@ const groups = [
   >
     <div class="header-ctas">
       <a class="btn" href="/reserve" data-track="click_reserve" data-placement="menu_header">Reserve a table</a>
-      <a class="link-arrow" href={site.links.orderDelivery} target="_blank" rel="noopener" data-track="click_order" data-placement="menu_header">Order pickup or delivery</a>
+      <OrderActions placement="menu_header" />
     </div>
   </PageHeader>
 
@@ -111,7 +111,7 @@ const groups = [
     display: flex;
     flex-wrap: wrap;
     gap: 1.75rem;
-    align-items: center;
+    align-items: flex-start;
     margin-top: var(--space-s);
   }
 

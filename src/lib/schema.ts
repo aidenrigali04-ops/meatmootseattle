@@ -57,7 +57,7 @@ export function restaurantSchema() {
       },
       {
         '@type': 'OrderAction',
-        target: { '@type': 'EntryPoint', urlTemplate: site.links.orderDelivery },
+        target: { '@type': 'EntryPoint', urlTemplate: site.links.orderOnline },
       },
     ],
     sameAs: [...Object.values(site.social), site.links.brand],
@@ -115,6 +115,11 @@ export function menuSchema() {
         '@type': 'MenuSection',
         name: 'Salads & Sides (included)',
         hasMenuItem: included.sides.map((name) => ({ '@type': 'MenuItem', name })),
+      },
+      {
+        '@type': 'MenuSection',
+        name: 'Garnish (included)',
+        hasMenuItem: included.garnish.map((name) => ({ '@type': 'MenuItem', name })),
       },
     ],
   };

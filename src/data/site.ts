@@ -120,8 +120,8 @@ export const site = {
   },
 
   analytics: {
-    /** GA4 Measurement ID, e.g. "G-XXXXXXX". Can also be set via PUBLIC_GA_ID. */
-    ga4: import.meta.env.PUBLIC_GA_ID ?? '',
+    /** GA4 Measurement ID. Override with PUBLIC_GA_ID if a different property is needed. */
+    ga4: import.meta.env.PUBLIC_GA_ID || 'G-2G0W5D0CZJ',
   },
 } as const;
 

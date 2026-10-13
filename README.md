@@ -11,7 +11,7 @@ npm run build     # type-checks, then outputs the static site to dist/
 npm run preview   # serve the built site locally
 ```
 
-`dist/` is plain HTML, CSS and images, so it can be hosted on Netlify, Vercel, Cloudflare Pages or any static host. Set `PUBLIC_GA_ID=G-XXXXXXX` in the host's environment variables to turn on Google Analytics 4.
+`dist/` is plain HTML, CSS and images, so it can be hosted on Netlify, Vercel, Cloudflare Pages or any static host. Google Analytics 4 (`G-2G0W5D0CZJ`) is included on every page. Override with `PUBLIC_GA_ID` only if a different property is needed.
 
 ## Where to edit things
 

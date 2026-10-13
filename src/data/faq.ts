@@ -26,7 +26,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'What is included with my order?',
-    a: 'Every cut comes with unlimited house-made sauces — chimichurri, honey mustard, dynamite, BBQ, hot sauce, honey, mushroom and smoky green garlic — plus rice, taboullah, tatziki and green salad, garnishes of tomatoes, rosemary, garlic and potatoes, and your choice of beverage.',
+    a: 'Every cut comes with unlimited house-made sauces — chimichurri, BBQ, hot sauce, honey, Moot Sauce and chili sauce — plus rice, taboullah, tatziki and green salad, garnishes of tomatoes, rosemary, garlic and potatoes, and your choice of beverage.',
     tags: ['menu'],
   },
   {

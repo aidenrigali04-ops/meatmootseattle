@@ -6,7 +6,7 @@ import LunchSpecial from '@/components/LunchSpecial.astro';
 import FaqList from '@/components/FaqList.astro';
 import HalalBand from '@/components/HalalBand.astro';
 import header from '@/assets/img/lamb-shank-table.jpg';
-import { cuts, included, formatPrice } from '@/data/menu';
+import { cuts, included, moreOfTheMenu, formatPrice } from '@/data/menu';
 import { faqsByTag } from '@/data/faq';
 import { menuSchema, breadcrumbSchema } from '@/lib/schema';
 import { pageMeta } from '@/data/seo';
@@ -31,7 +31,7 @@ const groups = [
   <PageHeader
     eyebrow="The menu"
     title="Sold by the pound. <em>Carved to share.</em>"
-    intro="Seven halal cuts, smoked in-house over wood for up to 16 hours. Choose your cut at the counter, we weigh it in front of you, and every board comes with unlimited sauces, salads, sides and a drink."
+    intro="Seven halal cuts, smoked in-house over wood for up to 16 hours. Choose your cut at the counter; we weigh it in front of you. Appetizers, brunch, extra sides and desserts sit alongside the board, and every cut comes with unlimited sauces, salads, sides and a drink."
     image={header}
     imageAlt="Smoked halal lamb with house sauces and salads on a Meat Moot table"
     crumbs={crumbs}
@@ -78,6 +78,29 @@ const groups = [
   </section>
 
   <div id="lunch"><LunchSpecial /></div>
+
+  <section class="section" aria-labelledby="more-title">
+    <div class="container">
+      <header class="sec-head">
+        <h2 id="more-title" class="h2" data-reveal>Around the table</h2>
+        <p class="body-muted" data-reveal style="--reveal-i:1">Appetizers, extra sides, brunch and dessert — alongside the smoked cuts. Rice is also included with every meat order.</p>
+      </header>
+      <div class="included more-menu">
+        {
+          moreOfTheMenu.map((g, i) => (
+            <div id={g.id} data-reveal style={`--reveal-i:${i}`}>
+              <h3 class="eyebrow eyebrow--gold">{g.title}</h3>
+              <ul>
+                {g.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
   <section class="section" aria-labelledby="included-title">
     <div class="container">

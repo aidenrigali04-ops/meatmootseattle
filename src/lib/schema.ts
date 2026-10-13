@@ -1,5 +1,5 @@
 import { site } from '@/data/site';
-import { cuts, included, lunchSpecial } from '@/data/menu';
+import { cuts, included, lunchSpecial, moreOfTheMenu } from '@/data/menu';
 import type { FaqItem } from '@/data/faq';
 
 const abs = (path: string) => new URL(path, site.url).toString();
@@ -111,6 +111,11 @@ export function menuSchema() {
           offers: { '@type': 'Offer', price: lunchSpecial.price.toFixed(2), priceCurrency: 'USD' },
         })),
       },
+      ...moreOfTheMenu.map((section) => ({
+        '@type': 'MenuSection',
+        name: section.title,
+        hasMenuItem: section.items.map((name) => ({ '@type': 'MenuItem', name })),
+      })),
       {
         '@type': 'MenuSection',
         name: 'Salads & Sides (included)',

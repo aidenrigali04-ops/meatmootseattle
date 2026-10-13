@@ -167,4 +167,28 @@ export const included = {
   beverages: ['Mineral Water', 'Soft Drinks'],
 };
 
+/** Named dishes beyond the smoked cuts. No prices until they are confirmed. */
+export const moreOfTheMenu = [
+  {
+    id: 'appetizers',
+    title: 'Appetizers',
+    items: ['Hummus', 'Babaganoush', 'Labneh'],
+  },
+  {
+    id: 'extra-sides',
+    title: 'Extra sides',
+    items: ['Mac & Cheese', 'Roasted Potatoes', 'French Fries', 'Rice', 'Loaded Brisket Fries'],
+  },
+  {
+    id: 'brunch',
+    title: 'Brunch',
+    items: ['Menemen', 'Shakshuka', 'Merquez & Eggs', 'Smoked Meat Menemen', 'Tomato, Feta and Olives'],
+  },
+  {
+    id: 'desserts',
+    title: 'Desserts',
+    items: ['Baklava', 'Ice Cream', 'Creme Brulee', 'Kunafa'],
+  },
+] as const;
+
 export const formatPrice = (n: number) => `$${n.toFixed(2)}`;

@@ -1,0 +1,131 @@
+---
+import { site } from '@/data/site';
+
+interface Props {
+  placement: string;
+}
+const { placement } = Astro.props;
+---
+
+<div class="order-actions">
+  <a
+    class="link-arrow"
+    href={site.links.orderOnline}
+    target="_blank"
+    rel="noopener"
+    data-track="click_order"
+    data-placement={placement}
+    data-partner="toast"
+  >
+    Order online
+  </a>
+  <div class="delivery">
+    <p class="eyebrow eyebrow--gold">Delivery</p>
+    <div class="delivery-links">
+      <a
+        class="delivery-main"
+        href={site.links.orderDelivery}
+        target="_blank"
+        rel="noopener"
+        data-track="click_order"
+        data-placement={placement}
+        data-partner="toast_delivery"
+      >
+        Toast Delivery
+      </a>
+      <span class="delivery-also">
+        {
+          site.links.deliveryPartners.map((partner, i) => (
+            <span class="partner">
+              {i > 0 && (
+                <span class="sep" aria-hidden="true">
+                  ·
+                </span>
+              )}
+              <a
+                href={partner.href}
+                target="_blank"
+                rel="noopener"
+                data-track="click_order"
+                data-placement={placement}
+                data-partner={partner.name.toLowerCase().replace(/\s+/g, '_')}
+              >
+                {partner.name}
+              </a>
+            </span>
+          ))
+        }
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .order-actions {
+    display: grid;
+    gap: 1.05rem;
+    align-content: start;
+    justify-items: start;
+  }
+
+  .delivery {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .delivery-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.7rem 1.15rem;
+  }
+
+  .delivery-main {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cream);
+    padding-block: 0.2rem;
+    border-bottom: 1px solid var(--line-strong);
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .delivery-main:hover,
+  .delivery-main:focus-visible {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .delivery-also {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .partner {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .sep {
+    margin-inline: 0.5rem;
+    color: var(--muted);
+  }
+
+  .delivery-also a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .delivery-also a:hover,
+  .delivery-also a:focus-visible {
+    color: var(--gold);
+  }
+</style>

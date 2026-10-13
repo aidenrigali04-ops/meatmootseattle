@@ -37,7 +37,7 @@ export const cuts: Cut[] = [
     story:
       'The cut that built our name. A whole halal brisket goes onto the wood smoke for 16 hours until the bark sets dark and the fat renders through, then it is weighed and sliced at the carving counter in front of you.',
     texture: 'Peppery bark, a soft smoke ring and slices that pull apart under a fork.',
-    pairsWith: ['Chimichurri', 'BBQ sauce', 'Meat Moot Special Rice', 'Mixed pickles'],
+    pairsWith: ['Chimichurri', 'BBQ sauce', 'Rice', 'Green Salad'],
     image: brisketPlated,
     imageAlt: 'Smoked halal beef brisket on a black platter with rosemary, yellow rice, salads and house sauces',
     soldBy: 'pound',
@@ -54,7 +54,7 @@ export const cuts: Cut[] = [
     story:
       'Each halal lamb shank is seasoned with our house spice blend and smoked until the meat slips off the bone. It arrives whole on the board so you can carve and share it the way it is done in Istanbul.',
     texture: 'Deep, gelatinous and juicy, with a lacquered, smoky crust.',
-    pairsWith: ['Honey', 'Smoky green garlic', 'Bulgur salad', 'Roasted garlic'],
+    pairsWith: ['Honey', 'Smoky green garlic', 'Taboullah', 'Garlic'],
     image: lambShankPlated,
     imageAlt: 'Smoked halal lamb shanks on a black platter with rosemary, roasted potatoes, cherry tomatoes and a ring of house sauces',
     soldBy: 'piece',
@@ -71,7 +71,7 @@ export const cuts: Cut[] = [
     story:
       'Shoulder is the cut that rewards patience. The marbling melts through hours of smoke, leaving a sweet, rich meat that shreds into soft, juicy pieces — ideal for groups who want to keep coming back to the board.',
     texture: 'Rich and marbled, shredding into soft, smoky pieces.',
-    pairsWith: ['Dynamite sauce', 'Turkish salad', 'Spicy potato', 'Mushroom sauce'],
+    pairsWith: ['Dynamite sauce', 'Green Salad', 'Potatoes', 'Mushroom sauce'],
     image: lambShoulderPlated,
     imageAlt: 'Whole smoked halal lamb shoulder on a black platter, surrounded by house sauces, salads, garlic and roasted potatoes',
     soldBy: 'pound',
@@ -88,7 +88,7 @@ export const cuts: Cut[] = [
     story:
       'Lamb neck is the cut regulars order once they know. Slow smoke turns its web of connective tissue into the most succulent meat on the menu, bursting with flavour around the bone.',
     texture: 'Succulent and intensely flavoured, best eaten straight from the bone.',
-    pairsWith: ['Hot sauce', 'Arabic salad', 'Jalapeño peppers', 'Mashed potato'],
+    pairsWith: ['Hot sauce', 'Green Salad', 'Tomatoes', 'Rice'],
     image: lambNeckPlated,
     imageAlt: 'Smoked halal lamb neck on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces',
     soldBy: 'pound',
@@ -105,7 +105,7 @@ export const cuts: Cut[] = [
     story:
       'Smaller and richer than beef, our halal lamb ribs are smoked until the fat caps crisp and the meat comes clean off the bone. Order a rack for the table and pass them around.',
     texture: 'Crisp edges, rich meat and a clean pull from the bone.',
-    pairsWith: ['Honey mustard', 'Haydaria salad', 'Cherry tomatoes', 'Rosemary'],
+    pairsWith: ['Honey mustard', 'Taboullah', 'Tomatoes', 'Rosemary'],
     image: lambRibsPlated,
     imageAlt: 'A full rack of smoked halal lamb ribs on a black platter with rosemary, cherry tomatoes, rice, salads and house sauces',
     soldBy: 'pound',
@@ -121,7 +121,7 @@ export const cuts: Cut[] = [
     story:
       'Thick halal beef ribs take their time in the smoker until the meat is tender enough to cut with a spoon. They land on the board as a showpiece and disappear just as fast.',
     texture: 'Thick, juicy and beefy, with a dark, peppery bark.',
-    pairsWith: ['BBQ sauce', 'Meat Moot salad', 'Meat Moot Special Rice', 'Roasted garlic'],
+    pairsWith: ['BBQ sauce', 'Green Salad', 'Rice', 'Garlic'],
     image: beefRibsPlated,
     imageAlt: 'A rack of smoked halal beef ribs on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces',
     soldBy: 'pound',
@@ -137,7 +137,7 @@ export const cuts: Cut[] = [
     story:
       'A cut built for slow cooking. Hours of smoke break the shank down into tender, deeply beefy meat around a marrow bone — a hearty choice for anyone who loves bold flavour.',
     texture: 'Tender and beefy, enriched by the marrow at its heart.',
-    pairsWith: ['Smoky green garlic', 'Bulgur salad', 'Mixed pickles', 'Spicy potato'],
+    pairsWith: ['Smoky green garlic', 'Tatziki', 'Green Salad', 'Potatoes'],
     image: beefShankPlated,
     imageAlt: 'Upright smoked halal beef shank with a marrow bone, yellow rice, salads and house sauces',
     soldBy: 'piece',
@@ -171,17 +171,8 @@ export const included = {
     'Mushroom',
     'Smoky Green Garlic',
   ],
-  sides: [
-    'Meat Moot Salad',
-    'Arabic Salad',
-    'Haydaria Salad',
-    'Bulgur Salad',
-    'Turkish Salad',
-    'Mashed Potato',
-    'Mixed Pickles',
-    'Meat Moot Special Rice',
-  ],
-  garnish: ['Jalapeño Peppers', 'Cherry Tomato', 'Roasted Garlic', 'Spicy Potato', 'Rosemary'],
+  sides: ['Rice', 'Taboullah', 'Tatziki', 'Green Salad'],
+  garnish: ['Tomatoes', 'Rosemary', 'Garlic', 'Potatoes'],
   beverages: ['Mineral Water', 'Soft Drinks'],
 };
 

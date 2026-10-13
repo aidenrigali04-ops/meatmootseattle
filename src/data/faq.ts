@@ -26,7 +26,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'What is included with my order?',
-    a: 'Every cut comes with unlimited house-made sauces — chimichurri, honey mustard, dynamite, BBQ, hot sauce, honey, mushroom and smoky green garlic — plus salads and sides such as Meat Moot Special Rice, mashed potato and mixed pickles, and your choice of beverage.',
+    a: 'Every cut comes with unlimited house-made sauces — chimichurri, honey mustard, dynamite, BBQ, hot sauce, honey, mushroom and smoky green garlic — plus rice, taboullah, tatziki and green salad, garnishes of tomatoes, rosemary, garlic and potatoes, and your choice of beverage.',
     tags: ['menu'],
   },
   {
@@ -56,7 +56,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Do you offer catering, takeout or delivery?',
-    a: 'Yes. We cater events, and you can order pickup or delivery through our online ordering partners. For larger catering orders, send an enquiry through our Events page so we can smoke enough for your group.',
+    a: 'Yes. We cater events. Order online through Toast for pickup, or choose Toast Delivery — DoorDash and Uber Eats are also available. For larger catering orders, send an enquiry through our Events page so we can smoke enough for your group.',
     tags: ['events', 'menu'],
   },
   {

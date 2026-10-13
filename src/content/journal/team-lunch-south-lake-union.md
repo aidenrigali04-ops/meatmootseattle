@@ -34,4 +34,4 @@ Meat Moot is **100% halal and alcohol-free**, so it works for teams with mixed d
 
 ## Can't come to us?
 
-We also cater. Tell us your headcount and timing and we'll smoke enough for the whole office. [Request a catering quote](/events#catering).
+We also cater. Tell us your headcount and timing and we'll smoke enough for the whole office. [Request a catering quote](/catering).

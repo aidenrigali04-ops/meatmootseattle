@@ -1,0 +1,252 @@
+---
+import { catering, lambShoulder } from '@/data/catering';
+
+const { preorder } = catering;
+const { scale } = preorder;
+---
+
+<section class="section" id="pre-order" aria-labelledby="preorder-title">
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow eyebrow--gold" data-reveal>The sell-out guarantee</p>
+      <h2 id="preorder-title" class="h2" data-reveal style="--reveal-i:1">Pre-order your cuts</h2>
+      <p class="body-muted" data-reveal style="--reveal-i:2">{preorder.intro}</p>
+    </header>
+
+    <div class="table-wrap" data-reveal>
+      <table data-planning-table>
+        <caption>Planning amounts for a mixed board</caption>
+        <thead>
+          <tr>
+            <th scope="col">Guests</th>
+            <th scope="col">Total meat</th>
+            <th scope="col">Brisket</th>
+            <th scope="col">Beef ribs</th>
+            <th scope="col">Lamb</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            preorder.rows.map((row) => (
+              <tr>
+                <th scope="row">{row.guests}</th>
+                <td>{row.totalMeat}</td>
+                <td>{row.brisket}</td>
+                <td>{row.beefRibs}</td>
+                <td>{row.lamb}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <p class="foot">{preorder.footnote}</p>
+    </div>
+
+    <form
+      class="scale"
+      data-planning-scale
+      data-lb={scale.lbPerGuest}
+      data-brisket={scale.brisket}
+      data-ribs={scale.ribs}
+      data-lamb={scale.lamb}
+      data-round={scale.roundTo}
+      data-reveal
+      style="--reveal-i:1"
+    >
+      <label for="planning-guests">Scale the table for your headcount</label>
+      <input
+        id="planning-guests"
+        name="planning-guests"
+        type="number"
+        min="6"
+        max="120"
+        step="1"
+        inputmode="numeric"
+        placeholder="e.g. 24"
+      />
+      <p class="hint">Optional. The static table above stays on the page without JavaScript. Scaled amounts use {scale.lbPerGuest} lb × guests, {Math.round(scale.brisket * 100)}% brisket / {Math.round(scale.ribs * 100)}% ribs / {Math.round(scale.lamb * 100)}% lamb, rounded to {scale.roundTo} lb.</p>
+    </form>
+
+    <aside class="shoulder" data-reveal>
+      <h3 class="h3">Lamb shoulder</h3>
+      <p>
+        Sold by the pound at {lambShoulder.pricePerLb}/lb. {lambShoulder.serving} A large shoulder is the centerpiece on the Signature Event board.
+      </p>
+    </aside>
+
+    <ul class="rules">
+      {
+        preorder.rules.map((rule, i) => (
+          <li data-reveal style={`--reveal-i:${i}`}>
+            {rule}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-m);
+    margin-bottom: var(--space-l);
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  caption {
+    caption-side: bottom;
+    padding: 0.85rem 1rem;
+    text-align: left;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  th,
+  td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  thead th {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--ink-raised);
+  }
+
+  tbody th {
+    font-weight: 500;
+    color: var(--cream);
+  }
+
+  td {
+    color: var(--cream-soft);
+  }
+
+  .foot {
+    padding: 0 1rem 1rem;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .scale {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: var(--space-l);
+    max-width: 28rem;
+  }
+
+  .scale label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scale input {
+    min-height: 44px;
+    padding: 0.6rem 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line-strong);
+    color: var(--cream);
+  }
+
+  .scale input:focus {
+    outline: none;
+    border-bottom-color: var(--gold);
+  }
+
+  .hint {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .shoulder {
+    margin-top: var(--space-l);
+    padding: var(--space-l);
+    border: 1px solid var(--line);
+    background: var(--ink-raised);
+    display: grid;
+    gap: 0.75rem;
+    max-width: 36rem;
+  }
+
+  .shoulder p {
+    color: var(--cream-soft);
+  }
+
+  .rules {
+    list-style: none;
+    display: grid;
+    gap: 0.65rem;
+    margin-top: var(--space-l);
+  }
+
+  .rules li {
+    padding-left: 1.6rem;
+    position: relative;
+    color: var(--cream-soft);
+  }
+
+  .rules li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.8em;
+    width: 0.9rem;
+    height: 1px;
+    background: var(--gold);
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-planning-scale]');
+  const table = document.querySelector<HTMLTableElement>('[data-planning-table]');
+  if (form && table) {
+    const input = form.querySelector<HTMLInputElement>('input');
+    const tbody = table.tBodies[0];
+    const staticRows = tbody.innerHTML;
+    const lb = Number(form.dataset.lb);
+    const parts = {
+      brisket: Number(form.dataset.brisket),
+      ribs: Number(form.dataset.ribs),
+      lamb: Number(form.dataset.lamb),
+    };
+    const step = Number(form.dataset.round);
+    const round = (n: number) => Math.round(n / step) * step;
+    const lbText = (n: number) => `${round(n).toFixed(1).replace(/\.0$/, '')} lb`;
+
+    input?.addEventListener('input', () => {
+      const guests = Number(input.value);
+      if (!Number.isFinite(guests) || guests < 6) {
+        tbody.innerHTML = staticRows;
+        return;
+      }
+      const total = guests * lb;
+      tbody.innerHTML = `<tr>
+        <th scope="row">${guests}</th>
+        <td>${lbText(total)}</td>
+        <td>${lbText(total * parts.brisket)}</td>
+        <td>${lbText(total * parts.ribs)}</td>
+        <td>${lbText(total * parts.lamb)}</td>
+      </tr>${staticRows}`;
+    });
+  }
+</script>

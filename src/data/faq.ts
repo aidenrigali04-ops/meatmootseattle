@@ -56,12 +56,12 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Can you host team dinners, celebrations or private events?',
-    a: 'Yes. Our shared-board format is made for groups — from team lunches near the South Lake Union tech offices to birthdays and family celebrations. Send an enquiry through our Events page and we will plan the menu with you.',
+    a: 'Yes. Our shared-board format is made for groups — from team lunches near the South Lake Union tech offices to birthdays and family celebrations. Send an enquiry through the Events page, or request a catering quote if you want us to come to you.',
     tags: ['events'],
   },
   {
     q: 'Do you offer catering, takeout or delivery?',
-    a: 'Yes. We cater events. Order online through Toast for pickup, or choose Toast Delivery — DoorDash and Uber Eats are also available. For larger catering orders, send an enquiry through our Events page so we can smoke enough for your group.',
+    a: 'Yes. We cater events. Order online through Toast for pickup, or choose Toast Delivery — DoorDash and Uber Eats are also available. For larger catering orders, send an enquiry through the Catering page so we can smoke enough for your group.',
     tags: ['events', 'menu'],
   },
   {

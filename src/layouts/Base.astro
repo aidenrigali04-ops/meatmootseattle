@@ -126,6 +126,7 @@ const jsonLd = [restaurantSchema(), ...schema];
         w.gtag?.('event', el.dataset.track, {
           link_url: (el as HTMLAnchorElement).href ?? undefined,
           placement: el.dataset.placement ?? undefined,
+          package_name: el.dataset.package ?? undefined,
         });
       });
     </script>

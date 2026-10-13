@@ -1,5 +1,6 @@
 import { site } from '@/data/site';
 import { cuts, included, lunchSpecial, moreOfTheMenu } from '@/data/menu';
+import { catering } from '@/data/catering';
 import type { FaqItem } from '@/data/faq';
 
 const abs = (path: string) => new URL(path, site.url).toString();
@@ -127,6 +128,35 @@ export function menuSchema() {
         hasMenuItem: included.garnish.map((name) => ({ '@type': 'MenuItem', name })),
       },
     ],
+  };
+}
+
+/** MenuSection for group packages. Offers are omitted until a per-person price is confirmed. */
+export function cateringPackagesSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'MenuSection',
+    '@id': `${site.url}/catering#packages`,
+    name: 'Catering & Group Packages',
+    url: abs('/catering'),
+    hasMenuItem: catering.packages.map((p) => {
+      const item: Record<string, unknown> = {
+        '@type': 'MenuItem',
+        name: p.name,
+        description: `${p.bestFor}. ${p.guests}. ${p.meatPerPerson} of meat per person. ${p.cuts}. ${p.included}`,
+        url: abs(`/catering#package-${p.id}`),
+      };
+      const price = p.pricePerPerson as number | null;
+      if (typeof price === 'number') {
+        item.offers = {
+          '@type': 'Offer',
+          price: price.toFixed(2),
+          priceCurrency: 'USD',
+          unitText: 'person',
+        };
+      }
+      return item;
+    }),
   };
 }
 

@@ -36,7 +36,8 @@ ${moreOfTheMenu.map((s) => `- ${s.title}: ${s.items.join(', ')}`).join('\n')}
 ## Pages
 - [Menu](${site.url}/menu): smoked cuts, appetizers, extra sides, brunch, desserts and the weekday lunch special
 - [Halal standards](${site.url}/halal): sourcing, certification and our alcohol-free policy
-- [Events, groups & catering](${site.url}/events): team dinners, celebrations and catering requests
+- [Group dining & private events](${site.url}/events): team dinners, celebrations, iftars and buyouts
+- [Catering](${site.url}/catering): office lunches and smoked BBQ delivered or picked up, from 10 guests
 - [Hours & directions](${site.url}/visit): address, hours, parking and transit
 - [FAQ](${site.url}/faq): answers to common questions
 - [Journal](${site.url}/journal): guides to ordering, halal BBQ in Seattle and group lunches

@@ -1,5 +1,6 @@
 import { site } from '@/data/site';
 import { formatPrice, lunchSpecial, type Cut } from '@/data/menu';
+import { catering } from '@/data/catering';
 
 const brand = site.name;
 
@@ -25,9 +26,12 @@ export const pageMeta = {
       'Every cut is halal at Meat Moot Seattle. Pork-free kitchen, no alcohol served. Smoked brisket, ribs and lamb in South Lake Union. Open daily 11am–9pm.',
   },
   events: {
-    title: `Group Dining & Catering in Seattle | ${brand}`,
-    description:
-      `Team lunches, birthdays and catering at Meat Moot Seattle. Halal smoked brisket, ribs and lamb, shared in South Lake Union. Enquire for groups of ${site.reservations.largePartySize} or more.`,
+    title: catering.pages.events.title,
+    description: catering.pages.events.description,
+  },
+  catering: {
+    title: catering.pages.catering.title,
+    description: catering.pages.catering.description,
   },
   visit: {
     title: `Hours & Directions | ${brand}, South Lake Union`,

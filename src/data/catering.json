@@ -1,0 +1,377 @@
+{
+  "pages": {
+    "catering": {
+      "path": "/catering",
+      "title": "Halal BBQ Catering in Seattle | Meat Moot",
+      "description": "Smoked brisket, beef ribs and lamb catered for offices and events in South Lake Union. Team lunches from 10 guests. Request a quote.",
+      "h1": "Halal Smoked BBQ Catering in Seattle",
+      "eyebrow": "Catering",
+      "subhead": "Brisket, beef ribs and lamb, smoked in-house and delivered to your team. From 10 guests.",
+      "primaryCta": "Request a catering quote",
+      "heroImageAlt": "Smoked lamb shanks on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces at Meat Moot Seattle",
+      "ogImageAlt": "Sliced smoked brisket on a tray at Meat Moot Seattle",
+      "packageOrder": ["slu-team-lunch", "signature-event", "celebration-feast"],
+      "eventOrder": [
+        "corporate-lunch",
+        "holiday-party",
+        "iftar",
+        "birthday",
+        "aqiqah",
+        "buyout",
+        "watch-party"
+      ]
+    },
+    "events": {
+      "path": "/events",
+      "title": "Group Dining & Private Events in SLU | Meat Moot",
+      "description": "Celebrations, team dinners, iftars and buyouts at Meat Moot, South Lake Union. Pre-order your cuts so nothing sells out. Plan your event.",
+      "h1": "Group Dinners & Private Events in South Lake Union",
+      "eyebrow": "Group dining & private events",
+      "subhead": "Pre-order your cuts, bring your group, and we'll have it smoked and ready.",
+      "primaryCta": "Plan your event",
+      "heroImageAlt": "A rack of smoked beef ribs on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces at Meat Moot Seattle",
+      "ogImageAlt": "Sliced smoked brisket on a tray at Meat Moot Seattle",
+      "packageOrder": ["celebration-feast", "signature-event", "slu-team-lunch"],
+      "eventOrder": [
+        "corporate-lunch",
+        "holiday-party",
+        "birthday",
+        "aqiqah",
+        "iftar",
+        "buyout",
+        "watch-party"
+      ]
+    }
+  },
+  "trust": [
+    "Smoked in-house daily",
+    "Alcohol-free menu",
+    "South Lake Union, 400 Fairview Ave N"
+  ],
+  "packages": [
+    {
+      "id": "slu-team-lunch",
+      "name": "SLU Team Lunch",
+      "bestFor": "Office lunches, meetings, weekday catering",
+      "guests": "10–40",
+      "guestMin": 10,
+      "guestMax": 40,
+      "meatPerPerson": "½ lb",
+      "cuts": "Brisket or lamb shank per person, chosen at order",
+      "included": "Rice, taboullah, tatziki, green salad, and house sauces (chimichurri, BBQ, hot sauce, honey, Moot Sauce and chili sauce)",
+      "pricePerPerson": null,
+      "minimum": "10 guests",
+      "format": "Individual boxes or shared trays; pickup or delivery",
+      "iftarVersion": null,
+      "cta": "Request this package"
+    },
+    {
+      "id": "celebration-feast",
+      "name": "Celebration Feast",
+      "bestFor": "Birthdays, family dinners, aqiqah, engagements, team dinners",
+      "guests": "6–20 (dine-in)",
+      "guestMin": 6,
+      "guestMax": 20,
+      "meatPerPerson": "About ¾ lb, mixed",
+      "cuts": "Per 4 guests: 1 lb brisket + 1 lb beef ribs + 1 lamb shank",
+      "included": "Rice, taboullah, tatziki, green salad, house sauces, mineral water or a soft drink, and shared kunafa",
+      "pricePerPerson": null,
+      "minimum": "6 guests",
+      "format": "Family-style, carved to order",
+      "iftarVersion": null,
+      "cta": "Request this package"
+    },
+    {
+      "id": "signature-event",
+      "name": "Signature Event / Iftar",
+      "bestFor": "Holiday parties, iftars & Eid, buyouts, 25+ guests",
+      "guests": "20–80 (dine-in, buyout or catering)",
+      "guestMin": 20,
+      "guestMax": 80,
+      "meatPerPerson": "About ¾–1 lb, mixed",
+      "cuts": "Large lamb shoulder centerpiece + brisket + beef ribs + chicken quarters",
+      "included": "Hummus, babaganoush and labneh to start; rice, taboullah, tatziki, green salad and house sauces; kunafa and baklava; mineral water or a soft drink per guest",
+      "pricePerPerson": null,
+      "minimum": "20 guests",
+      "format": "Family-style or buffet",
+      "iftarVersion": "Ramadan iftar menus are planned with you when you enquire. Timed extras are confirmed against that season's menu.",
+      "cta": "Request this package"
+    }
+  ],
+  "preorder": {
+    "intro": "Our meat is smoked in limited batches each day. Group orders lock in your cuts at booking. They're smoked and held for you, never sold to walk-ins.",
+    "footnote": "Planned at about ¾ lb of cooked meat per guest. Bone-in cuts weigh more. Our team will confirm your amounts.",
+    "scale": {
+      "lbPerGuest": 0.75,
+      "brisket": 0.45,
+      "ribs": 0.25,
+      "lamb": 0.3,
+      "roundTo": 0.5
+    },
+    "rows": [
+      {
+        "guests": 10,
+        "totalMeat": "7.5 lb",
+        "brisket": "3.5 lb",
+        "beefRibs": "2 lb",
+        "lamb": "2 lb (about 2 shanks)"
+      },
+      {
+        "guests": 20,
+        "totalMeat": "15 lb",
+        "brisket": "6.5 lb",
+        "beefRibs": "4 lb",
+        "lamb": "4.5 lb (1 Large shoulder)"
+      },
+      {
+        "guests": 40,
+        "totalMeat": "30 lb",
+        "brisket": "13.5 lb",
+        "beefRibs": "7.5 lb",
+        "lamb": "9–12 lb (2 Large shoulders)"
+      },
+      {
+        "guests": 80,
+        "totalMeat": "60 lb",
+        "brisket": "27 lb",
+        "beefRibs": "15 lb",
+        "lamb": "18–24 lb (4 Large shoulders)"
+      }
+    ],
+    "rules": [
+      "Cuts are locked when you book.",
+      "Final headcount and cut choices are due before your event. We confirm the deadline on your quote.",
+      "Changes after the deadline are subject to availability."
+    ]
+  },
+  "bookingSteps": [
+    {
+      "title": "Tell us about your event",
+      "body": "Date, guests and package — or call and we'll walk through it with you."
+    },
+    {
+      "title": "Get your quote",
+      "body": "We'll come back within one business day with cuts, quantities and timing."
+    },
+    {
+      "title": "Confirm and lock your cuts",
+      "body": "Pay your deposit and your cuts are reserved. They are smoked for your group, not sold to walk-ins."
+    },
+    {
+      "title": "We smoke, carve and serve",
+      "body": "Dine in at South Lake Union, pick up, or have us deliver. Carvers finish the boards for you."
+    }
+  ],
+  "eventTypes": [
+    {
+      "id": "corporate-lunch",
+      "name": "Corporate team lunch",
+      "packageId": "slu-team-lunch",
+      "packageLabel": "SLU Team Lunch",
+      "leadTime": "48 hours",
+      "leadTimeHours": 48,
+      "season": "Year-round, best Tue/Wed",
+      "description": "Office lunches and weekday meetings, boxed or on shared trays."
+    },
+    {
+      "id": "holiday-party",
+      "name": "Office holiday party",
+      "packageId": "signature-event",
+      "packageLabel": "Signature Event (Celebration Feast if the group is small)",
+      "leadTime": "2–3 weeks",
+      "leadTimeHours": 336,
+      "season": "Nov–Dec",
+      "description": "Year-end gatherings in the dining room or catered to your office."
+    },
+    {
+      "id": "birthday",
+      "name": "Birthday or celebration",
+      "packageId": "celebration-feast",
+      "packageLabel": "Celebration Feast",
+      "leadTime": "72 hours",
+      "leadTimeHours": 72,
+      "season": "Year-round",
+      "description": "Family-style boards with table-side carving for milestones."
+    },
+    {
+      "id": "aqiqah",
+      "name": "Aqiqah, engagement, graduation",
+      "packageId": "celebration-feast",
+      "packageLabel": "Celebration Feast or Signature Event",
+      "leadTime": "1–2 weeks",
+      "leadTimeHours": 168,
+      "season": "Graduations May–June",
+      "description": "Shared cuts for family gatherings, with a larger board when you need it."
+    },
+    {
+      "id": "iftar",
+      "name": "Iftar or Eid gathering",
+      "packageId": "signature-event",
+      "packageLabel": "Signature Event (iftar version)",
+      "leadTime": "2 weeks",
+      "leadTimeHours": 336,
+      "season": "Ramadan and Eid",
+      "description": "A timed iftar spread. We'll plan the menu with you for that season."
+    },
+    {
+      "id": "buyout",
+      "name": "Buyout or large event",
+      "packageId": "signature-event",
+      "packageLabel": "Signature Event",
+      "leadTime": "3–4 weeks",
+      "leadTimeHours": 504,
+      "season": "Tue/Wed nights preferred",
+      "description": "Larger guest counts, dine-in or catering. We'll confirm space when you enquire."
+    },
+    {
+      "id": "watch-party",
+      "name": "Watch party",
+      "packageId": "celebration-feast",
+      "packageLabel": "Celebration Feast or a custom platter",
+      "leadTime": "1 week",
+      "leadTimeHours": 168,
+      "season": "Major sports events",
+      "description": "A group platter timed for kickoff, with cuts locked in advance."
+    }
+  ],
+  "addOns": [
+    {
+      "name": "Extra cuts by the pound",
+      "detail": "Add brisket, ribs, lamb or any cut from the menu, priced per pound."
+    },
+    {
+      "name": "Dessert platter",
+      "detail": "Kunafa and baklava from the dessert menu."
+    },
+    {
+      "name": "Drinks",
+      "detail": "Mineral water and soft drinks. No alcohol is served."
+    },
+    {
+      "name": "Upgrade lunch boxes to beef ribs",
+      "detail": "Swap the Team Lunch cut to beef ribs when you enquire."
+    },
+    {
+      "name": "Live carving station",
+      "detail": "Available for dine-in events. Staffing is confirmed on your quote."
+    }
+  ],
+  "logistics": {
+    "events": [
+      "For parties of 6 or more we reserve your table and plan the cuts with you.",
+      "Paid street parking and public garages are nearby. Rideshare drop-off works best on Fairview Ave N.",
+      "The South Lake Union Streetcar and several King County Metro routes stop within a few blocks."
+    ],
+    "catering": [
+      "Pickup at 400 Fairview Ave N, Suite P001, Seattle, WA 98109.",
+      "Delivery area, fees and setup are confirmed on your quote.",
+      "Team Lunch catering starts at 10 guests."
+    ]
+  },
+  "policies": [
+    {
+      "title": "Service charge",
+      "body": "A service charge applies to groups. It is shown on your quote, not only in fine print. We confirm the rate and whether it is a gratuity when we send the quote."
+    },
+    {
+      "title": "Headcount",
+      "body": "You're billed for the confirmed guest count. We set the deadline for final numbers on your quote."
+    },
+    {
+      "title": "Cancellation",
+      "body": "Deposit and cancellation windows are confirmed on your quote, before you pay."
+    },
+    {
+      "title": "Dietary",
+      "body": "The kitchen is pork-free and alcohol-free. Every meat we serve is halal. Tell us about allergies when you book."
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Is everything halal?",
+      "a": "Every meat we serve is halal, and the restaurant is pork-free and alcohol-free. Package menus list the cuts and sides; they do not carry a separate certification line until the certifying body is named on this site."
+    },
+    {
+      "q": "How far ahead do I need to book?",
+      "a": "Lead times are listed with each event type on this page. Team lunches can be as little as 48 hours; holiday parties, iftars and buyouts need more notice."
+    },
+    {
+      "q": "What if you sell out of brisket?",
+      "a": "Group orders lock in your cuts at booking. They're smoked and held for your group, never sold to walk-ins."
+    },
+    {
+      "q": "How much meat do I need per person?",
+      "a": "Plan on about ¾ lb of cooked meat per guest for a mixed board, or ½ lb for a Team Lunch. The planning table on this page shows worked examples. Bone-in cuts weigh more; we'll confirm amounts on your quote."
+    },
+    {
+      "q": "Do you deliver?",
+      "a": "Yes — pickup at the South Lake Union restaurant, or delivery. The delivery area and fee are confirmed on your catering quote. Everyday orders can also use Toast Delivery."
+    },
+    {
+      "q": "Is there a service charge?",
+      "a": "Yes. A service charge applies to groups. The exact percentage is on your quote, not buried in fine print."
+    },
+    {
+      "q": "Can you host iftar?",
+      "a": "Yes. The Signature Event package has an iftar version. We'll time the spread with you for that season's sunset."
+    },
+    {
+      "q": "Do you serve alcohol?",
+      "a": "No. All drinks are alcohol-free. Mineral water and soft drinks come with dine-in meat orders; we'll plan drinks for catering when you enquire."
+    }
+  ],
+  "form": {
+    "id": "enquire",
+    "subjectCatering": "Catering quote request",
+    "subjectEvents": "Group dining / private event enquiry",
+    "success": "Thank you — we'll be in touch within one business day.",
+    "formats": ["Dine-in", "Pickup", "Delivery"],
+    "hearAbout": ["Google", "Instagram", "Friend", "ezCater", "Other"],
+    "cutPreferencesHint": "Brisket, beef ribs, lamb shank, lamb shoulder…",
+    "leadTimeWarning": "That date is sooner than the usual lead time for this event type. Send the enquiry anyway and we'll tell you if we can make it work."
+  },
+  "ctaBand": {
+    "catering": "Ready to feed the team?",
+    "events": "Ready to plan the table?"
+  },
+  "unconfirmed": [
+    "halal.certifier (do not use “halal certified” or put “halal” on package names until GBP bacon-burger issue is resolved and the certifier is named)",
+    "address.suiteFormat (using existing site NAP: Suite P001 — must still be checked against GBP)",
+    "packages.slu-team-lunch.pricePerPerson (suggested $28 — omitted)",
+    "packages.celebration-feast.pricePerPerson (suggested $45 — omitted)",
+    "packages.signature-event.pricePerPerson (suggested $65 — omitted)",
+    "packages.*.serviceChargePercent",
+    "packages.slu-team-lunch.pita",
+    "packages.celebration-feast.sidesUnlimitedOrSet",
+    "packages.celebration-feast.softDrinkConfirmedAsPackageLine",
+    "packages.signature-event.carvingStationStaffed",
+    "packages.signature-event.iftarExtras (dates, lentil soup, yogurt drink vs Ramadan menu)",
+    "packages.signature-event.buyoutMinimumDollars",
+    "preorder.portionConfirmWithChef",
+    "preorder.headcountDeadlineHours (suggested 72)",
+    "lambShoulder.regularPrice (suggested $190)",
+    "lambShoulder.largePrice (suggested $270)",
+    "lambShoulder.serves",
+    "booking.quoteSlaHours (suggested 24; site uses existing “one business day”)",
+    "eventTypes.*.depositPercent",
+    "eventTypes.iftar.ramadan2027Dates",
+    "eventTypes.depositCollectionMethod",
+    "addOns.extraCutsPricePerLb (menu /lb prices are for dine-in counter; catering /lb not confirmed)",
+    "addOns.liveCarvingStationStaffed",
+    "logistics.events.capacitySeatedStanding",
+    "logistics.events.privateDiningRoomExists",
+    "logistics.events.av",
+    "logistics.catering.deliveryRadiusMiles",
+    "logistics.catering.deliveryFee",
+    "logistics.catering.cateringMinimumDollars",
+    "logistics.catering.setupDisposablesIncluded",
+    "policies.serviceCharge.percent",
+    "policies.serviceCharge.appliesToGroupSize",
+    "policies.serviceCharge.distributedToStaffOrNotGratuity",
+    "policies.headcount.deadlineHours",
+    "policies.cancellation.fullRefundDays (suggested 7)",
+    "policies.cancellation.halfRefundHours (suggested 72)",
+    "form.submitDestination (using existing FormSubmit to aiden@meatmootseattle.com — confirm if CRM/Toast is preferred)",
+    "form.autoReplySlaHours"
+  ]
+}

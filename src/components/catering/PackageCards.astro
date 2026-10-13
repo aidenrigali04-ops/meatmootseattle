@@ -1,0 +1,145 @@
+---
+import { packagesFor, type PageIntent } from '@/data/catering';
+
+interface Props {
+  intent: PageIntent;
+}
+const { intent } = Astro.props;
+const packages = packagesFor(intent);
+---
+
+<section class="section" id="packages" aria-labelledby="packages-title">
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow eyebrow--gold" data-reveal>Packages</p>
+      <h2 id="packages-title" class="h2" data-reveal style="--reveal-i:1">Choose a starting point</h2>
+      <p class="body-muted" data-reveal style="--reveal-i:2">
+        Prices are quoted per person once we have your date and headcount. A service charge applies to groups; the rate is on the quote, not only in fine print.
+      </p>
+    </header>
+    <ul class="cards">
+      {
+        packages.map((p, i) => (
+          <li id={`package-${p.id}`} data-reveal style={`--reveal-i:${i}`}>
+            <article>
+              <h3 class="h3">{p.name}</h3>
+              <p class="best">{p.bestFor}</p>
+              <dl>
+                <div>
+                  <dt>Guests</dt>
+                  <dd>{p.guests}</dd>
+                </div>
+                <div>
+                  <dt>Meat per person</dt>
+                  <dd>{p.meatPerPerson}</dd>
+                </div>
+                <div>
+                  <dt>Cuts</dt>
+                  <dd>{p.cuts}</dd>
+                </div>
+                <div>
+                  <dt>Included</dt>
+                  <dd>{p.included}</dd>
+                </div>
+                <div>
+                  <dt>Minimum</dt>
+                  <dd>{p.minimum}</dd>
+                </div>
+                <div>
+                  <dt>Format</dt>
+                  <dd>{p.format}</dd>
+                </div>
+                {p.iftarVersion && (
+                  <div>
+                    <dt>Iftar</dt>
+                    <dd>{p.iftarVersion}</dd>
+                  </div>
+                )}
+                <div>
+                  <dt>Price</dt>
+                  <dd>
+                    {typeof (p.pricePerPerson as number | null) === 'number'
+                      ? `From $${p.pricePerPerson} per person, plus tax and service charge`
+                      : 'Quoted per person, plus tax and service charge'}
+                  </dd>
+                </div>
+              </dl>
+              <a
+                class="btn"
+                href={`#enquire`}
+                data-track="package_cta_click"
+                data-package={p.name}
+                data-package-id={p.id}
+                data-placement={`${intent}_packages`}
+              >
+                {p.cta}
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-m);
+    margin-bottom: var(--space-l);
+  }
+
+  .cards {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  article {
+    display: grid;
+    gap: 1.1rem;
+    align-content: start;
+    height: 100%;
+    padding: var(--space-l);
+    border: 1px solid var(--line);
+    background: var(--ink-raised);
+    border-radius: var(--radius);
+  }
+
+  .best {
+    color: var(--gold);
+    font-size: 0.95rem;
+  }
+
+  dl {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+  }
+
+  dt {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--cream-soft);
+  }
+
+  .btn {
+    justify-self: start;
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 1000px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -4,9 +4,9 @@ import Base from '@/layouts/Base.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import Reserve from '@/components/Reserve.astro';
 import FaqList from '@/components/FaqList.astro';
-import header from '@/assets/img/beef-ribs-spread.jpg';
-import brisket from '@/assets/img/brisket-spread.jpg';
-import ribs from '@/assets/img/lamb-ribs-spread.jpg';
+import header from '@/assets/img/beef-ribs-plated.jpg';
+import brisket from '@/assets/img/beef-brisket-plated.jpg';
+import shank from '@/assets/img/lamb-shank-plated.jpg';
 import { faqsByTag } from '@/data/faq';
 import { site } from '@/data/site';
 import { breadcrumbSchema } from '@/lib/schema';
@@ -34,7 +34,7 @@ const occasions = [
     title="Bring everyone <em>to the table.</em>"
     intro="Meat Moot was made for sharing. Bring your team, your family or your whole crew and we'll take care of the cuts, the quantities and the show."
     image={header}
-    imageAlt="A shared spread of halal smoked beef ribs, salads and sauces for a group at Meat Moot"
+    imageAlt="A rack of smoked halal beef ribs on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces"
     crumbs={crumbs}
   >
     <div class="header-ctas">
@@ -62,7 +62,7 @@ const occasions = [
   <section class="section" id="group-dining">
     <div class="container split">
       <figure data-reveal>
-        <Image src={brisket} alt="Smoked halal brisket carved for a group with sauces and salads" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
+        <Image src={brisket} alt="Smoked halal beef brisket on a black platter with rosemary, yellow rice, salads and house sauces" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
       </figure>
       <div class="copy" data-reveal style="--reveal-i:1">
         <p class="eyebrow eyebrow--gold">Dine with us</p>
@@ -82,7 +82,7 @@ const occasions = [
   <section class="section" id="catering">
     <div class="container split reverse">
       <figure data-reveal>
-        <Image src={ribs} alt="A rack of halal smoked lamb ribs ready for catering" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
+        <Image src={shank} alt="Smoked halal lamb shanks on a black platter with rosemary, roasted potatoes, cherry tomatoes and a ring of house sauces" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
       </figure>
       <div class="copy" data-reveal style="--reveal-i:1">
         <p class="eyebrow eyebrow--gold">We come to you</p>

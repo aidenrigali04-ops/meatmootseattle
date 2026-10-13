@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
-import spread from '@/assets/img/beef-ribs-spread.jpg';
-import ribs from '@/assets/img/lamb-ribs-spread.jpg';
+import spread from '@/assets/img/beef-ribs-plated.jpg';
+import shank from '@/assets/img/lamb-shank-plated.jpg';
 ---
 
 <section class="section events" id="events" aria-labelledby="events-title">
@@ -13,7 +13,7 @@ import ribs from '@/assets/img/lamb-ribs-spread.jpg';
   </div>
 
   <div class="banner" data-reveal>
-    <Image src={spread} alt="A shared table of smoked halal beef ribs, salads and house sauces ready for a group" widths={[768, 1280, 2048]} sizes="100vw" />
+    <Image src={spread} alt="A rack of smoked halal beef ribs on a black platter with rosemary, roasted potatoes, cherry tomatoes and house sauces" widths={[768, 1280, 2048]} sizes="100vw" />
   </div>
 
   <div class="container body">
@@ -30,7 +30,7 @@ import ribs from '@/assets/img/lamb-ribs-spread.jpg';
       </div>
     </div>
     <figure class="side" data-reveal style="--reveal-i:1">
-      <Image src={ribs} alt="Rack of smoked halal lamb ribs with sauces and salads" widths={[480, 800]} sizes="(max-width: 860px) 100vw, 40vw" />
+      <Image src={shank} alt="Smoked halal lamb shanks on a black platter with rosemary, roasted potatoes, cherry tomatoes and a ring of house sauces" widths={[480, 800]} sizes="(max-width: 860px) 100vw, 40vw" />
     </figure>
   </div>
 </section>
@@ -51,6 +51,7 @@ import ribs from '@/assets/img/lamb-ribs-spread.jpg';
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 50% 60%;
     filter: brightness(0.82) saturate(1.05);
   }
 

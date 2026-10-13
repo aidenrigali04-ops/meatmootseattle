@@ -4,8 +4,8 @@ import Base from '@/layouts/Base.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import FaqList from '@/components/FaqList.astro';
 import VisitBlock from '@/components/VisitBlock.astro';
-import header from '@/assets/img/lamb-shank-honey.jpg';
-import board from '@/assets/img/lamb-shank-board.jpg';
+import header from '@/assets/img/lamb-shank-plated.jpg';
+import board from '@/assets/img/beef-brisket-plated.jpg';
 import badge from '@/assets/img/halal-badge.png';
 import { faqsByTag } from '@/data/faq';
 import { site } from '@/data/site';
@@ -41,7 +41,7 @@ const pillars = [
     title="Fully halal. <em>Fully smoked.</em>"
     intro="Meat Moot was born in Istanbul to bring a centuries-old smoked-meat tradition to the table — and halal is at the heart of it. In Seattle, that means every meat, every sauce and every drink is something the whole family can enjoy."
     image={header}
-    imageAlt="Smoked halal lamb being finished with honey at Meat Moot"
+    imageAlt="Smoked halal lamb shanks on a black platter with rosemary, roasted potatoes, cherry tomatoes and a ring of house sauces"
     crumbs={crumbs}
   />
 
@@ -64,7 +64,7 @@ const pillars = [
   <section class="section">
     <div class="container split">
       <figure data-reveal>
-        <Image src={board} alt="Halal smoked lamb shanks on a board with sauces and salads at Meat Moot Seattle" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
+        <Image src={board} alt="Smoked halal beef brisket on a black platter with rosemary, yellow rice, salads and house sauces" widths={[480, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" />
       </figure>
       <div class="copy" data-reveal style="--reveal-i:1">
         <Image src={badge} alt="Halal" width={72} height={72} class="badge" />

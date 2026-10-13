@@ -30,6 +30,11 @@ export const faqs: FaqItem[] = [
     tags: ['menu'],
   },
   {
+    q: 'Do you serve appetizers, brunch and dessert?',
+    a: 'Yes. Appetizers are hummus, babaganoush and labneh. Extra sides are mac & cheese, roasted potatoes, french fries, rice and loaded brisket fries. Brunch includes menemen, shakshuka, merquez and eggs, smoked meat menemen, and tomato, feta and olives. Desserts are baklava, ice cream, creme brulee and kunafa.',
+    tags: ['menu', 'general'],
+  },
+  {
     q: 'Do you have a lunch special?',
     a: `Yes. ${lunchSpecial.days}, ${lunchSpecial.time}, choose a chicken quarter, ½ lb of smoked brisket, or one lamb shank for $${lunchSpecial.price}. Sauces, salads and a drink are included.`,
     tags: ['menu', 'general'],

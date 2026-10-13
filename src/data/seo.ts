@@ -16,8 +16,8 @@ export const pageMeta = {
       `Halal smoked brisket, ribs and lamb, sold by the pound in South Lake Union. 100% halal and alcohol-free. Open daily 11am–9pm. Weekday lunch ${formatPrice(lunchSpecial.price)}.`,
   },
   menu: {
-    title: `Halal BBQ Menu & Prices | ${brand}`,
-    description: `Seven halal cuts smoked in-house, priced from $49.99/lb. Unlimited sauces, salads and drinks. Weekday lunch ${formatPrice(lunchSpecial.price)}, Monday–Friday 12–3pm.`,
+    title: `Halal BBQ Menu, Brunch & Desserts | ${brand}`,
+    description: `Halal smoked brisket, ribs and lamb from $49.99/lb, plus hummus, brunch plates, extra sides and desserts. Weekday lunch ${formatPrice(lunchSpecial.price)}, Monday–Friday 12–3pm.`,
   },
   halal: {
     title: `Halal Restaurant in Seattle | ${brand}`,
@@ -40,7 +40,7 @@ export const pageMeta = {
   faq: {
     title: `Frequently Asked Questions | ${brand}`,
     description:
-      'How ordering by the pound works, weekday lunch, reservations, groups, catering, hours, and our 100% halal, alcohol-free kitchen at Meat Moot Seattle.',
+      'How ordering by the pound works, weekday lunch, brunch, reservations, groups, catering, hours, and our 100% halal, alcohol-free kitchen at Meat Moot Seattle.',
   },
   journal: {
     title: `Halal BBQ Guides in Seattle | ${brand}`,

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { site, fullAddress, formatTime } from '@/data/site';
-import { cuts, included, lunchSpecial, formatPrice } from '@/data/menu';
+import { cuts, included, lunchSpecial, moreOfTheMenu, formatPrice } from '@/data/menu';
 import { faqs } from '@/data/faq';
 
 /** Plain-text brief for AI assistants (ChatGPT, Perplexity, Gemini) that answer "where should I eat" questions. */
@@ -30,8 +30,11 @@ Included with every cut: unlimited sauces (${included.sauces.join(', ')}); salad
 
 ${lunchSpecial.title}: ${lunchSpecial.days}, ${lunchSpecial.time} — ${formatPrice(lunchSpecial.price)} for ${lunchSpecial.options.map((o) => `${o.portion} ${o.name}`).join(', ')}. ${lunchSpecial.served}
 
+Also on the menu:
+${moreOfTheMenu.map((s) => `- ${s.title}: ${s.items.join(', ')}`).join('\n')}
+
 ## Pages
-- [Menu](${site.url}/menu): every cut, price per pound, sides and the weekday lunch special
+- [Menu](${site.url}/menu): smoked cuts, appetizers, extra sides, brunch, desserts and the weekday lunch special
 - [Halal standards](${site.url}/halal): sourcing, certification and our alcohol-free policy
 - [Events, groups & catering](${site.url}/events): team dinners, celebrations and catering requests
 - [Hours & directions](${site.url}/visit): address, hours, parking and transit

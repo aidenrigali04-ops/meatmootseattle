@@ -15,12 +15,12 @@ export function restaurantSchema() {
     alternateName: site.shortName,
     description: site.description,
     url: site.url,
-    telephone: site.phoneE164,
+    telephone: site.phoneSchema,
     email: site.email,
     image: [abs('/og-default.jpg')],
     logo: abs('/logo.png'),
     priceRange: site.priceRange,
-    servesCuisine: site.cuisines,
+    servesCuisine: ['Barbecue', 'Turkish', 'Middle Eastern', 'Halal'],
     acceptsReservations: true,
     hasMenu: abs('/menu'),
     menu: abs('/menu'),
@@ -80,25 +80,50 @@ export function menuSchema() {
         '@type': 'MenuSection',
         name: 'Smoked Meats — sold by the pound',
         description: 'Every cut is halal and served with unlimited house sauces, salads, sides and a beverage.',
-        hasMenuItem: cuts.map((c) => ({
-          '@type': 'MenuItem',
-          name: c.name,
-          description: `${c.summary} ${c.serving}`,
-          url: abs(`/menu/${c.slug}`),
-          suitableForDiet: 'https://schema.org/HalalDiet',
-          offers: {
-            '@type': 'Offer',
-            price: c.pricePerLb.toFixed(2),
-            priceCurrency: 'USD',
-            priceSpecification: {
-              '@type': 'UnitPriceSpecification',
-              price: c.pricePerLb.toFixed(2),
-              priceCurrency: 'USD',
-              unitCode: 'LBR',
-              unitText: 'lb',
+        hasMenuItem: cuts.flatMap((c) => {
+          if (c.slug === 'lamb-shoulder') {
+            const s = catering.lamb_shoulder;
+            return [
+              {
+                '@type': 'MenuItem',
+                name: 'Lamb Shoulder, Regular',
+                description: s.copy,
+                url: abs('/menu/lamb-shoulder'),
+                suitableForDiet: 'https://schema.org/HalalDiet',
+                offers: { '@type': 'Offer', price: s.regular.price.toFixed(2), priceCurrency: 'USD' },
+              },
+              {
+                '@type': 'MenuItem',
+                name: 'Lamb Shoulder, Large',
+                description: s.copy,
+                url: abs('/menu/lamb-shoulder'),
+                suitableForDiet: 'https://schema.org/HalalDiet',
+                offers: { '@type': 'Offer', price: s.large.price.toFixed(2), priceCurrency: 'USD' },
+              },
+            ];
+          }
+          return [
+            {
+              '@type': 'MenuItem',
+              name: c.name,
+              description: `${c.summary} ${c.serving}`,
+              url: abs(`/menu/${c.slug}`),
+              suitableForDiet: 'https://schema.org/HalalDiet',
+              offers: {
+                '@type': 'Offer',
+                price: c.pricePerLb.toFixed(2),
+                priceCurrency: 'USD',
+                priceSpecification: {
+                  '@type': 'UnitPriceSpecification',
+                  price: c.pricePerLb.toFixed(2),
+                  priceCurrency: 'USD',
+                  unitCode: 'LBR',
+                  unitText: 'lb',
+                },
+              },
             },
-          },
-        })),
+          ];
+        }),
       },
       {
         '@type': 'MenuSection',
@@ -131,32 +156,53 @@ export function menuSchema() {
   };
 }
 
-/** MenuSection for group packages. Offers are omitted until a per-person price is confirmed. */
 export function cateringPackagesSchema() {
+  const shoulder = catering.lamb_shoulder;
+  const packageItems = catering.packages.map((p) => {
+    const item: Record<string, unknown> = {
+      '@type': 'MenuItem',
+      name: p.name,
+      description: `${p.bestFor}. ${p.guests}. ${p.meatPerPerson} of meat per person. ${p.cuts}. ${p.includes.join(', ')}`,
+      url: abs(`/catering#package-${p.id}`),
+    };
+    if (typeof p.pricePerPerson === 'number') {
+      item.offers = {
+        '@type': 'Offer',
+        price: p.pricePerPerson.toFixed(2),
+        priceCurrency: 'USD',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: p.pricePerPerson.toFixed(2),
+          priceCurrency: 'USD',
+          unitText: 'per person',
+        },
+      };
+    }
+    return item;
+  });
+  const shoulderItems = [
+    {
+      '@type': 'MenuItem',
+      name: 'Lamb Shoulder, Regular',
+      description: shoulder.copy,
+      url: abs('/catering#pre-order'),
+      offers: { '@type': 'Offer', price: shoulder.regular.price.toFixed(2), priceCurrency: 'USD' },
+    },
+    {
+      '@type': 'MenuItem',
+      name: 'Lamb Shoulder, Large',
+      description: shoulder.copy,
+      url: abs('/catering#pre-order'),
+      offers: { '@type': 'Offer', price: shoulder.large.price.toFixed(2), priceCurrency: 'USD' },
+    },
+  ];
   return {
     '@context': 'https://schema.org',
     '@type': 'MenuSection',
     '@id': `${site.url}/catering#packages`,
     name: 'Catering & Group Packages',
     url: abs('/catering'),
-    hasMenuItem: catering.packages.map((p) => {
-      const item: Record<string, unknown> = {
-        '@type': 'MenuItem',
-        name: p.name,
-        description: `${p.bestFor}. ${p.guests}. ${p.meatPerPerson} of meat per person. ${p.cuts}. ${p.included}`,
-        url: abs(`/catering#package-${p.id}`),
-      };
-      const price = p.pricePerPerson as number | null;
-      if (typeof price === 'number') {
-        item.offers = {
-          '@type': 'Offer',
-          price: price.toFixed(2),
-          priceCurrency: 'USD',
-          unitText: 'person',
-        };
-      }
-      return item;
-    }),
+    hasMenuItem: [...packageItems, ...shoulderItems],
   };
 }
 

@@ -17,6 +17,9 @@ const packages = packagesFor(intent);
 const eventTypes = eventTypesFor(intent);
 const subject = intent === 'catering' ? form.subjectCatering : form.subjectEvents;
 const id = form.id;
+const quote = form.quote_response;
+const disclosure = catering.service_charge.disclosure;
+const headcountRule = catering.preorder.headcount_deadline.rule;
 const times: string[] = [];
 for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
   const hr = Math.floor(m / 60);
@@ -31,7 +34,7 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
       <p class="eyebrow eyebrow--gold" data-reveal>Enquiries</p>
       <h2 id={`${id}-title`} class="h2" data-reveal style="--reveal-i:1">{page.primaryCta}</h2>
       <p class="body-muted" data-reveal style="--reveal-i:2">
-        Tell us the date, headcount and package. We'll reply within one business day with a quote. Cuts lock in when you confirm.
+        Tell us the date, headcount and package. {quote} Cuts lock in when you confirm.
       </p>
       <p class="call" data-reveal style="--reveal-i:3">
         Prefer to talk? <a href={`tel:${cateringContact.phoneE164}`} data-track="phone_click" data-placement={`${intent}_form`}>{cateringContact.phone}</a>
@@ -45,6 +48,9 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
       data-endpoint={cateringContact.formEndpoint}
       data-subject={subject}
       data-success={form.success}
+      data-quote={quote}
+      data-headcount={headcountRule}
+      data-disclosure={disclosure}
       data-lead-warning={form.leadTimeWarning}
       method="post"
       action={cateringContact.formEndpoint}
@@ -53,7 +59,7 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
       <input type="hidden" name="_subject" value={subject} />
       <input type="hidden" name="_captcha" value="false" />
       <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_autoresponse" value={form.success} />
+      <input type="hidden" name="_autoresponse" value={form.success} data-autoresponse />
       <input type="hidden" name="page" value={page.path} />
       <input type="hidden" name="utm_source" data-utm="utm_source" />
       <input type="hidden" name="utm_medium" data-utm="utm_medium" />
@@ -92,7 +98,7 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
           <select id={`${id}-event-type`} name="event_type" required data-event-type>
             <option value="" disabled selected>Select an event type</option>
             {eventTypes.map((e) => (
-              <option value={e.name} data-package={e.packageId} data-lead-hours={e.leadTimeHours}>
+              <option value={e.name} data-suggested-package={e.packageId} data-lead-hours={e.leadTimeHours}>
                 {e.name}
               </option>
             ))}
@@ -103,7 +109,7 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
           <select id={`${id}-package`} name="package" required data-package>
             <option value="" disabled selected>Select a package</option>
             {packages.map((p) => (
-              <option value={p.name} data-id={p.id} data-min={p.guestMin}>
+              <option value={p.name} data-id={p.id} data-min={p.guestMin} data-lead-hours={p.leadTimeHours}>
                 {p.name}
               </option>
             ))}
@@ -275,12 +281,21 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
     const date = form.querySelector<HTMLInputElement>('[data-event-date]')!;
     const guests = form.querySelector<HTMLInputElement>('[data-guests]')!;
     const eventType = form.querySelector<HTMLSelectElement>('[data-event-type]')!;
-    const pkg = form.querySelector<HTMLSelectElement>('[data-package]')!;
+    const pkg = form.querySelector<HTMLSelectElement>('select[data-package]')!;
     const format = form.querySelector<HTMLSelectElement>('[data-format]')!;
     const addressField = form.querySelector<HTMLElement>('[data-address-field]')!;
     const address = form.querySelector<HTMLInputElement>('[data-address]')!;
     const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const auto = form.querySelector<HTMLInputElement>('[data-autoresponse]')!;
     date.min = iso;
+
+    const setAutoReply = () => {
+      const selected = pkg.value || 'your package';
+      auto.value = [form.dataset.quote, `Package: ${selected}`, form.dataset.headcount, form.dataset.disclosure]
+        .filter(Boolean)
+        .join('\n\n');
+    };
+    setAutoReply();
 
     const params = new URLSearchParams(window.location.search);
     form.querySelectorAll<HTMLInputElement>('[data-utm]').forEach((input) => {
@@ -288,15 +303,6 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
       const value = params.get(key);
       if (value) input.value = value;
     });
-
-    const prefill = params.get('package');
-    if (prefill) {
-      const match = [...pkg.options].find((o) => o.dataset.id === prefill);
-      if (match) {
-        pkg.value = match.value;
-        guests.min = match.dataset.min || '6';
-      }
-    }
 
     const setAddress = () => {
       const delivery = format.value === 'Delivery';
@@ -306,28 +312,8 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
     format.addEventListener('change', setAddress);
     setAddress();
 
-    eventType.addEventListener('change', () => {
-      const selected = eventType.selectedOptions[0];
-      const packageId = selected?.dataset.package;
-      if (packageId && !pkg.value) {
-        const match = [...pkg.options].find((o) => o.dataset.id === packageId);
-        if (match) pkg.value = match.value;
-      }
-      checkLead();
-    });
-
-    pkg.addEventListener('change', () => {
-      const selected = pkg.selectedOptions[0];
-      guests.min = selected?.dataset.min || '6';
-      if (guests.value && Number(guests.value) < Number(guests.min)) {
-        guests.setCustomValidity(`This package starts at ${guests.min} guests.`);
-      } else {
-        guests.setCustomValidity('');
-      }
-    });
-
     const checkLead = () => {
-      const hours = Number(eventType.selectedOptions[0]?.dataset.leadHours);
+      const hours = Number(pkg.selectedOptions[0]?.dataset.leadHours || eventType.selectedOptions[0]?.dataset.leadHours);
       if (!date.value || !hours) {
         leadStatus.hidden = true;
         return;
@@ -341,6 +327,39 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
         leadStatus.hidden = true;
       }
     };
+
+    const applyPackageMin = () => {
+      const selected = pkg.selectedOptions[0];
+      guests.min = selected?.dataset.min || '6';
+      if (guests.value && Number(guests.value) < Number(guests.min)) {
+        guests.setCustomValidity(`This package starts at ${guests.min} guests.`);
+      } else {
+        guests.setCustomValidity('');
+      }
+      setAutoReply();
+      checkLead();
+    };
+
+    const prefill = params.get('package');
+    if (prefill) {
+      const match = [...pkg.options].find((o) => o.dataset.id === prefill);
+      if (match) {
+        pkg.value = match.value;
+        applyPackageMin();
+      }
+    }
+
+    eventType.addEventListener('change', () => {
+      const selected = eventType.selectedOptions[0];
+      const packageId = selected?.dataset.suggestedPackage;
+      if (packageId) {
+        const match = [...pkg.options].find((o) => o.dataset.id === packageId);
+        if (match) pkg.value = match.value;
+      }
+      applyPackageMin();
+    });
+
+    pkg.addEventListener('change', applyPackageMin);
     date.addEventListener('change', checkLead);
 
     let started = false;
@@ -360,7 +379,7 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
         const match = id ? [...pkg.options].find((o) => o.dataset.id === id) : undefined;
         if (match) {
           pkg.value = match.value;
-          guests.min = match.dataset.min || '6';
+          applyPackageMin();
         }
         w.gtag?.('event', 'package_cta_click', { package_name: link.dataset.package });
       });
@@ -412,8 +431,9 @@ for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
         lastSent = Date.now();
         form.reset();
         setAddress();
+        setAutoReply();
         leadStatus.hidden = true;
-        status.textContent = form.dataset.success ?? '';
+        status.textContent = [form.dataset.quote, form.dataset.headcount, form.dataset.disclosure].filter(Boolean).join(' ');
       } catch {
         status.classList.add('is-error');
         status.textContent = 'Something went wrong. Please call us and we will take it from there.';

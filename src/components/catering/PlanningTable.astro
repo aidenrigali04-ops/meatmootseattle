@@ -2,7 +2,9 @@
 import { catering, lambShoulder } from '@/data/catering';
 
 const { preorder } = catering;
-const { scale } = preorder;
+const mix = preorder.cut_mix;
+const dinner = preorder.portions.dinner_lb_per_guest;
+const lunch = preorder.portions.lunch_lb_per_guest;
 ---
 
 <section class="section" id="pre-order" aria-labelledby="preorder-title">
@@ -45,33 +47,42 @@ const { scale } = preorder;
     <form
       class="scale"
       data-planning-scale
-      data-lb={scale.lbPerGuest}
-      data-brisket={scale.brisket}
-      data-ribs={scale.ribs}
-      data-lamb={scale.lamb}
-      data-round={scale.roundTo}
+      data-dinner={dinner}
+      data-lunch={lunch}
+      data-brisket={mix.brisket}
+      data-ribs={mix.beef_ribs}
+      data-lamb={mix.lamb}
+      data-round={preorder.roundTo}
       data-reveal
       style="--reveal-i:1"
     >
       <label for="planning-guests">Scale the table for your headcount</label>
-      <input
-        id="planning-guests"
-        name="planning-guests"
-        type="number"
-        min="6"
-        max="120"
-        step="1"
-        inputmode="numeric"
-        placeholder="e.g. 24"
-      />
-      <p class="hint">Optional. The static table above stays on the page without JavaScript. Scaled amounts use {scale.lbPerGuest} lb × guests, {Math.round(scale.brisket * 100)}% brisket / {Math.round(scale.ribs * 100)}% ribs / {Math.round(scale.lamb * 100)}% lamb, rounded to {scale.roundTo} lb.</p>
+      <div class="scale-row">
+        <input
+          id="planning-guests"
+          name="planning-guests"
+          type="number"
+          min="6"
+          max="120"
+          step="1"
+          inputmode="numeric"
+          placeholder="e.g. 24"
+        />
+        <select id="planning-meal" name="planning-meal" aria-label="Lunch or dinner">
+          <option value="dinner">Dinner ({dinner} lb each)</option>
+          <option value="lunch">Lunch ({lunch} lb each)</option>
+        </select>
+      </div>
+      <p class="hint">
+        Optional. The static table above stays on the page without JavaScript. Scaled amounts use dinner {dinner} lb or lunch {lunch} lb × guests, {Math.round(mix.brisket * 100)}% brisket / {Math.round(mix.beef_ribs * 100)}% ribs / {Math.round(mix.lamb * 100)}% lamb, rounded to {preorder.roundTo} lb.
+      </p>
     </form>
 
     <aside class="shoulder" data-reveal>
       <h3 class="h3">Lamb shoulder</h3>
-      <p>
-        Sold by the pound at {lambShoulder.pricePerLb}/lb. {lambShoulder.serving} A large shoulder is the centerpiece on the Signature Event board.
-      </p>
+      <p>{lambShoulder.regular}</p>
+      <p>{lambShoulder.large}</p>
+      <p>{lambShoulder.copy}</p>
     </aside>
 
     <ul class="rules">
@@ -148,7 +159,7 @@ const { scale } = preorder;
     display: grid;
     gap: 0.6rem;
     margin-top: var(--space-l);
-    max-width: 28rem;
+    max-width: 36rem;
   }
 
   .scale label {
@@ -159,7 +170,14 @@ const { scale } = preorder;
     color: var(--muted);
   }
 
-  .scale input {
+  .scale-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .scale input,
+  .scale select {
     min-height: 44px;
     padding: 0.6rem 0;
     background: transparent;
@@ -168,7 +186,8 @@ const { scale } = preorder;
     color: var(--cream);
   }
 
-  .scale input:focus {
+  .scale input:focus,
+  .scale select:focus {
     outline: none;
     border-bottom-color: var(--gold);
   }
@@ -214,6 +233,12 @@ const { scale } = preorder;
     height: 1px;
     background: var(--gold);
   }
+
+  @media (max-width: 560px) {
+    .scale-row {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 
 <script>
@@ -221,9 +246,9 @@ const { scale } = preorder;
   const table = document.querySelector<HTMLTableElement>('[data-planning-table]');
   if (form && table) {
     const input = form.querySelector<HTMLInputElement>('input');
+    const meal = form.querySelector<HTMLSelectElement>('select');
     const tbody = table.tBodies[0];
     const staticRows = tbody.innerHTML;
-    const lb = Number(form.dataset.lb);
     const parts = {
       brisket: Number(form.dataset.brisket),
       ribs: Number(form.dataset.ribs),
@@ -233,13 +258,14 @@ const { scale } = preorder;
     const round = (n: number) => Math.round(n / step) * step;
     const lbText = (n: number) => `${round(n).toFixed(1).replace(/\.0$/, '')} lb`;
 
-    input?.addEventListener('input', () => {
-      const guests = Number(input.value);
+    const render = () => {
+      const guests = Number(input?.value);
       if (!Number.isFinite(guests) || guests < 6) {
         tbody.innerHTML = staticRows;
         return;
       }
-      const total = guests * lb;
+      const per = meal?.value === 'lunch' ? Number(form.dataset.lunch) : Number(form.dataset.dinner);
+      const total = guests * per;
       tbody.innerHTML = `<tr>
         <th scope="row">${guests}</th>
         <td>${lbText(total)}</td>
@@ -247,6 +273,9 @@ const { scale } = preorder;
         <td>${lbText(total * parts.ribs)}</td>
         <td>${lbText(total * parts.lamb)}</td>
       </tr>${staticRows}`;
-    });
+    };
+
+    input?.addEventListener('input', render);
+    meal?.addEventListener('change', render);
   }
 </script>

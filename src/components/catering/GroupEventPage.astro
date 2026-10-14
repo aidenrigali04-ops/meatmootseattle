@@ -11,6 +11,7 @@ import {
   cateringContact,
   eventTypesFor,
   pageCopy,
+  visibleSpaceFields,
   type PageIntent,
 } from '@/data/catering';
 import { breadcrumbSchema, cateringPackagesSchema } from '@/lib/schema';
@@ -26,6 +27,7 @@ const events = eventTypesFor(intent);
 const other = intent === 'catering' ? catering.pages.events : catering.pages.catering;
 const crumbs = [{ name: page.eyebrow, path: page.path }];
 const logistics = catering.logistics[intent];
+const space = visibleSpaceFields();
 const faqs = catering.faqs.map((f) => ({ ...f, tags: ['events'] as Array<'events'> }));
 ---
 
@@ -96,6 +98,7 @@ const faqs = catering.faqs.map((f) => ({ ...f, tags: ['events'] as Array<'events
               <p class="meta">
                 <span>{e.packageLabel}</span>
                 <span>Book ahead: {e.leadTime}</span>
+                <span>Deposit: {e.deposit}</span>
                 <span>{e.season}</span>
               </p>
               <p>{e.description}</p>
@@ -134,6 +137,10 @@ const faqs = catering.faqs.map((f) => ({ ...f, tags: ['events'] as Array<'events
         </h2>
       </div>
       <ul class="ticks">
+        {space.capacity_seated && <li data-reveal>Seated: {space.capacity_seated}</li>}
+        {space.capacity_standing && <li data-reveal>Standing: {space.capacity_standing}</li>}
+        {space.private_area && <li data-reveal>{space.private_area}</li>}
+        {space.av && <li data-reveal>AV: {space.av}</li>}
         {logistics.map((line, i) => <li data-reveal style={`--reveal-i:${i}`}>{line}</li>)}
       </ul>
     </div>
@@ -198,7 +205,7 @@ const faqs = catering.faqs.map((f) => ({ ...f, tags: ['events'] as Array<'events
   .trust ul {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     border-top: 1px solid var(--line);
   }
 
@@ -364,7 +371,7 @@ const faqs = catering.faqs.map((f) => ({ ...f, tags: ['events'] as Array<'events
       grid-template-columns: 1fr 1fr;
     }
 
-    .trust li:nth-child(3),
+    .trust li:nth-child(odd),
     .steps li:nth-child(3) {
       padding-left: 0;
       border-left: 0;

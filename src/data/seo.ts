@@ -64,7 +64,7 @@ const cutDescriptions: Record<string, string> = {
   'lamb-shank':
     'Halal lamb shank smoked until it falls from the bone. Sold by the piece (about 0.4–0.7 lb) at $PRICE/lb in South Lake Union. Sauces, salads and drinks included.',
   'lamb-shoulder':
-    'Marbled halal lamb shoulder, smoked for the whole table. $PRICE/lb, 3 lb minimum (usually 3–4.5 lb), at Meat Moot Seattle. Sauces, salads and drinks included.',
+    `Marbled halal lamb shoulder, smoked for the whole table. Regular $${catering.lamb_shoulder.regular.price} (at least ${catering.lamb_shoulder.regular.min_cooked_lb} lb cooked, serves ${catering.lamb_shoulder.regular.serves}) or Large $${catering.lamb_shoulder.large.price} (at least ${catering.lamb_shoulder.large.min_cooked_lb} lb cooked, serves ${catering.lamb_shoulder.large.serves}) at Meat Moot Seattle. Sauces, salads and drinks included.`,
   'lamb-neck':
     'Halal lamb neck, smoked until succulent around the bone. $PRICE/lb, 1 lb minimum, at Meat Moot Seattle in South Lake Union. Sauces, salads and drinks included.',
   'lamb-ribs':

@@ -1,6 +1,5 @@
 import data from './catering.json';
 import { site, fullAddress } from './site';
-import { cuts, formatPrice } from './menu';
 
 export type PageIntent = 'catering' | 'events';
 
@@ -10,13 +9,18 @@ export type PlanningRow = (typeof data.preorder.rows)[number];
 
 export const catering = data;
 
-const shoulder = cuts.find((c) => c.slug === 'lamb-shoulder');
+export function packagePriceLine(pricePerPerson: number) {
+  return `From $${pricePerPerson}${catering.priceLineSuffix}`;
+}
 
-/** Confirmed shoulder facts from the menu — not the unconfirmed Regular/Large package prices. */
+export function includedText(pkg: CateringPackage) {
+  return pkg.includes.join(', ');
+}
+
 export const lambShoulder = {
-  name: shoulder?.name ?? 'Lamb Shoulder',
-  pricePerLb: shoulder ? formatPrice(shoulder.pricePerLb) : null,
-  serving: shoulder?.serving ?? '',
+  copy: catering.lamb_shoulder.copy,
+  regular: `Regular: $${catering.lamb_shoulder.regular.price}, at least ${catering.lamb_shoulder.regular.min_cooked_lb} lb cooked, serves ${catering.lamb_shoulder.regular.serves}`,
+  large: `Large: $${catering.lamb_shoulder.large.price}, at least ${catering.lamb_shoulder.large.min_cooked_lb} lb cooked, serves ${catering.lamb_shoulder.large.serves}`,
 };
 
 export const cateringContact = {
@@ -57,6 +61,17 @@ export function eventTypesFor(intent: PageIntent): EventType[] {
 
 export function packageById(id: string) {
   return catering.packages.find((p) => p.id === id);
+}
+
+export function visibleSpaceFields() {
+  const { capacity_seated, capacity_standing, private_area, av, space_wording } = catering.space;
+  return {
+    space_wording,
+    capacity_seated: capacity_seated || null,
+    capacity_standing: capacity_standing || null,
+    private_area: private_area || null,
+    av: av || null,
+  };
 }
 
 export const unconfirmedFields = catering.unconfirmed;

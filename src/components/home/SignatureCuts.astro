@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { cuts, formatPrice } from '@/data/menu';
+import { cuts, cutPriceLabel } from '@/data/menu';
 
 const featured = cuts.filter((c) => c.signature);
 ---
@@ -27,7 +27,7 @@ const featured = cuts.filter((c) => c.signature);
                 <span class="name">{c.name}</span>
                 <span class="meta">
                   <span>{c.animal}</span>
-                  <span class="price">{formatPrice(c.pricePerLb)} / lb</span>
+                  <span class="price">{cutPriceLabel(c)}</span>
                 </span>
                 <span class="serving">{c.serving}</span>
               </a>

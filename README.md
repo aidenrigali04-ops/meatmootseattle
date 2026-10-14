@@ -44,7 +44,7 @@ Change a price or the opening hours once in `src/data/` and it updates everywher
 
 ## Google Business Profile checklist
 
-1. **Keep NAP identical.** Use exactly `Meat Moot Seattle · 400 Fairview Ave N, Suite P001, Seattle, WA 98109 · (206) 261-0661` on GBP, Yelp, Apple Maps, TripAdvisor, Zabihah and every directory.
+1. **Keep NAP identical.** Use exactly `Meat Moot Seattle · 400 Fairview Ave N P001, Seattle, WA 98109 · (206) 261-0661` on GBP, Yelp, Apple Maps, TripAdvisor, Zabihah and every directory.
 2. **Tag the GBP links** so Google traffic shows up separately in Analytics:
    - Website: `https://meatmootseattle.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp`
    - Menu: `https://meatmootseattle.com/menu?utm_source=google&utm_medium=organic&utm_campaign=gbp-menu`

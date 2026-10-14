@@ -6,7 +6,7 @@ import LunchSpecial from '@/components/LunchSpecial.astro';
 import FaqList from '@/components/FaqList.astro';
 import HalalBand from '@/components/HalalBand.astro';
 import header from '@/assets/img/lamb-shank-plated.jpg';
-import { cuts, included, moreOfTheMenu, formatPrice } from '@/data/menu';
+import { cuts, included, moreOfTheMenu, formatPrice, cutPriceLabel } from '@/data/menu';
 import { faqsByTag } from '@/data/faq';
 import { menuSchema, breadcrumbSchema } from '@/lib/schema';
 import { pageMeta } from '@/data/seo';
@@ -62,8 +62,14 @@ const groups = [
                 <div class="row">
                   <h3 class="h3">{c.name}</h3>
                   <p class="price">
-                    {formatPrice(c.pricePerLb)}
-                    <span>/ lb</span>
+                    {c.soldBy === 'set' ? (
+                      cutPriceLabel(c)
+                    ) : (
+                      <>
+                        {formatPrice(c.pricePerLb)}
+                        <span>/ lb</span>
+                      </>
+                    )}
                   </p>
                 </div>
                 <p class="summary">{c.summary}</p>

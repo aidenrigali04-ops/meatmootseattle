@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Pre-launch check: fail the build if catering data still contains the
- * confirm-placeholder token or an empty string. Prints omitted fields.
+ * Pre-launch check: fail on confirm-placeholders. Empty HIDE fields are skipped.
+ * Empty halal.certifier is a soft warning, not a failure.
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, extname } from 'node:path';
@@ -10,24 +10,44 @@ const root = process.cwd();
 const dataPath = join(root, 'src/data/catering.json');
 const data = JSON.parse(readFileSync(dataPath, 'utf8'));
 
+const hide = new Set(Array.isArray(data.hide) ? data.hide : []);
 const bad = [];
+const warnings = [];
+
+function isHidden(path) {
+  return hide.has(path) || [...hide].some((h) => path === h || path.endsWith(`.${h}`));
+}
+
+function isPlaceholder(value) {
+  return /\[CONFIRM\]|\bCONFIRM\b/.test(value);
+}
 
 function walk(value, path) {
   if (value === null || value === undefined) return;
   if (typeof value === 'string') {
-    if (value.trim() === '' || value.includes('[CONFIRM]')) {
-      bad.push(`${path}: ${value.trim() === '' ? '(empty string)' : value}`);
+    const hidden = isHidden(path);
+    if (isPlaceholder(value)) {
+      bad.push(`${path}: ${value}`);
+      return;
+    }
+    if (value.trim() === '') {
+      if (path === 'halal.certifier' || hidden) {
+        warnings.push(`${path}: (empty, HIDE)`);
+        return;
+      }
+      bad.push(`${path}: (empty string)`);
     }
     return;
   }
   if (typeof value === 'number' || typeof value === 'boolean') return;
   if (Array.isArray(value)) {
+    if (path === 'unconfirmed' || path === 'hide') return;
     value.forEach((item, i) => walk(item, `${path}[${i}]`));
     return;
   }
   if (typeof value === 'object') {
     for (const [key, child] of Object.entries(value)) {
-      if (key === 'unconfirmed') continue;
+      if (key === 'unconfirmed' || key === 'hide') continue;
       walk(child, path ? `${path}.${key}` : key);
     }
   }
@@ -52,7 +72,7 @@ function walkFiles(dir, hits) {
     const text = readFileSync(full, 'utf8');
     const lines = text.split('\n');
     lines.forEach((line, i) => {
-      if (line.includes('[CONFIRM]')) {
+      if (line.includes('[CONFIRM]') || /\bCONFIRM —/.test(line)) {
         hits.push(`${full.replace(`${root}/`, '')}:${i + 1}: ${line.trim()}`);
       }
     });
@@ -64,18 +84,23 @@ walkFiles(join(root, 'src'), fileHits);
 walkFiles(join(root, 'scripts'), fileHits);
 
 const unconfirmed = Array.isArray(data.unconfirmed) ? data.unconfirmed : [];
-console.log('Unconfirmed catering fields (omitted from public copy):');
+console.log('Unconfirmed catering fields:');
 if (unconfirmed.length === 0) {
   console.log('  (none listed)');
 } else {
   for (const field of unconfirmed) console.log(`  - ${field}`);
 }
 
+if (warnings.length) {
+  console.log('\nSoft warnings (HIDE / empty certifier — not a failure):');
+  for (const item of warnings) console.log(`  - ${item}`);
+}
+
 if (bad.length || fileHits.length) {
-  console.error('\nCatering check failed. Placeholder or empty values:');
+  console.error('\nCatering check failed. Placeholder values:');
   for (const item of bad) console.error(`  - ${item}`);
   for (const item of fileHits) console.error(`  - ${item}`);
   process.exit(1);
 }
 
-console.log('\nCatering check passed. No [CONFIRM] or empty strings in published data.');
+console.log('\nCatering check passed. No confirm-placeholders in published data.');

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { site, fullAddress, formatTime } from '@/data/site';
-import { cuts, included, lunchSpecial, moreOfTheMenu, formatPrice } from '@/data/menu';
+import { cuts, included, lunchSpecial, moreOfTheMenu, formatPrice, cutPriceLabel } from '@/data/menu';
 import { faqs } from '@/data/faq';
 
 /** Plain-text brief for AI assistants (ChatGPT, Perplexity, Gemini) that answer "where should I eat" questions. */
@@ -24,7 +24,7 @@ export const GET: APIRoute = () => {
 - Part of the Meat Moot brand, founded in ${site.founded.city} in ${site.founded.year}
 
 ## Menu (priced per pound, all halal)
-${cuts.map((c) => `- [${c.name}](${site.url}/menu/${c.slug}): ${formatPrice(c.pricePerLb)}/lb. ${c.serving} ${c.summary}`).join('\n')}
+${cuts.map((c) => `- [${c.name}](${site.url}/menu/${c.slug}): ${cutPriceLabel(c)}. ${c.serving} ${c.summary}`).join('\n')}
 
 Included with every cut: unlimited sauces (${included.sauces.join(', ')}); salads and sides (${included.sides.join(', ')}); garnish (${included.garnish.join(', ')}); unlimited ${included.beverages.join(' and ').toLowerCase()}.
 

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { site, fullAddress, formatTime } from '@/data/site';
-import { cuts, included, lunchSpecial, moreOfTheMenu, formatPrice } from '@/data/menu';
+import { cuts, included, lunchSpecial, moreOfTheMenu, formatPrice, cutPriceLabel } from '@/data/menu';
 import { faqs } from '@/data/faq';
 
 /** Plain-text brief for AI assistants (ChatGPT, Perplexity, Gemini) that answer "where should I eat" questions. */
@@ -24,7 +24,7 @@ export const GET: APIRoute = () => {
 - Part of the Meat Moot brand, founded in ${site.founded.city} in ${site.founded.year}
 
 ## Menu (priced per pound, all halal)
-${cuts.map((c) => `- [${c.name}](${site.url}/menu/${c.slug}): ${formatPrice(c.pricePerLb)}/lb. ${c.serving} ${c.summary}`).join('\n')}
+${cuts.map((c) => `- [${c.name}](${site.url}/menu/${c.slug}): ${cutPriceLabel(c)}. ${c.serving} ${c.summary}`).join('\n')}
 
 Included with every cut: unlimited sauces (${included.sauces.join(', ')}); salads and sides (${included.sides.join(', ')}); garnish (${included.garnish.join(', ')}); unlimited ${included.beverages.join(' and ').toLowerCase()}.
 
@@ -36,7 +36,8 @@ ${moreOfTheMenu.map((s) => `- ${s.title}: ${s.items.join(', ')}`).join('\n')}
 ## Pages
 - [Menu](${site.url}/menu): smoked cuts, appetizers, extra sides, brunch, desserts and the weekday lunch special
 - [Halal standards](${site.url}/halal): sourcing, certification and our alcohol-free policy
-- [Events, groups & catering](${site.url}/events): team dinners, celebrations and catering requests
+- [Group dining & private events](${site.url}/events): team dinners, celebrations, iftars and buyouts
+- [Catering](${site.url}/catering): office lunches and smoked BBQ delivered or picked up, from 10 guests
 - [Hours & directions](${site.url}/visit): address, hours, parking and transit
 - [FAQ](${site.url}/faq): answers to common questions
 - [Journal](${site.url}/journal): guides to ordering, halal BBQ in Seattle and group lunches

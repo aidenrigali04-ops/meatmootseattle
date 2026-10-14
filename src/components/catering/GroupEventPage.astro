@@ -1,0 +1,405 @@
+---
+import type { ImageMetadata } from 'astro';
+import Base from '@/layouts/Base.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import FaqList from '@/components/FaqList.astro';
+import PackageCards from './PackageCards.astro';
+import PlanningTable from './PlanningTable.astro';
+import EnquiryForm from './EnquiryForm.astro';
+import {
+  catering,
+  cateringContact,
+  eventTypesFor,
+  pageCopy,
+  visibleSpaceFields,
+  type PageIntent,
+} from '@/data/catering';
+import { breadcrumbSchema, cateringPackagesSchema } from '@/lib/schema';
+
+interface Props {
+  intent: PageIntent;
+  image: ImageMetadata;
+  ogImage: string;
+}
+const { intent, image, ogImage } = Astro.props;
+const page = pageCopy(intent);
+const events = eventTypesFor(intent);
+const other = intent === 'catering' ? catering.pages.events : catering.pages.catering;
+const crumbs = [{ name: page.eyebrow, path: page.path }];
+const logistics = catering.logistics[intent];
+const space = visibleSpaceFields();
+const faqs = catering.faqs.map((f) => ({ ...f, tags: ['events'] as Array<'events'> }));
+---
+
+<Base
+  title={page.title}
+  description={page.description}
+  image={ogImage}
+  imageAlt={page.ogImageAlt}
+  schema={[breadcrumbSchema(crumbs), cateringPackagesSchema()]}
+  overlayHeader
+>
+  <PageHeader eyebrow={page.eyebrow} title={page.h1} intro={page.subhead} image={image} imageAlt={page.heroImageAlt} crumbs={crumbs}>
+    <div class="header-ctas">
+      <a class="btn" href={`#${catering.form.id}`} data-track={intent === 'catering' ? 'click_catering' : 'click_events'} data-placement={`${intent}_header`}>
+        {page.primaryCta}
+      </a>
+      <a class="link-arrow" href={`tel:${cateringContact.phoneE164}`} data-track="phone_click" data-placement={`${intent}_header`}>
+        Call {cateringContact.phone}
+      </a>
+    </div>
+  </PageHeader>
+
+  <section class="section trust" aria-label="At a glance">
+    <div class="container">
+      <ul>
+        {catering.trust.map((fact, i) => <li data-reveal style={`--reveal-i:${i}`}>{fact}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <PackageCards intent={intent} />
+  <PlanningTable />
+
+  <section class="section" id="booking" aria-labelledby="booking-title">
+    <div class="container">
+      <header class="head">
+        <p class="eyebrow eyebrow--gold" data-reveal>How booking works</p>
+        <h2 id="booking-title" class="h2" data-reveal style="--reveal-i:1">Four steps</h2>
+      </header>
+      <ol class="steps">
+        {
+          catering.bookingSteps.map((step, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <span class="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="h3">
+                <span class="sr-only">Step {i + 1}: </span>
+                {step.title}
+              </h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="event-types" aria-labelledby="types-title">
+    <div class="container">
+      <header class="head">
+        <p class="eyebrow eyebrow--gold" data-reveal>Events we host</p>
+        <h2 id="types-title" class="h2" data-reveal style="--reveal-i:1">From team lunch to iftar</h2>
+      </header>
+      <ul class="types">
+        {
+          events.map((e, i) => (
+            <li id={e.id} data-reveal style={`--reveal-i:${i % 4}`}>
+              <h3 class="h3">{e.name}</h3>
+              <p class="meta">
+                <span>{e.packageLabel}</span>
+                <span>Book ahead: {e.leadTime}</span>
+                <span>Deposit: {e.deposit}</span>
+                <span>{e.season}</span>
+              </p>
+              <p>{e.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="add-ons" aria-labelledby="addons-title">
+    <div class="container">
+      <header class="head">
+        <p class="eyebrow eyebrow--gold" data-reveal>Add-ons</p>
+        <h2 id="addons-title" class="h2" data-reveal style="--reveal-i:1">Build on the board</h2>
+      </header>
+      <ul class="addons">
+        {
+          catering.addOns.map((item, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <h3 class="h3">{item.name}</h3>
+              <p>{item.detail}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="logistics" aria-labelledby="logistics-title">
+    <div class="container split">
+      <div>
+        <p class="eyebrow eyebrow--gold" data-reveal>Space &amp; logistics</p>
+        <h2 id="logistics-title" class="h2" data-reveal style="--reveal-i:1">
+          {intent === 'catering' ? 'How catering arrives' : 'The South Lake Union room'}
+        </h2>
+      </div>
+      <ul class="ticks">
+        {space.capacity_seated && <li data-reveal>Seated: {space.capacity_seated}</li>}
+        {space.capacity_standing && <li data-reveal>Standing: {space.capacity_standing}</li>}
+        {space.private_area && <li data-reveal>{space.private_area}</li>}
+        {space.av && <li data-reveal>AV: {space.av}</li>}
+        {logistics.map((line, i) => <li data-reveal style={`--reveal-i:${i}`}>{line}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="policies" aria-labelledby="policies-title">
+    <div class="container">
+      <header class="head">
+        <p class="eyebrow eyebrow--gold" data-reveal>Policies</p>
+        <h2 id="policies-title" class="h2" data-reveal style="--reveal-i:1">Plain language</h2>
+      </header>
+      <ul class="policies">
+        {
+          catering.policies.map((p, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <h3 class="h3">{p.title}</h3>
+              <p>{p.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <FaqList items={faqs} title="Planning questions" />
+  <EnquiryForm intent={intent} />
+
+  <section class="section band" aria-labelledby="final-cta">
+    <div class="container band-inner">
+      <div>
+        <h2 id="final-cta" class="h2">{catering.ctaBand[intent]}</h2>
+        <p class="nap">
+          {cateringContact.name}<br />
+          {cateringContact.address}<br />
+          <a href={`tel:${cateringContact.phoneE164}`} data-track="phone_click" data-placement={`${intent}_cta`}>{cateringContact.phone}</a>
+          <span> · {cateringContact.hoursSummary}</span>
+        </p>
+      </div>
+      <div class="band-ctas">
+        <a class="btn" href={`#${catering.form.id}`}>{page.primaryCta}</a>
+        <a class="link-arrow" href={other.path}>{other.eyebrow}</a>
+      </div>
+    </div>
+    <nav class="container more" aria-label="Related">
+      <a href={cateringContact.menuPath}>Menu</a>
+      <a href={cateringContact.howItWorksPath}>How it works</a>
+      <a href={cateringContact.contactPath}>Contact</a>
+      <a href={other.path}>{intent === 'catering' ? 'Group dining' : 'Catering'}</a>
+    </nav>
+  </section>
+</Base>
+
+<style>
+  .header-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+    align-items: center;
+    margin-top: var(--space-s);
+  }
+
+  .trust ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+  }
+
+  .trust li {
+    padding: var(--space-l) var(--space-m) 0 0;
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: 1.2;
+  }
+
+  .trust li + li {
+    padding-left: var(--space-m);
+    border-left: 1px solid var(--line);
+  }
+
+  .head {
+    display: grid;
+    gap: var(--space-m);
+    margin-bottom: var(--space-l);
+  }
+
+  .steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+  }
+
+  .steps li {
+    display: grid;
+    align-content: start;
+    gap: 0.85rem;
+    padding: var(--space-l) var(--space-m) 0 0;
+  }
+
+  .steps li + li {
+    padding-left: var(--space-m);
+    border-left: 1px solid var(--line);
+  }
+
+  .n {
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .steps p,
+  .types p,
+  .addons p,
+  .policies p {
+    color: var(--cream-soft);
+  }
+
+  .types,
+  .addons,
+  .policies {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .types li,
+  .addons li,
+  .policies li {
+    display: grid;
+    gap: 0.7rem;
+    align-content: start;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--line);
+  }
+
+  .meta {
+    display: grid;
+    gap: 0.2rem;
+    font-size: 0.85rem;
+    color: var(--gold) !important;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .ticks {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .ticks li {
+    padding-left: 1.6rem;
+    position: relative;
+    color: var(--cream-soft);
+  }
+
+  .ticks li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.8em;
+    width: 0.9rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .band {
+    background: radial-gradient(80% 80% at 0% 0%, rgb(var(--ember) / 0.08), transparent 60%), var(--ink-warm);
+  }
+
+  .band-inner {
+    display: grid;
+    grid-template-columns: 1.4fr auto;
+    gap: var(--space-l);
+    align-items: end;
+  }
+
+  .nap {
+    margin-top: var(--space-m);
+    color: var(--cream-soft);
+  }
+
+  .nap a {
+    color: var(--gold);
+  }
+
+  .band-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: var(--space-l);
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .more a {
+    text-decoration: none;
+    color: var(--cream-soft);
+  }
+
+  .more a:hover {
+    color: var(--gold);
+  }
+
+  @media (max-width: 1000px) {
+    .trust ul,
+    .steps {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .trust li:nth-child(odd),
+    .steps li:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .split,
+    .band-inner,
+    .types,
+    .addons,
+    .policies {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .trust ul,
+    .steps {
+      grid-template-columns: 1fr;
+    }
+
+    .trust li,
+    .trust li + li,
+    .steps li,
+    .steps li + li {
+      padding: var(--space-m) 0;
+      border-left: 0;
+    }
+  }
+</style>

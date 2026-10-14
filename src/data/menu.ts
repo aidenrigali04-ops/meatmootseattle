@@ -1,4 +1,5 @@
 import type { ImageMetadata } from 'astro';
+import cateringData from './catering.json';
 import lambShankPlated from '@/assets/img/lamb-shank-plated.jpg';
 import lambShoulderPlated from '@/assets/img/lamb-shoulder-plated.jpg';
 import lambNeckPlated from '@/assets/img/lamb-neck-plated.jpg';
@@ -19,7 +20,7 @@ export type Cut = {
   image: ImageMetadata;
   imageAlt: string;
   /** How the cut is sold at the carving counter. */
-  soldBy: 'pound' | 'piece';
+  soldBy: 'pound' | 'piece' | 'set';
   /** One-line order note: minimum weight or typical piece size. */
   serving: string;
   /** Primary search phrase this cut's page targets. */
@@ -74,8 +75,8 @@ export const cuts: Cut[] = [
     pairsWith: ['Moot Sauce', 'Green Salad', 'Potatoes', 'Chili Sauce'],
     image: lambShoulderPlated,
     imageAlt: 'Whole smoked halal lamb shoulder on a black platter, surrounded by house sauces, salads, garlic and roasted potatoes',
-    soldBy: 'pound',
-    serving: 'Sold by the pound. Minimum 3 lb; each shoulder is usually 3–4.5 lb.',
+    soldBy: 'set',
+    serving: `Regular: $${cateringData.lamb_shoulder.regular.price}, at least ${cateringData.lamb_shoulder.regular.min_cooked_lb} lb cooked, serves ${cateringData.lamb_shoulder.regular.serves}. Large: $${cateringData.lamb_shoulder.large.price}, at least ${cateringData.lamb_shoulder.large.min_cooked_lb} lb cooked, serves ${cateringData.lamb_shoulder.large.serves}. ${cateringData.lamb_shoulder.copy}`,
     keyword: 'smoked lamb shoulder Seattle',
     signature: true,
   },
@@ -192,3 +193,11 @@ export const moreOfTheMenu = [
 ] as const;
 
 export const formatPrice = (n: number) => `$${n.toFixed(2)}`;
+
+export function cutPriceLabel(cut: Cut) {
+  if (cut.soldBy === 'set') {
+    const { regular, large } = cateringData.lamb_shoulder;
+    return `$${regular.price} / $${large.price}`;
+  }
+  return `${formatPrice(cut.pricePerLb)} / lb`;
+}

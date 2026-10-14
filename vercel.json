@@ -6,6 +6,10 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/private-events", "destination": "/events", "permanent": true },
+    { "source": "/private-events/", "destination": "/events", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/_astro/(.*)",

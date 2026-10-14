@@ -18,4 +18,7 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: 'hover',
   },
+  redirects: {
+    '/private-events': '/events',
+  },
 });

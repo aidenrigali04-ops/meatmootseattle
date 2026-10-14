@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "node scripts/check-catering.mjs && astro check && astro build",
+    "check:catering": "node scripts/check-catering.mjs",
     "preview": "astro preview",
     "check": "astro check"
   },

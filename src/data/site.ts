@@ -14,10 +14,12 @@ export const site = {
 
   phone: '(206) 261-0661',
   phoneE164: '+12062610661',
+  /** Schema.org telephone. Keep `phoneE164` for tel: links. */
+  phoneSchema: '+1-206-261-0661',
   email: 'info@meatmootseattle.com',
 
   address: {
-    street: '400 Fairview Ave N, Suite P001',
+    street: '400 Fairview Ave N P001',
     streetShort: '400 Fairview Ave N',
     city: 'Seattle',
     region: 'WA',

@@ -1,5 +1,6 @@
 import { site } from '@/data/site';
 import { formatPrice, lunchSpecial, type Cut } from '@/data/menu';
+import { catering } from '@/data/catering';
 
 const brand = site.name;
 
@@ -25,9 +26,12 @@ export const pageMeta = {
       'Every cut is halal at Meat Moot Seattle. Pork-free kitchen, no alcohol served. Smoked brisket, ribs and lamb in South Lake Union. Open daily 11am–9pm.',
   },
   events: {
-    title: `Group Dining & Catering in Seattle | ${brand}`,
-    description:
-      `Team lunches, birthdays and catering at Meat Moot Seattle. Halal smoked brisket, ribs and lamb, shared in South Lake Union. Enquire for groups of ${site.reservations.largePartySize} or more.`,
+    title: catering.pages.events.title,
+    description: catering.pages.events.description,
+  },
+  catering: {
+    title: catering.pages.catering.title,
+    description: catering.pages.catering.description,
   },
   visit: {
     title: `Hours & Directions | ${brand}, South Lake Union`,
@@ -60,7 +64,7 @@ const cutDescriptions: Record<string, string> = {
   'lamb-shank':
     'Halal lamb shank smoked until it falls from the bone. Sold by the piece (about 0.4–0.7 lb) at $PRICE/lb in South Lake Union. Sauces, salads and drinks included.',
   'lamb-shoulder':
-    'Marbled halal lamb shoulder, smoked for the whole table. $PRICE/lb, 3 lb minimum (usually 3–4.5 lb), at Meat Moot Seattle. Sauces, salads and drinks included.',
+    `Marbled halal lamb shoulder, smoked for the whole table. Regular $${catering.lamb_shoulder.regular.price} (at least ${catering.lamb_shoulder.regular.min_cooked_lb} lb cooked, serves ${catering.lamb_shoulder.regular.serves}) or Large $${catering.lamb_shoulder.large.price} (at least ${catering.lamb_shoulder.large.min_cooked_lb} lb cooked, serves ${catering.lamb_shoulder.large.serves}) at Meat Moot Seattle. Sauces, salads and drinks included.`,
   'lamb-neck':
     'Halal lamb neck, smoked until succulent around the bone. $PRICE/lb, 1 lb minimum, at Meat Moot Seattle in South Lake Union. Sauces, salads and drinks included.',
   'lamb-ribs':

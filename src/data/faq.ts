@@ -1,27 +1,28 @@
 import { site, fullAddress } from './site';
 import { lunchSpecial } from './menu';
+import { catering } from './catering';
 
 export type FaqItem = { q: string; a: string; tags: Array<'general' | 'halal' | 'menu' | 'visit' | 'events'> };
 
 export const faqs: FaqItem[] = [
   {
     q: 'Is Meat Moot Seattle fully halal?',
-    a: 'Yes. Every meat we serve is halal, and the restaurant is completely pork-free and alcohol-free. Our bar pours non-alcoholic drinks only.',
+    a: catering.faqs.find((f) => f.q === 'Is everything halal?')?.a ?? 'Yes. All our meat is halal, and all drinks are alcohol-free.',
     tags: ['halal', 'general'],
   },
   {
     q: 'Do you serve alcohol?',
-    a: 'No. Meat Moot is an alcohol-free restaurant. Mineral water and soft drinks are included with every meat order.',
+    a: catering.faqs.find((f) => f.q === 'Do you serve alcohol?')?.a ?? 'No. We serve mocktails and Turkish tea instead.',
     tags: ['halal', 'menu'],
   },
   {
     q: 'How does ordering by the pound work?',
-    a: 'Prices are per pound. Choose your cut at the carving counter and tell us how much you would like — each cut has a minimum (for example ½ lb of brisket, 1 lb of ribs, 3 lb of lamb shoulder). Lamb shank and beef shank are sold by the piece. We weigh it in front of you, carve it to order and bring it to your table with unlimited house sauces, salads, sides and a drink.',
+    a: `Most cuts are priced per pound, with a minimum (for example ½ lb of brisket, 1 lb of ribs). Lamb shoulder is a set price: Regular $${catering.lamb_shoulder.regular.price} (at least ${catering.lamb_shoulder.regular.min_cooked_lb} lb cooked, serves ${catering.lamb_shoulder.regular.serves}) or Large $${catering.lamb_shoulder.large.price} (at least ${catering.lamb_shoulder.large.min_cooked_lb} lb cooked, serves ${catering.lamb_shoulder.large.serves}). Lamb shank and beef shank are sold by the piece. We weigh and carve to order and bring it to your table with unlimited house sauces, salads, sides and a drink.`,
     tags: ['menu', 'general'],
   },
   {
     q: 'How much meat should I order per person?',
-    a: 'Most guests are happy with about half a pound each. For big appetites or a table that wants to try several cuts, plan on three-quarters of a pound per person. Our carvers are happy to help you decide.',
+    a: catering.faqs.find((f) => f.q === 'How much meat per person?')?.a ?? 'About ¾ lb at dinner and ½ lb at lunch. See the planning table.',
     tags: ['menu'],
   },
   {
@@ -56,12 +57,12 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Can you host team dinners, celebrations or private events?',
-    a: 'Yes. Our shared-board format is made for groups — from team lunches near the South Lake Union tech offices to birthdays and family celebrations. Send an enquiry through our Events page and we will plan the menu with you.',
+    a: 'Yes. Our shared-board format is made for groups — from team lunches near the South Lake Union tech offices to birthdays and family celebrations. Send an enquiry through the Events page, or request a catering quote if you want us to come to you.',
     tags: ['events'],
   },
   {
     q: 'Do you offer catering, takeout or delivery?',
-    a: 'Yes. We cater events. Order online through Toast for pickup, or choose Toast Delivery — DoorDash and Uber Eats are also available. For larger catering orders, send an enquiry through our Events page so we can smoke enough for your group.',
+    a: `${catering.faqs.find((f) => f.q === 'Do you deliver?')?.a} Everyday orders can also use Toast Delivery, DoorDash or Uber Eats. For group catering, send an enquiry through the Catering page.`,
     tags: ['events', 'menu'],
   },
   {

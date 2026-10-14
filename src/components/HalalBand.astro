@@ -1,21 +1,25 @@
 ---
 import { Image } from 'astro:assets';
 import badge from '@/assets/img/halal-badge.png';
+import { catering } from '@/data/catering';
 
 interface Props {
   link?: boolean;
 }
 const { link = true } = Astro.props;
+const heading = catering.halal.certifier
+  ? `Halal certified by ${catering.halal.certifier}`
+  : catering.halal.wording;
 ---
 
 <section class="halal" aria-labelledby="halal-band-title">
   <div class="container">
     <div class="inner" data-reveal>
-      <h2 id="halal-band-title">Halal certified <span class="amp">&amp;</span> alcohol-free</h2>
-      <Image src={badge} alt="Halal certified" width={96} height={96} />
+      <h2 id="halal-band-title">{heading} <span class="amp">&amp;</span> alcohol-free</h2>
+      <Image src={badge} alt={heading} width={96} height={96} />
     </div>
     <p class="sub" data-reveal style="--reveal-i:1">
-      Every cut is halal. No pork, no alcohol — just wood smoke, spice and time.
+      {catering.halal.wording} No pork, no alcohol — just wood smoke, spice and time.
       {link && <a href="/halal">Our halal standards</a>}
     </p>
   </div>

@@ -3,7 +3,8 @@ import { Image } from 'astro:assets';
 import Base from '@/layouts/Base.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import Reserve from '@/components/Reserve.astro';
-import { cuts, included, formatPrice, type Cut } from '@/data/menu';
+import { cuts, included, formatPrice, cutPriceLabel, type Cut } from '@/data/menu';
+import { catering } from '@/data/catering';
 import { site } from '@/data/site';
 import { breadcrumbSchema } from '@/lib/schema';
 import { cutMeta } from '@/data/seo';
@@ -34,20 +35,42 @@ const productSchema = {
   description: `${cut.summary} ${cut.serving} ${cut.story}`,
   url: new URL(path, site.url).toString(),
   suitableForDiet: 'https://schema.org/HalalDiet',
-  offers: {
-    '@type': 'Offer',
-    price: cut.pricePerLb.toFixed(2),
-    priceCurrency: 'USD',
-    availability: 'https://schema.org/InStock',
-    priceSpecification: { '@type': 'UnitPriceSpecification', price: cut.pricePerLb.toFixed(2), priceCurrency: 'USD', unitCode: 'LBR', unitText: 'lb' },
-    seller: { '@id': `${site.url}/#restaurant` },
-  },
+  offers:
+    cut.soldBy === 'set'
+      ? [
+          {
+            '@type': 'Offer',
+            name: 'Regular',
+            price: catering.lamb_shoulder.regular.price.toFixed(2),
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            seller: { '@id': `${site.url}/#restaurant` },
+          },
+          {
+            '@type': 'Offer',
+            name: 'Large',
+            price: catering.lamb_shoulder.large.price.toFixed(2),
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            seller: { '@id': `${site.url}/#restaurant` },
+          },
+        ]
+      : {
+          '@type': 'Offer',
+          price: cut.pricePerLb.toFixed(2),
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          priceSpecification: { '@type': 'UnitPriceSpecification', price: cut.pricePerLb.toFixed(2), priceCurrency: 'USD', unitCode: 'LBR', unitText: 'lb' },
+          seller: { '@id': `${site.url}/#restaurant` },
+        },
 };
 
 const ledger = [
   cut.soldBy === 'piece'
     ? `1 piece of halal ${cut.animal.toLowerCase()} ${cut.name.replace(/^(Lamb|Beef) /, '').toLowerCase()}`
-    : `Halal ${cut.animal.toLowerCase()} ${cut.name.replace(/^(Lamb|Beef) /, '').toLowerCase()}, sold by the pound`,
+    : cut.soldBy === 'set'
+      ? `Halal ${cut.animal.toLowerCase()} ${cut.name.replace(/^(Lamb|Beef) /, '').toLowerCase()}, set price`
+      : `Halal ${cut.animal.toLowerCase()} ${cut.name.replace(/^(Lamb|Beef) /, '').toLowerCase()}, sold by the pound`,
   'Unlimited house-made sauces',
   'Fresh salads & sides, with refills',
   `Garnish: ${included.garnish.slice(0, -1).join(', ').toLowerCase()} and ${included.garnish.at(-1)!.toLowerCase()}`,
@@ -69,7 +92,15 @@ const ledger = [
     imageAlt={cut.imageAlt}
     crumbs={crumbs}
   >
-    <p class="price-tag">{formatPrice(cut.pricePerLb)} <span>per lb</span></p>
+    <p class="price-tag">
+      {cut.soldBy === 'set' ? (
+        cutPriceLabel(cut)
+      ) : (
+        <>
+          {formatPrice(cut.pricePerLb)} <span>per lb</span>
+        </>
+      )}
+    </p>
     <p class="serving-note">{cut.serving}</p>
   </PageHeader>
 

@@ -1,0 +1,445 @@
+---
+import {
+  catering,
+  cateringContact,
+  eventTypesFor,
+  packagesFor,
+  type PageIntent,
+} from '@/data/catering';
+
+interface Props {
+  intent: PageIntent;
+}
+const { intent } = Astro.props;
+const page = catering.pages[intent];
+const form = catering.form;
+const packages = packagesFor(intent);
+const eventTypes = eventTypesFor(intent);
+const subject = intent === 'catering' ? form.subjectCatering : form.subjectEvents;
+const id = form.id;
+const quote = form.quote_response;
+const disclosure = catering.service_charge.disclosure;
+const headcountRule = catering.preorder.headcount_deadline.rule;
+const times: string[] = [];
+for (let m = 11 * 60; m <= 20 * 60 + 30; m += 30) {
+  const hr = Math.floor(m / 60);
+  const mm = m % 60;
+  times.push(`${hr % 12 === 0 ? 12 : hr % 12}:${String(mm).padStart(2, '0')} ${hr >= 12 ? 'PM' : 'AM'}`);
+}
+---
+
+<section class="section reserve" id={id} aria-labelledby={`${id}-title`}>
+  <div class="container grid">
+    <div class="intro">
+      <p class="eyebrow eyebrow--gold" data-reveal>Enquiries</p>
+      <h2 id={`${id}-title`} class="h2" data-reveal style="--reveal-i:1">{page.primaryCta}</h2>
+      <p class="body-muted" data-reveal style="--reveal-i:2">
+        Tell us the date, headcount and package. {quote} Cuts lock in when you confirm.
+      </p>
+      <p class="call" data-reveal style="--reveal-i:3">
+        Prefer to talk? <a href={`tel:${cateringContact.phoneE164}`} data-track="phone_click" data-placement={`${intent}_form`}>{cateringContact.phone}</a>
+      </p>
+    </div>
+
+    <form
+      class="form"
+      data-enquiry
+      data-intent={intent}
+      data-endpoint={cateringContact.formEndpoint}
+      data-subject={subject}
+      data-success={form.success}
+      data-quote={quote}
+      data-headcount={headcountRule}
+      data-disclosure={disclosure}
+      data-lead-warning={form.leadTimeWarning}
+      method="post"
+      action={cateringContact.formEndpoint}
+      novalidate
+    >
+      <input type="hidden" name="_subject" value={subject} />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_autoresponse" value={form.success} data-autoresponse />
+      <input type="hidden" name="page" value={page.path} />
+      <input type="hidden" name="utm_source" data-utm="utm_source" />
+      <input type="hidden" name="utm_medium" data-utm="utm_medium" />
+      <input type="hidden" name="utm_campaign" data-utm="utm_campaign" />
+      <input type="hidden" name="utm_content" data-utm="utm_content" />
+      <input type="hidden" name="utm_term" data-utm="utm_term" />
+      <div class="hp" aria-hidden="true">
+        <label for={`${id}-website`}>Website</label>
+        <input id={`${id}-website`} type="text" name="website" tabindex="-1" autocomplete="off" />
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="row two">
+        <div class="field">
+          <label for={`${id}-name`}>Name</label>
+          <input id={`${id}-name`} name="name" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for={`${id}-email`}>Email</label>
+          <input id={`${id}-email`} name="email" type="email" autocomplete="email" required />
+        </div>
+      </div>
+      <div class="row two">
+        <div class="field">
+          <label for={`${id}-phone`}>Phone</label>
+          <input id={`${id}-phone`} name="phone" type="tel" autocomplete="tel" required />
+        </div>
+        <div class="field">
+          <label for={`${id}-company`}>Company / organization</label>
+          <input id={`${id}-company`} name="company" autocomplete="organization" />
+        </div>
+      </div>
+      <div class="row two">
+        <div class="field">
+          <label for={`${id}-event-type`}>Event type</label>
+          <select id={`${id}-event-type`} name="event_type" required data-event-type>
+            <option value="" disabled selected>Select an event type</option>
+            {eventTypes.map((e) => (
+              <option value={e.name} data-suggested-package={e.packageId} data-lead-hours={e.leadTimeHours}>
+                {e.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div class="field">
+          <label for={`${id}-package`}>Package</label>
+          <select id={`${id}-package`} name="package" required data-package>
+            <option value="" disabled selected>Select a package</option>
+            {packages.map((p) => (
+              <option value={p.name} data-id={p.id} data-min={p.guestMin} data-lead-hours={p.leadTimeHours}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div class="row three">
+        <div class="field">
+          <label for={`${id}-date`}>Date</label>
+          <input id={`${id}-date`} name="date" type="date" required data-event-date />
+        </div>
+        <div class="field">
+          <label for={`${id}-time`}>Time</label>
+          <select id={`${id}-time`} name="time">
+            <option value="">Flexible</option>
+            {times.map((t) => <option>{t}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for={`${id}-guests`}>Guest count</label>
+          <input id={`${id}-guests`} name="guest_count" type="number" min="6" step="1" inputmode="numeric" required data-guests />
+        </div>
+      </div>
+      <p class="warn" role="status" aria-live="polite" data-lead-status hidden></p>
+      <div class="row two">
+        <div class="field">
+          <label for={`${id}-format`}>Dine-in / pickup / delivery</label>
+          <select id={`${id}-format`} name="format" required data-format>
+            {form.formats.map((f) => <option>{f}</option>)}
+          </select>
+        </div>
+        <div class="field" data-address-field hidden>
+          <label for={`${id}-address`}>Delivery address</label>
+          <input id={`${id}-address`} name="delivery_address" autocomplete="street-address" data-address />
+        </div>
+      </div>
+      <div class="field">
+        <label for={`${id}-cuts`}>Cut preferences</label>
+        <textarea id={`${id}-cuts`} name="cut_preferences" rows="2" placeholder={form.cutPreferencesHint}></textarea>
+      </div>
+      <div class="field">
+        <label for={`${id}-dietary`}>Dietary notes</label>
+        <textarea id={`${id}-dietary`} name="dietary_notes" rows="2"></textarea>
+      </div>
+      <div class="field">
+        <label for={`${id}-heard`}>How did you hear about us</label>
+        <select id={`${id}-heard`} name="heard_about">
+          <option value="">Select</option>
+          {form.hearAbout.map((h) => <option>{h}</option>)}
+        </select>
+      </div>
+      <div class="submit">
+        <button class="btn" type="submit" data-submit>Send enquiry</button>
+        <p class="status" role="status" aria-live="polite" data-status></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: var(--space-xl);
+  }
+
+  .intro {
+    display: grid;
+    gap: var(--space-m);
+    align-content: start;
+  }
+
+  .call a {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .form {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .row {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .two {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .three {
+    grid-template-columns: 1.1fr 1fr 0.9fr;
+  }
+
+  .form :global(.field input),
+  .form :global(.field select),
+  .form :global(.field textarea) {
+    min-height: 44px;
+  }
+
+  .hp {
+    position: absolute;
+    left: -9999px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .warn {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-left: 2px solid var(--gold);
+    background: var(--ink-raised);
+    color: var(--cream-soft);
+    font-size: 0.9rem;
+  }
+
+  .submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .submit .btn {
+    min-height: 44px;
+  }
+
+  .status {
+    font-size: 0.9rem;
+    color: var(--cream-soft);
+  }
+
+  .status.is-error {
+    color: #e48a7a;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .two,
+    .three {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const w = window as unknown as { gtag?: (...a: unknown[]) => void };
+
+  const today = new Date();
+  const iso = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+
+  const band = (n: number) => {
+    if (n < 10) return '1-9';
+    if (n < 20) return '10-19';
+    if (n < 40) return '20-39';
+    return '40+';
+  };
+
+  document.querySelectorAll<HTMLFormElement>('[data-enquiry]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const leadStatus = form.querySelector<HTMLElement>('[data-lead-status]')!;
+    const date = form.querySelector<HTMLInputElement>('[data-event-date]')!;
+    const guests = form.querySelector<HTMLInputElement>('[data-guests]')!;
+    const eventType = form.querySelector<HTMLSelectElement>('[data-event-type]')!;
+    const pkg = form.querySelector<HTMLSelectElement>('select[data-package]')!;
+    const format = form.querySelector<HTMLSelectElement>('[data-format]')!;
+    const addressField = form.querySelector<HTMLElement>('[data-address-field]')!;
+    const address = form.querySelector<HTMLInputElement>('[data-address]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const auto = form.querySelector<HTMLInputElement>('[data-autoresponse]')!;
+    date.min = iso;
+
+    const setAutoReply = () => {
+      const selected = pkg.value || 'your package';
+      auto.value = [form.dataset.quote, `Package: ${selected}`, form.dataset.headcount, form.dataset.disclosure]
+        .filter(Boolean)
+        .join('\n\n');
+    };
+    setAutoReply();
+
+    const params = new URLSearchParams(window.location.search);
+    form.querySelectorAll<HTMLInputElement>('[data-utm]').forEach((input) => {
+      const key = input.dataset.utm!;
+      const value = params.get(key);
+      if (value) input.value = value;
+    });
+
+    const setAddress = () => {
+      const delivery = format.value === 'Delivery';
+      addressField.hidden = !delivery;
+      address.required = delivery;
+    };
+    format.addEventListener('change', setAddress);
+    setAddress();
+
+    const checkLead = () => {
+      const hours = Number(pkg.selectedOptions[0]?.dataset.leadHours || eventType.selectedOptions[0]?.dataset.leadHours);
+      if (!date.value || !hours) {
+        leadStatus.hidden = true;
+        return;
+      }
+      const chosen = new Date(`${date.value}T12:00:00`);
+      const diff = (chosen.getTime() - Date.now()) / 36e5;
+      if (diff < hours) {
+        leadStatus.hidden = false;
+        leadStatus.textContent = form.dataset.leadWarning ?? '';
+      } else {
+        leadStatus.hidden = true;
+      }
+    };
+
+    const applyPackageMin = () => {
+      const selected = pkg.selectedOptions[0];
+      guests.min = selected?.dataset.min || '6';
+      if (guests.value && Number(guests.value) < Number(guests.min)) {
+        guests.setCustomValidity(`This package starts at ${guests.min} guests.`);
+      } else {
+        guests.setCustomValidity('');
+      }
+      setAutoReply();
+      checkLead();
+    };
+
+    const prefill = params.get('package');
+    if (prefill) {
+      const match = [...pkg.options].find((o) => o.dataset.id === prefill);
+      if (match) {
+        pkg.value = match.value;
+        applyPackageMin();
+      }
+    }
+
+    eventType.addEventListener('change', () => {
+      const selected = eventType.selectedOptions[0];
+      const packageId = selected?.dataset.suggestedPackage;
+      if (packageId) {
+        const match = [...pkg.options].find((o) => o.dataset.id === packageId);
+        if (match) pkg.value = match.value;
+      }
+      applyPackageMin();
+    });
+
+    pkg.addEventListener('change', applyPackageMin);
+    date.addEventListener('change', checkLead);
+
+    let started = false;
+    form.addEventListener(
+      'focusin',
+      () => {
+        if (started) return;
+        started = true;
+        w.gtag?.('event', 'form_start', { form_id: form.id || 'enquire', page_intent: form.dataset.intent });
+      },
+      { once: true },
+    );
+
+    document.querySelectorAll<HTMLAnchorElement>('[data-package-id]').forEach((link) => {
+      link.addEventListener('click', () => {
+        const id = link.dataset.packageId;
+        const match = id ? [...pkg.options].find((o) => o.dataset.id === id) : undefined;
+        if (match) {
+          pkg.value = match.value;
+          applyPackageMin();
+        }
+        w.gtag?.('event', 'package_cta_click', { package_name: link.dataset.package });
+      });
+    });
+
+    let lastSent = 0;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.classList.remove('is-error');
+      if (form.querySelector<HTMLInputElement>('input[name="website"]')?.value) return;
+      if (Date.now() - lastSent < 8000) {
+        status.classList.add('is-error');
+        status.textContent = 'Please wait a moment before sending again.';
+        return;
+      }
+      if (!form.checkValidity()) {
+        form.querySelector<HTMLElement>(':invalid')?.focus();
+        status.classList.add('is-error');
+        status.textContent = 'Please fill in the required fields — name, email, phone, event type, package, date and guest count.';
+        return;
+      }
+
+      const data = new FormData(form);
+      data.delete('website');
+      data.delete('_honey');
+      w.gtag?.('event', 'form_submit', {
+        event_type: String(data.get('event_type') || ''),
+        guest_count_band: band(Number(data.get('guest_count'))),
+        page_intent: form.dataset.intent,
+      });
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        status.classList.add('is-error');
+        status.textContent = 'Something went wrong. Please call us and we will take it from there.';
+        return;
+      }
+
+      submit.disabled = true;
+      status.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        const payload = (await res.json().catch(() => ({}))) as { success?: boolean | string; message?: string };
+        const activating = typeof payload.message === 'string' && /activat/i.test(payload.message);
+        const ok =
+          res.ok &&
+          (activating || payload.success === true || payload.success === 'true' || payload.success === undefined);
+        if (!ok) throw new Error(String(res.status));
+        lastSent = Date.now();
+        form.reset();
+        setAddress();
+        setAutoReply();
+        leadStatus.hidden = true;
+        status.textContent = [form.dataset.quote, form.dataset.headcount, form.dataset.disclosure].filter(Boolean).join(' ');
+      } catch {
+        status.classList.add('is-error');
+        status.textContent = 'Something went wrong. Please call us and we will take it from there.';
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  });
+</script>

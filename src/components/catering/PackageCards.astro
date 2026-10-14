@@ -1,0 +1,177 @@
+---
+import { catering, includedText, packagePriceLine, packagesFor, type PageIntent } from '@/data/catering';
+
+interface Props {
+  intent: PageIntent;
+}
+const { intent } = Astro.props;
+const packages = packagesFor(intent);
+const disclosure = catering.service_charge.disclosure;
+const halalLine = catering.halal.wording;
+---
+
+<section class="section" id="packages" aria-labelledby="packages-title">
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow eyebrow--gold" data-reveal>Packages</p>
+      <h2 id="packages-title" class="h2" data-reveal style="--reveal-i:1">Choose a starting point</h2>
+    </header>
+    <ul class="cards">
+      {
+        packages.map((p, i) => (
+          <li id={`package-${p.id}`} data-reveal style={`--reveal-i:${i}`}>
+            <article>
+              <h3 class="h3">{p.name}</h3>
+              <p class="best">{p.bestFor}</p>
+              <p class="halal">{halalLine}</p>
+              <dl>
+                <div>
+                  <dt>Guests</dt>
+                  <dd>{p.guests}</dd>
+                </div>
+                <div>
+                  <dt>Meat per person</dt>
+                  <dd>{p.meatPerPerson}</dd>
+                </div>
+                <div>
+                  <dt>Cuts</dt>
+                  <dd>
+                    {p.cuts}
+                    {p.upgrade && <span class="sub">{p.upgrade}</span>}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Included</dt>
+                  <dd>
+                    {includedText(p)}
+                    {p.drinks && <span class="sub">{p.drinks}</span>}
+                    {'extraSides' in p && p.extraSides && <span class="sub">{p.extraSides}</span>}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Minimum</dt>
+                  <dd>{p.minimum}</dd>
+                </div>
+                <div>
+                  <dt>Format</dt>
+                  <dd>{p.format}</dd>
+                </div>
+                <div>
+                  <dt>{p.payment ? 'Payment' : 'Deposit'}</dt>
+                  <dd>{p.payment ?? p.deposit}</dd>
+                </div>
+                <div>
+                  <dt>Lead time</dt>
+                  <dd>{p.leadTime}</dd>
+                </div>
+                {p.iftarVersion && (
+                  <div>
+                    <dt>{p.iftarVersion.label}</dt>
+                    <dd>
+                      {p.iftarVersion.adds.join(', ')}. {p.iftarVersion.note}. {packagePriceLine(p.iftarVersion.pricePerPerson)}
+                    </dd>
+                  </div>
+                )}
+                <div>
+                  <dt>Price</dt>
+                  <dd>{packagePriceLine(p.pricePerPerson)}</dd>
+                </div>
+              </dl>
+              <a
+                class="btn"
+                href={`#enquire`}
+                data-track="package_cta_click"
+                data-package={p.name}
+                data-package-id={p.id}
+                data-placement={`${intent}_packages`}
+              >
+                {p.cta}
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="disclosure" data-reveal>{disclosure}</p>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: var(--space-m);
+    margin-bottom: var(--space-l);
+  }
+
+  .cards {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  article {
+    display: grid;
+    gap: 1.1rem;
+    align-content: start;
+    height: 100%;
+    padding: var(--space-l);
+    border: 1px solid var(--line);
+    background: var(--ink-raised);
+    border-radius: var(--radius);
+  }
+
+  .best {
+    color: var(--gold);
+    font-size: 0.95rem;
+  }
+
+  .halal {
+    color: var(--cream);
+    font-size: 0.95rem;
+  }
+
+  dl {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+  }
+
+  dt {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--cream-soft);
+  }
+
+  .sub {
+    display: block;
+    margin-top: 0.35rem;
+  }
+
+  .btn {
+    justify-self: start;
+    margin-top: 0.4rem;
+  }
+
+  .disclosure {
+    margin-top: var(--space-l);
+    max-width: 72ch;
+    color: var(--cream);
+    font-size: var(--step-0);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 1000px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

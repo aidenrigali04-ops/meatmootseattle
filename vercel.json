@@ -8,7 +8,13 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/private-events", "destination": "/events", "permanent": true },
-    { "source": "/private-events/", "destination": "/events", "permanent": true }
+    { "source": "/private-events/", "destination": "/events", "permanent": true },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.meatmootseattle.com" }],
+      "destination": "https://meatmootseattle.com/:path*",
+      "permanent": true
+    }
   ],
   "headers": [
     {

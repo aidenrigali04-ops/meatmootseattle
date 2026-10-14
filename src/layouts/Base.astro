@@ -81,8 +81,11 @@ const jsonLd = [restaurantSchema(), ...schema];
     <meta name="ICBM" content={`${site.geo.lat}, ${site.geo.lng}`} />
 
     <meta name="theme-color" content="#0b0b0c" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Google Search needs a square icon whose size is a multiple of 48px. Absolute URLs so www and apex resolve the same file. -->
+    <link rel="icon" href={new URL('/favicon.ico', site.url).toString()} sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="48x48" href={new URL('/favicon-48.png', site.url).toString()} />
+    <link rel="icon" type="image/png" sizes="96x96" href={new URL('/favicon-96.png', site.url).toString()} />
+    <link rel="apple-touch-icon" sizes="180x180" href={new URL('/apple-touch-icon.png', site.url).toString()} />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 

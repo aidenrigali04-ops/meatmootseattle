@@ -6,6 +6,9 @@ export const GET: APIRoute = ({ site }) =>
 Allow: /
 Disallow: /404
 
+User-agent: Googlebot-Image
+Allow: /
+
 Sitemap: ${new URL('sitemap-index.xml', site).href}
 `,
     { headers: { 'Content-Type': 'text/plain; charset=utf-8' } },
